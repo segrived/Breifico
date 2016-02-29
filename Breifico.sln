@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breifico.DataStructures", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breifico.DataStructures.UnitTests", "Breifico.DataStructures.UnitTests\Breifico.DataStructures.UnitTests.csproj", "{9DEB0030-F17F-4A86-ADB7-E24C35E2286A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breifico.Algorithms", "Breifico.Algorithms\Breifico.Algorithms.csproj", "{EA7392E4-E0ED-4BFF-AC9E-570090C0BB46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breifico.Algorithms.UnitTests", "Breifico.Algorithms.UnitTests\Breifico.Algorithms.UnitTests.csproj", "{0CB1C4E8-79C7-49C9-A6E2-16D14A961399}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{9DEB0030-F17F-4A86-ADB7-E24C35E2286A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DEB0030-F17F-4A86-ADB7-E24C35E2286A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DEB0030-F17F-4A86-ADB7-E24C35E2286A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA7392E4-E0ED-4BFF-AC9E-570090C0BB46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA7392E4-E0ED-4BFF-AC9E-570090C0BB46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA7392E4-E0ED-4BFF-AC9E-570090C0BB46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA7392E4-E0ED-4BFF-AC9E-570090C0BB46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CB1C4E8-79C7-49C9-A6E2-16D14A961399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB1C4E8-79C7-49C9-A6E2-16D14A961399}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB1C4E8-79C7-49C9-A6E2-16D14A961399}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB1C4E8-79C7-49C9-A6E2-16D14A961399}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

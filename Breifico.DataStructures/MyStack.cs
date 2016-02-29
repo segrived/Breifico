@@ -1,37 +1,81 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Breifico.DataStructures.Interfaces;
 
 namespace Breifico.DataStructures
 {
-    public class MyStack<T>
+    [DebuggerDisplay("MyStack<T>: {Count} element(s)")]
+    public class MyStack<T> : IMyStack<T>
     {
-        public const int InitStackSize = 8;
+        private readonly MyLinkedList<T> _stackData
+            = new MyLinkedList<T>();
 
-        private T[] _stackInternalArray;
+        private object _syncRoot;
 
+        private int LastIndex => this.Count - 1;
 
-        public int Count { get; private set; } = 0;
+        public int Count => this._stackData.Count;
 
+        public MyStack() {}
 
-        public MyStack() {
-            this._stackInternalArray = new T[InitStackSize];
-        }
-
-        public bool HasElements() {
-            return this.Count > 0;
-        }
-
-        public T Push() {
-            if (this.Count == 0) {
-                throw new InvalidOperationException("Empty stack");
+        public MyStack(IEnumerable<T> input) {
+            foreach (var item in input) {
+                this.Push(item);
             }
-            var item = this._stackInternalArray[this.Count - 1];
-            this.Count -= 1;
+        } 
+
+        public void Clear() {
+            this._stackData.Clear();
+        }
+
+        public T Pop() {
+            if (this.Count == 0) {
+                throw new InvalidOperationException("Stack is empty");
+            }
+            var item = this._stackData[this.LastIndex];
+            this._stackData.Remove(this.LastIndex);
             return item;
         }
 
-        public IEnumerator GetEnumerator() {
+        public T Peek() {
+            if (this.Count == 0) {
+                throw new InvalidOperationException("Stack is empty");
+            }
+            return this._stackData[this.LastIndex];
+        }
+
+        public void Push(T value) {
+            this._stackData.Add(value);
+        }
+
+        #region IEnumerable<T> implementation
+        public IEnumerator<T> GetEnumerator() {
+            return this._stackData.ReverseEnumerate().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return this.GetEnumerator();
+        }
+        #endregion
+
+        #region ICollection implementation
+        public void CopyTo(Array array, int index) {
             throw new NotImplementedException();
         }
+
+        public object SyncRoot {
+            get
+            {
+                if (this._syncRoot == null) {
+                    System.Threading.Interlocked.CompareExchange(ref this._syncRoot, new object(), null);
+                }
+                return this._syncRoot;
+            }
+        }
+
+        public bool IsSynchronized { get; } = false;
+        #endregion
     }
 }

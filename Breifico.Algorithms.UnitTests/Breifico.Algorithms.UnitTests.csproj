@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9DEB0030-F17F-4A86-ADB7-E24C35E2286A}</ProjectGuid>
+    <ProjectGuid>{0CB1C4E8-79C7-49C9-A6E2-16D14A961399}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Breifico.DataStructures.UnitTests</RootNamespace>
-    <AssemblyName>Breifico.DataStructures.UnitTests</AssemblyName>
+    <RootNamespace>Breifico.Algorithms.UnitTests</RootNamespace>
+    <AssemblyName>Breifico.Algorithms.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -60,16 +60,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MyHashSetTests.cs" />
-    <Compile Include="MyListTests.cs" />
-    <Compile Include="MyStackTests.cs" />
-    <Compile Include="MyLinkedListTests.cs" />
+    <Compile Include="Numeric\LinearCongruentialGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Breifico.DataStructures\Breifico.DataStructures.csproj">
-      <Project>{F3229D65-A8C3-469D-9366-F9E7775CDE21}</Project>
-      <Name>Breifico.DataStructures</Name>
+    <ProjectReference Include="..\Breifico.Algorithms\Breifico.Algorithms.csproj">
+      <Project>{EA7392E4-E0ED-4BFF-AC9E-570090C0BB46}</Project>
+      <Name>Breifico.Algorithms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
