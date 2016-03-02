@@ -9,7 +9,7 @@ namespace Breifico.DataStructures
     [DebuggerDisplay("MyLinkedList<T>: {Count} element(s)")]
     public class MyLinkedList<T> : IMyDoublyLinkedList<T>
     {
-        [DebuggerDisplay("Previous <- {Value} -> {Next}")]
+        [DebuggerDisplay("{Previous} <- {Value} -> {Next}")]
         internal class Node<TR>
         {
             public Node(TR value) {
@@ -95,11 +95,28 @@ namespace Breifico.DataStructures
                 if (this._headNode != null) {
                     this._headNode.Previous = null;
                 }
+            } else if (index == this.Count - 1) {
+                this._lastNode = this._lastNode.Previous;
+                if (this._lastNode != null) {
+                    this._lastNode.Next = null;
+                }
             } else {
                 var node = this.GetNodeByIndex(index - 1);
                 node.Next = node.Next.Next;
             }
             this.Count -= 1;
+        }
+
+        public bool RemoveFirst(T item) {
+            var tempNode = this._headNode;
+            for (int i = 0; i < this.Count; i++) {
+                if (tempNode.Value.Equals(item)) {
+                    this.Remove(i);
+                    return true;
+                }
+                tempNode = tempNode.Next;
+            }
+            return false;
         }
 
         public void Clear() {

@@ -2,6 +2,7 @@
 using System.Linq;
 using Breifico.Algorithms.Numeric;
 using FluentAssertions;
+using FluentAssertions.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Breifico.Algorithms.UnitTests.Numeric
@@ -47,9 +48,9 @@ namespace Breifico.Algorithms.UnitTests.Numeric
         public void GenerateInRange_ShouldGenerateRandomValuesInRange() {
             var genList = new LinearCongruentialGenerator(0xCAAC);
             genList.GenerateInRange(1, 10).Take(10).ToArray()
-                .Should().Equal(1, 5, 5, 6, 8, 8, 4, 2, 4, 1);
+                .Should().Equal(4, 9, 4, 8, 3, 10, 3, 1, 5, 4);
             genList.GenerateInRange(-20, -10).Take(10).ToArray()
-                .Should().Equal(-11, -14, -13, -12, -19, -14, -19, -12, -13, -12);
+                .Should().Equal(-16, -13, -16, -13, -16, -9, -19, -13, -18, -9);
         }
 
         [TestMethod]
@@ -58,7 +59,6 @@ namespace Breifico.Algorithms.UnitTests.Numeric
                 .GenerateDoubles().Take(5).ToArray();
             var values = new[] { 0.33688, 0.80428, 0.39373, 0.77361, 0.25803 };
             gen.Should().Equal(values, (l, r) => l.AreEqualApproximately(r, 0.01));
-
         }
 
         [TestMethod]

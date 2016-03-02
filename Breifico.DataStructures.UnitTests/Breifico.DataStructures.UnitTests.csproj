@@ -60,6 +60,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="MyBinarySearchTreeTests.cs" />
     <Compile Include="MyHashSetTests.cs" />
     <Compile Include="MyListTests.cs" />
     <Compile Include="MyStackTests.cs" />

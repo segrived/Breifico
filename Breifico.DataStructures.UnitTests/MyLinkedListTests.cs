@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Runtime.InteropServices;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -116,6 +118,35 @@ namespace Breifico.DataStructures.UnitTests
             list.Invoking(l => l.Remove(10))
                 .ShouldThrow<IndexOutOfRangeException>();
         }
+
+        [TestMethod]
+        public void Remove_WhenLastIndexMultipleTimes_ShouldNotThrowException() {
+            var list = new MyLinkedList<int> { 1, 2, 3 };
+            list.Remove(2);
+            list.Add(10);
+            list.Remove(2);
+        }
+
+        [TestMethod]
+        public void RemoveFirst_WhenIncluded_ShouldRemoveItemAndReturnFalse() {
+            var list = new MyLinkedList<int> { 1, 2, 3 };
+            list.RemoveFirst(2).Should().BeTrue();
+            list.Should().Equal(1, 3);
+
+            var list2 = new MyLinkedList<int> { 1, 2, 2, 2, 3 };
+            list2.RemoveFirst(2).Should().BeTrue();
+            list2.Should().Equal(1, 2,2,3);
+            list2.RemoveFirst(3).Should().BeTrue();
+            list2.Should().Equal(1, 2, 2);
+            list2.RemoveFirst(1).Should().BeTrue();
+            list2.Should().Equal(2, 2);
+        }
+
+        public void RemoveFirst_WhenNotIncluded_ShouldReturnFalse() {
+            var list = new MyLinkedList<int> {1,2,3};
+            list.RemoveFirst(4).Should().BeFalse();
+            list.Should().Equal(1, 2, 3);
+        }
         #endregion
 
         [TestMethod]
@@ -137,7 +168,7 @@ namespace Breifico.DataStructures.UnitTests
         }
 
         [TestMethod]
-        public void Contains__ShouldReturnTrueIfContains() {
+        public void Contains_ShouldReturnTrueIfContains() {
             var list = new MyLinkedList<int> { 10, 20, 30 };
             list.Contains(10).Should().BeTrue();
             list.Contains(15).Should().BeFalse();

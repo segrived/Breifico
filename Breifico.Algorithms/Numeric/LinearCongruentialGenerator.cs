@@ -27,8 +27,9 @@ namespace Breifico.Algorithms.Numeric
             if (min >= max) {
                 throw new ArgumentException("Minimum should be greater then maximum");
             }
-            int newValue = this.Next();
-            return newValue % (max - min) + min;
+            double newValue = this.NextDouble();
+            double result = newValue * (max - min + 1) + min;
+            return (int)result;
         }
 
         public double NextDouble() {

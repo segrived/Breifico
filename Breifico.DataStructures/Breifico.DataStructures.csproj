@@ -44,6 +44,7 @@
     <Compile Include="Interfaces\IMyHashSet.cs" />
     <Compile Include="Interfaces\IMyLinkedList.cs" />
     <Compile Include="Interfaces\IMyList.cs" />
+    <Compile Include="MyBinarySearchTree.cs" />
     <Compile Include="MyHashSet.cs" />
     <Compile Include="MyList.cs" />
     <Compile Include="Interfaces\IMyStack.cs" />

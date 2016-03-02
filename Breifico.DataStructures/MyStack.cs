@@ -17,6 +17,7 @@ namespace Breifico.DataStructures
         private int LastIndex => this.Count - 1;
 
         public int Count => this._stackData.Count;
+        public bool IsEmpty => this.Count == 0;
 
         public MyStack() {}
 
@@ -31,7 +32,7 @@ namespace Breifico.DataStructures
         }
 
         public T Pop() {
-            if (this.Count == 0) {
+            if (this.IsEmpty) {
                 throw new InvalidOperationException("Stack is empty");
             }
             var item = this._stackData[this.LastIndex];
@@ -40,7 +41,7 @@ namespace Breifico.DataStructures
         }
 
         public T Peek() {
-            if (this.Count == 0) {
+            if (this.IsEmpty) {
                 throw new InvalidOperationException("Stack is empty");
             }
             return this._stackData[this.LastIndex];

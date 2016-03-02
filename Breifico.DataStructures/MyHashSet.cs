@@ -9,15 +9,25 @@ namespace Breifico.DataStructures
     {
         private const int DefaultTableSize = 64;
 
+        private int _tableSize;
         private object _syncRoot;
 
-        private MyLinkedList<T>[] _backets =
-            new MyLinkedList<T>[DefaultTableSize];
+        private MyLinkedList<T>[] _backets;
 
         public int Count { get; private set; }
 
+        public MyHashSet() : this(DefaultTableSize) {}
+
+        public MyHashSet(int tableSize) {
+            if (tableSize <= 0) {
+                throw new ArgumentOutOfRangeException();
+            }
+            this._tableSize = tableSize;
+            this._backets = new MyLinkedList<T>[tableSize];
+        } 
+
         private int GetBacketNumber(T item) {
-            return item.GetHashCode() % DefaultTableSize;
+            return item.GetHashCode() % this._tableSize;
         }
 
         public bool Add(T item) {
@@ -49,9 +59,20 @@ namespace Breifico.DataStructures
             return list.Contains(item);
         }
 
+        public void Remove(T item) {
+            int bt = this.GetBacketNumber(item);
+            if (this._backets[bt] == null) {
+                return;
+            }
+            // RemoveFirst returns true if selement was removed
+            if (this._backets[bt].RemoveFirst(item)) {
+                this.Count -= 1;
+            }
+        }
+
         #region IEnumerable<T> implementation
         public IEnumerator<T> GetEnumerator() {
-            for (int i = 0; i < DefaultTableSize; i++) {
+            for (int i = 0; i < this._tableSize; i++) {
                 var bt = this._backets[i];
                 if (bt == null) continue;
                 foreach (var item in bt) {
