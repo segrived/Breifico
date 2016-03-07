@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Breifico.DataStructures
 {
@@ -74,25 +76,25 @@ namespace Breifico.DataStructures
             return node != null;
         }
 
-        class FoundNode<T> where T: IComparable<T>
+        class SmartNode<TR> where TR: IComparable<TR>
         {
-            public Node<T> Node { get; }
-            public Node<T> Parent { get; }
-            public NodePosition Position { get; }
+            public Node<TR> RefNode { get; }
+            public Node<TR> Parent { get; }
+            private NodePosition Position { get; }
 
-            public FoundNode(Node<T> node, Node<T> parent, NodePosition position) {
-                this.Node = node;
+            public SmartNode(Node<TR> refNode, Node<TR> parent, NodePosition position) {
+                this.RefNode = refNode;
                 this.Parent = parent;
                 this.Position = position;
             }
 
-            public Node<T> GetNodeByPos() {
+            public Node<TR> GetNodeByPos() {
                 return this.Position == NodePosition.Left 
                     ? this.Parent.Left 
                     : this.Parent.Right;
             }
 
-            public void ReplaceNode(Node<T> newNode) {
+            public void ReplaceNode(Node<TR> newNode) {
                 if (this.Position == NodePosition.Left) {
                     this.Parent.Left = newNode;
                 } else {
@@ -100,7 +102,7 @@ namespace Breifico.DataStructures
                 }
             }
 
-            public void ReplaceNodeValue(T newValue) {
+            public void ReplaceNodeValue(TR newValue) {
                 if (this.Position == NodePosition.Left) {
                     this.Parent.Left.Value = newValue;
                 } else {
@@ -109,11 +111,11 @@ namespace Breifico.DataStructures
             }
         }
 
-        private FoundNode<T> FindNode(Node<T> item) {
+        private SmartNode<T> FindNode(Node<T> item) {
             return this.FindNode(item.Value);
         }
 
-        private FoundNode<T> FindNode(T item) {
+        private SmartNode<T> FindNode(T item) {
             var tempNode = this._rootNode;
             Node<T> parent = null;
             var nodePosition = NodePosition.Left;
@@ -121,7 +123,7 @@ namespace Breifico.DataStructures
             while (tempNode != null) {
                 int compResult = item.CompareTo(tempNode.Value);
                 if (compResult == 0) {
-                    return new FoundNode<T>(tempNode, parent, nodePosition);
+                    return new SmartNode<T>(tempNode, parent, nodePosition);
                 }
                 if (compResult < 0) {
                     parent = tempNode;
@@ -141,15 +143,15 @@ namespace Breifico.DataStructures
             if (node == null) {
                 return;
             }
-            if (node.Node.IsLeaf) {
+            if (node.RefNode.IsLeaf) {
                 // if root without any childs
                 if (node.Parent == null) {
                     this._rootNode = null;
                 } else {
                     node.ReplaceNode(null);
                 }
-            } else if (node.Node.HasOnlyOneChild) {
-                var newNode = node.Node.Left ?? node.Node.Right;
+            } else if (node.RefNode.HasOnlyOneChild) {
+                var newNode = node.RefNode.Left ?? node.RefNode.Right;
                 // if root with only one child
                 if (node.Parent == null) {
                     this._rootNode = newNode;
@@ -157,8 +159,8 @@ namespace Breifico.DataStructures
                     node.ReplaceNode(newNode);
                 }
             } else {
-                var x = node.Node.Right;
-                var parent = node.Node;
+                var x = node.RefNode.Right;
+                var parent = node.RefNode;
                 while (x != null) {
                     if (x.Left == null) {
                         var nodeValue = x.Value;
@@ -248,5 +250,73 @@ namespace Breifico.DataStructures
 
         public bool IsSynchronized { get; } = false;
         #endregion
+    }
+
+    [TestClass]
+    public class MyBinarySearchTreeTests
+    {
+        [TestMethod]
+        public void Test() {
+            //var tree = new MyBinarySearchTree<int> {1, 2, 3, 4, 5};
+            //tree.Should().Equal(1, 2, 3, 4, 5);
+            //tree.Remove(1);
+            //tree.Should().Equal(2, 3, 4, 5);
+            //tree.Remove(5);
+            //tree.Should().Equal(2, 3, 4);
+            //tree.Remove(3);
+            //tree.Should().Equal(2, 4);
+
+            //// when only root node exists
+            //var tree2 = new MyBinarySearchTree<int> {1};
+            //tree2.Should().Equal(1);
+            //tree2.Remove(1);
+            //tree2.Should().BeEmpty();
+
+            //// remove non-root node with only one child
+            //var tree3 = new MyBinarySearchTree<int> { 2 , 4, 3 };
+            //tree3.Should().Equal(2, 3, 4);
+            //tree3.Remove(4);
+            //tree3.Should().Equal(2,3);
+
+            //// remove root node with only one child
+            //var tree4 = new MyBinarySearchTree<int> { 4, 2 };
+            //tree4.Should().Equal(2, 4);
+            //tree4.Remove(4);
+            //tree4.Should().Equal(2);
+
+            // remove root node with only one child
+            //var tree5 = new MyBinarySearchTree<int> { 10, 8, 20 };
+            //tree5.Should().Equal(8, 10, 20);
+            //tree5.Remove(10);
+            //tree5.Should().Equal(8, 20);
+        }
+
+        [TestMethod]
+        public void Contains_WhenContains_ShouldReturnTrue() {
+            var tree = new MyBinarySearchTree<int> { 10, 20, 30, 40 };
+            tree.Contains(10).Should().BeTrue();
+            tree.Contains(20).Should().BeTrue();
+            tree.Contains(30).Should().BeTrue();
+            tree.Contains(40).Should().BeTrue();
+        }
+
+        [TestMethod]
+        public void Contains_WhenNotContains_ShouldReturnFalse() {
+            var tree = new MyBinarySearchTree<int> { 10, 20, 30, 40 };
+            tree.Contains(0).Should().BeFalse();
+            tree.Contains(11).Should().BeFalse();
+            tree.Contains(-1).Should().BeFalse();
+            tree.Contains(50).Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void SyncRoot_ShouldBeObject() {
+            new MyBinarySearchTree<int>().SyncRoot.Should().NotBeNull().And.BeOfType<object>();
+        }
+
+        [TestMethod]
+        public void IsSynchronized_ShouldBeFalse() {
+            new MyBinarySearchTree<int>().IsSynchronized.Should().BeFalse();
+        }
     }
 }
