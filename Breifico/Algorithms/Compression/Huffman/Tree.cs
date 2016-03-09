@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Breifico.DataStructures;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Breifico.Algorithms.Compression
+namespace Breifico.Algorithms.Compression.Huffman
 {
     /// <summary>
     /// Бинарное дерево Хаффмана
     /// </summary>
-    public class HuffmanTree
+    public class Tree
     {
         /// <summary>
         /// Нода бинарного дерева Хаффмана
         /// </summary>
-        internal class Node : IComparable<Node>
+        private class Node : IComparable<Node>
         {
             public Node LeftNode { get; internal set; }
             public Node RightNode { get; internal set; }
 
-            public List<byte> Bytes { get; set; }
-            public int Frequency { get; set; }
+            public List<byte> Bytes { get; }
+            public int Frequency { get; }
 
-            public Node(List<byte> nodeBytes, int freq) {
+            public Node(List<byte> nodeBytes, int frequency) {
                 this.Bytes = nodeBytes;
-                this.Frequency = freq;
+                this.Frequency = frequency;
             }
 
-            public Node(byte nodeByte, int freq) : 
-                this(new List<byte> { nodeByte }, freq) {}
+            public Node(byte nodeByte, int frequency) : 
+                this(new List<byte> { nodeByte }, frequency) {}
 
+            /// <summary>
+            /// Возвращает true если текущая нода лист
+            /// </summary>
             public bool IsLeafNode => this.LeftNode == null && this.RightNode == null;
 
             public byte LeafValue => this.Bytes[0];
@@ -42,7 +42,8 @@ namespace Breifico.Algorithms.Compression
 
         private readonly List<Node> _nodes;
 
-        public static HuffmanTree BuildTree(int[] freqData) {
+
+        public static Tree Create(int[] freqData) {
             if (freqData.Length > 255) {
                 throw new Exception();
             }
@@ -53,15 +54,18 @@ namespace Breifico.Algorithms.Compression
                 }
                 nodes.Add(new Node(i, freqData[i]));
             }
-            return new HuffmanTree(nodes);
+            return new Tree(nodes);
         }
 
-        private HuffmanTree(List<Node> nodes) {
+        private Tree(List<Node> nodes) {
             this._nodes = nodes;
-            this.BuildTree();
+            this.Build();
         }
 
-        private void BuildTree() {
+        /// <summary>
+        /// Строит дерево Хаффмана на основе доабвленных данных
+        /// </summary>
+        private void Build() {
             while (this._nodes.Count > 1) {
                 // Сортируем ноды по частоте, самые  редкие окажутся в конце списка
                 this._nodes.Sort();
@@ -89,6 +93,11 @@ namespace Breifico.Algorithms.Compression
             }
         }
 
+        /// <summary>
+        /// Возвращает битовый массив по указанному байту
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public MyBitArray GetCode(byte b) {
             var bitArray = new MyBitArray();
             var tempNode = this._nodes[0];
@@ -102,28 +111,6 @@ namespace Breifico.Algorithms.Compression
                 }
             }
             return bitArray;
-        }
-    }
-
-    [TestClass]
-    public class HuffmanTreeTests
-    {
-        [TestMethod]
-        public void TestMethod() {
-            var arr = Encoding.ASCII.GetBytes("helllloo");
-
-            var nodes = new int[255];
-
-            foreach (byte t in arr) {
-                nodes[t] += 1;
-            }
-
-            var tree = HuffmanTree.BuildTree(nodes);
-            var x = arr.Distinct().ToArray();
-            foreach (var v in x) {
-                var p = tree.GetCode(v);
-            }
-
         }
     }
 }

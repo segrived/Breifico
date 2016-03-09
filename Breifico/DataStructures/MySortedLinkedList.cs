@@ -21,7 +21,7 @@ namespace Breifico.DataStructures
                 tempNode = tempNode.Next;
                 index++;
             }
-            this.Insert(index, item);
+            base.Insert(index, item);
         }
 
         #region Unsupported methods

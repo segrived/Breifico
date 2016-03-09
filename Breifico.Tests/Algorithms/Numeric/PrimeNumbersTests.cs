@@ -1,77 +1,10 @@
-﻿using System;
-using System.Numerics;
-using Breifico.DataStructures;
+﻿using System.Numerics;
+using Breifico.Algorithms.Numeric;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Breifico.Algorithms
+namespace Breifico.Tests.Algorithms.Numeric
 {
-    public static class PrimeNumbers
-    {
-        public static bool IsPrime(long number) {
-            if (number == 0 || number == 1 || number == 2) {
-                return true;
-            }
-            if (number % 2 == 0) {
-                return false;
-            }
-            int maxValue = (int)Math.Sqrt(number);
-            for (int i = 3; i <= maxValue; i += 2) {
-                if (number % i == 0) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public static bool IsProbablyPrimeFermat(BigInteger p, int tests = 200) {
-            if (p == 0 || p == 1 || p == 2) {
-                return true;
-            }
-            var randonGen = new LinearCongruentialGenerator();
-            for(int i = 0; i < tests; i++) {
-                int n = randonGen.Next(1, Int32.MaxValue);
-                if (BigInteger.ModPow(n, p - 1, p) != 1) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public static MyList<long> GetPrimesBruteforce(long to) {
-            return GetPrimesBruteforce(2, to);
-        }
-
-        public static MyList<long> GetPrimesBruteforce(long from, long to) {
-            var primes = new MyList<long>();
-            for (long i = from; i <= to; i++) {
-                if (IsPrime(i)) {
-                    primes.Add(i);
-                }
-            }
-            return primes;
-        }
-
-        public static MyList<long> GetPrimes(long max) {
-            var sieve = new bool[max + 1];
-            long boundary = (long)Math.Ceiling(Math.Sqrt(max)) + 1;
-            for (long i = 2; i <= boundary; i++) {
-                long p = i * 2;
-                while (p <= max) {
-                    sieve[p] = true;
-                    p += i;
-                }
-            }
-            var output = new MyList<long>();
-            for (long i = 2; i < sieve.LongLength; i++) {
-                if (!sieve[i]) {
-                    output.Add(i);
-                }
-            }
-            return output;
-        }
-    }
-
     [TestClass]
     public class PrimeNumbersTests
     {
@@ -86,7 +19,6 @@ namespace Breifico.Algorithms
             PrimeNumbers.IsPrime(14).Should().BeFalse();
             PrimeNumbers.IsPrime(15).Should().BeFalse();
             PrimeNumbers.IsPrime(1763).Should().BeFalse();
-            PrimeNumbers.IsPrime(7400854980481283).Should().BeFalse();
         }
 
         [TestMethod]

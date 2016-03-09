@@ -2,6 +2,15 @@
 
 namespace Breifico
 {
+    public static class CommonHelpers
+    {
+        public static void Swap<T>(ref T lhs, ref T rhs) {
+            var temp = lhs;
+            lhs = rhs;
+            rhs = temp;
+        }
+    }
+
     public static class SortExtensions
     {
         public static T[] MySort<T>(this T[] input, ISorter<T> sorter) where T : IComparable<T> {

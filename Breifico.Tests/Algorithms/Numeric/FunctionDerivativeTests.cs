@@ -1,30 +1,10 @@
 ﻿using System;
+using Breifico.Algorithms.Numeric;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Breifico.Algorithms
+namespace Breifico.Tests.Algorithms.Numeric
 {
-    public class FunctionDerivative
-    {
-        private readonly Func<double, double> _func;
-
-        public FunctionDerivative(Func<double, double> func) {
-            this._func = func;
-        }
-
-        public Func<double, double> GetDerivativeThreePoint(double h = 0.0001) {
-            return x => (this._func(x + h) - this._func(x - h)) / (2 * h);
-        }
-
-        public Func<double, double> GetDerivativeFivePoint(double h = 0.0001) {
-            return x => {
-                double fa = this._func(x - 2 * h) - 8 * this._func(x - h);
-                double fb = 8 * this._func(x + h) - this._func(x + 2 * h);
-                return (fa + fb) / (12 * h);
-            };
-        }
-    }
-
     [TestClass]
     public class FunctionDerivativeTests
     {

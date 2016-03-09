@@ -3,12 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Breifico.DataStructures
 {
-    public class MyBitArray : IEnumerable<bool>
+    public class MyBitArray : IEnumerable<bool>, IEquatable<MyBitArray>
     {
         private const int DefaultBufferSize = 4;
 
@@ -17,19 +15,28 @@ namespace Breifico.DataStructures
         /// <summary>
         /// Размер битового массива в битах
         /// </summary>
-        public int Count { get; private set; } = 0;
+        public int Count { get; private set; }
+
+        public int FreeBits => (8 - this.NextBitPosition) % 8;
 
         private int BytePosition => this.Count / 8;
-        private int BitPosition => this.Count % 8;
+        private int NextBitPosition => this.Count % 8;
 
+        /// <summary>
+        /// Инициализирует новый битовый массив с размером по умолчанию
+        /// </summary>
         public MyBitArray() : this(DefaultBufferSize) {}
 
+        /// <summary>
+        /// Инициализирует новый битовый массив с указанным размером
+        /// </summary>
+        /// <param name="initSizeInBytes">Начальный размер битового массива</param>
         public MyBitArray(int initSizeInBytes) {
             this._internalBuffer = new MyList<byte>(initSizeInBytes);
         }
 
         /// <summary>
-        /// Добавыляет бит в битовый массив
+        /// Добавляет бит в битовый массив
         /// True - единичный бит, False - нулевой
         /// </summary>
         /// <param name="bit">Добавляемый бит</param>
@@ -38,29 +45,14 @@ namespace Breifico.DataStructures
                 this._internalBuffer.Add(0x00);
             }
             if (bit) {
-                byte op = (byte)(1 << (7 - this.BitPosition));
+                byte op = (byte)(1 << (7 - this.NextBitPosition));
                 this._internalBuffer[this.BytePosition] ^= op;
             }
             this.Count++;
         }
 
         /// <summary>
-        /// Добавляет байт в битовый массив
-        /// </summary>
-        /// <param name="b">Добавляемый бит</param>
-        public void Append(byte b) {
-            if (this.BitPosition == 0) {
-                this._internalBuffer.Add(b);
-            } else {
-                for (int i = 7; i >= 0; i--) {
-                    this.Append((b & (1 << i)) != 0);
-                }
-            }
-            this.Count += 8;
-        }
-
-        /// <summary>
-        /// Добавляет несколько битов в битовый массив
+        /// Добавляет последовательно несколько битов в битовый массив
         /// </summary>
         /// <param name="b">Добавляемые биты</param>
         public void Append(params bool[] b) {
@@ -68,7 +60,46 @@ namespace Breifico.DataStructures
                 this.Append(b[i]);
             }
         }
-        
+
+        /// <summary>
+        /// Добавляет байт в битовый массив
+        /// </summary>
+        /// <param name="b">Добавляемый бит</param>
+        public void Append(byte b) {
+            if (this.NextBitPosition == 0) {
+                this._internalBuffer.Add(b);
+                this.Count += 8;
+                return;
+            }
+            for (int i = 7; i >= 0; i--) {
+                this.Append((b & (1 << i)) != 0);
+            }
+        }
+
+        /// <summary>
+        /// Добавляет все элементы с другого битового массива
+        /// </summary>
+        /// <param name="other">Другой битовый массив</param>
+        public void Append(MyBitArray other) {
+            foreach (bool bit in other) {
+                this.Append(bit);
+            }
+        }
+
+        /// <summary>
+        /// Инвертирует все биты в битовом массиве
+        /// </summary>
+        public void Negative() {
+            if (this.BytePosition > 0) {
+                for (int i = 0; i < this.BytePosition; i++) {
+                    this._internalBuffer[i] = (byte)~this._internalBuffer[i];
+                } 
+            }
+            for (int i = this.BytePosition * 8; i < this.Count; i++) {
+                this[i] = !this[i];
+            }
+        }
+
         /// <summary>
         /// Получает доступ или устанавливает значение бита по индексу 
         /// в виде булевого значения
@@ -114,6 +145,44 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
+        /// Сбрасывает состояние байтового массива до начального состояния
+        /// </summary>
+        public void Clear() {
+            this._internalBuffer.Clear();
+            this.Count = 0;
+        }
+
+        /// <summary>
+        /// Славнивает два битовых массивов
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(MyBitArray other) {
+            if (this.Count != other.Count) {
+                return false;
+            }
+            for (int i = 0; i < this._internalBuffer.Count; i++) {
+                if (this._internalBuffer[i] != other._internalBuffer[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Переопределяет GetHashCode для битового массива
+        /// Для получения хэшкода ксорит все байты
+        /// </summary>
+        /// <returns>Хэшкод битового массива</returns>
+        public override int GetHashCode() {
+            int hashCode = 0;
+            for (int i = 0; i < this._internalBuffer.Count; i++) {
+                hashCode ^= this._internalBuffer[i];
+            }
+            return hashCode;
+        }
+
+        /// <summary>
         /// Строковое представление
         /// </summary>
         /// <returns></returns>
@@ -133,115 +202,6 @@ namespace Breifico.DataStructures
 
         IEnumerator IEnumerable.GetEnumerator() {
             return this.GetEnumerator();
-        }
-    }
-
-    [TestClass]
-    public class MyBitArrayTests
-    {
-        [TestMethod]
-        public void NewInstance_ShouldBeEmpty() {
-            var bitArray = new MyBitArray();
-            bitArray.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void Count_ShouldReflectCollectionChanges() {
-            var bitArray = new MyBitArray();
-            bitArray.Count.Should().Be(0);
-            bitArray.Append(true);
-            bitArray.Count.Should().Be(1);
-            bitArray.Append(true, false);
-            bitArray.Count.Should().Be(3);
-            bitArray.Append(0x00);
-            bitArray.Count.Should().Be(11);
-        }
-
-        [TestMethod]
-        public void Append_ShouldAddBitsToBitArray() {
-            var bitArray = new MyBitArray();
-            // append single bit
-            bitArray.Append(true);
-            bitArray.Should().Equal(true);
-            // append multiple bits
-            bitArray.Append(false, false, true);
-            bitArray.Should().Equal(true, false, false, true);
-            // append byte
-            bitArray.Append(0xff);
-            bitArray.ToByteArray().Should().Equal(159, 240);
-            bitArray.Should().Equal(true, false, false, true,
-                                    true, true, true, true, true, true, true, true);
-            bitArray.Append(false);
-            bitArray.Should().Equal(true, false, false, true,
-                                    true, true, true, true, true, true, true, true, false);
-        }
-
-        [TestMethod]
-        public void IndexerGet_WhenEmpty_ShouldThrowException() {
-            var bitArray = new MyBitArray();
-            bitArray.Invoking(b => b[0].DoNothing())
-                    .ShouldThrow<IndexOutOfRangeException>();
-            bitArray.Invoking(b => b[-1].DoNothing())
-                    .ShouldThrow<IndexOutOfRangeException>();
-            bitArray.Invoking(b => b[1].DoNothing())
-                    .ShouldThrow<IndexOutOfRangeException>();
-        }
-
-        [TestMethod]
-        public void IndexerGet_WhenInvalidIndex_ShouldThrowException() {
-            var bitArray = new MyBitArray();
-            bitArray.Append(true, false, false);
-            bitArray.Invoking(b => b[-1].DoNothing())
-                    .ShouldThrow<IndexOutOfRangeException>();
-            bitArray.Invoking(b => b[3].DoNothing())
-                    .ShouldThrow<IndexOutOfRangeException>();
-            bitArray.Invoking(b => b[99].DoNothing())
-                    .ShouldThrow<IndexOutOfRangeException>();
-        }
-
-        [TestMethod]
-        public void IndexerGet_ShouldReturnElementByIndex() {
-            var bitArray = new MyBitArray();
-            bitArray.Append(true, false, false);
-            bitArray[0].Should().BeTrue();
-            bitArray[1].Should().BeFalse();
-            bitArray[2].Should().BeFalse();
-            bitArray.Append(129);
-            bitArray[3].Should().Be(true);
-            bitArray[10].Should().Be(true);
-        }
-
-        [TestMethod]
-        public void IndexerSet_WhenInvalidIndex_ShouldThrowException() {
-            var bitArray = new MyBitArray();
-            bitArray.Append(true, false, false);
-            bitArray.Invoking(b => b[-1] = true)
-                    .ShouldThrow<IndexOutOfRangeException>();
-            bitArray.Invoking(b => b[3] = true)
-                    .ShouldThrow<IndexOutOfRangeException>();
-            bitArray.Invoking(b => b[99] = true)
-                    .ShouldThrow<IndexOutOfRangeException>();
-        }
-
-        [TestMethod]
-        public void IndexerSet_ShouldReturnElementByIndex() {
-            var bitArray = new MyBitArray();
-            bitArray.Append(true, false, false);
-            bitArray[0].Should().BeTrue();
-            bitArray[1].Should().BeFalse();
-            bitArray[2].Should().BeFalse();
-            bitArray[0] = false;
-            bitArray[0].Should().BeFalse();
-            bitArray[0] = true;
-            bitArray[0].Should().BeTrue();
-            bitArray.Should().Equal(true, false, false);
-            bitArray.Append(129);
-            bitArray[3] = false;
-            bitArray[3].Should().BeFalse();
-            bitArray[10] = false;
-            bitArray[10].Should().BeFalse();
-            bitArray.Should().Equal(true, false, false, false, false,
-                                    false, false, false, false, false, false);
         }
     }
 }

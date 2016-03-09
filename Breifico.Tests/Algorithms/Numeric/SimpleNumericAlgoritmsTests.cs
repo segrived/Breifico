@@ -1,46 +1,9 @@
-﻿using FluentAssertions;
+﻿using Breifico.Algorithms.Numeric;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Breifico.Algorithms
+namespace Breifico.Tests.Algorithms.Numeric
 {
-    public static class SimpleNumericAlgoritms
-    {
-        public static int GcdFinder(int a, int b) {
-            while (b != 0) {
-                int rem = a % b;
-                a = b;
-                b = rem;
-            }
-            return a;
-        }
-
-        public static void RandomizeArray<T>(T[] input) {
-            var generator = new LinearCongruentialGenerator();
-            int maxIndex = input.Length - 1;
-            for (int i = 0; i < maxIndex; i++) {
-                int newIndex = generator.Next(i, maxIndex);
-                var tempValue = input[newIndex];
-                input[newIndex] = input[i];
-                input[i] = tempValue;
-            }
-        }
-
-        public static double ExpNumber(long number, long exp) {
-            if (exp < 0) {
-                return 1.0 / ExpNumber(number, -exp);
-            }
-            long result = 1;
-            while (exp > 0) {
-                if ((exp & 1) != 0) {
-                    result *= number;
-                }
-                exp >>= 1;
-                number *= number;
-            }
-            return result;
-        }
-    }
-
     [TestClass]
     public class SimpleNumericAlgoritmsTests
     {

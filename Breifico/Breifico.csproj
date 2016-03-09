@@ -30,15 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=4.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -50,19 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\Compression\HuffmanCompression.cs" />
-    <Compile Include="Algorithms\FibonacciNumbers.cs" />
-    <Compile Include="Algorithms\FunctionDerivative.cs" />
-    <Compile Include="Algorithms\FunctionIntegration.cs" />
-    <Compile Include="Algorithms\FunctionRootFinder.cs" />
-    <Compile Include="Algorithms\LinearCongruentialGenerator.cs" />
-    <Compile Include="Algorithms\PrimeNumbers.cs" />
-    <Compile Include="Algorithms\SimpleNumericAlgoritms.cs" />
+    <Compile Include="Algorithms\Compression\Huffman\Decoder.cs" />
+    <Compile Include="Algorithms\Compression\Huffman\Tree.cs" />
+    <Compile Include="Algorithms\Compression\Huffman\Encoder.cs" />
+    <Compile Include="Algorithms\Compression\Huffman\TreeBuilder.cs" />
+    <Compile Include="Algorithms\Crypto\XorChiper.cs" />
+    <Compile Include="Algorithms\Numeric\FibonacciNumbers.cs" />
+    <Compile Include="Algorithms\Numeric\FunctionDerivative.cs" />
+    <Compile Include="Algorithms\Numeric\FunctionIntegration.cs" />
+    <Compile Include="Algorithms\Numeric\FunctionRootFinder.cs" />
+    <Compile Include="Algorithms\Numeric\LinearCongruentialGenerator.cs" />
+    <Compile Include="Algorithms\Numeric\PrimeNumbers.cs" />
+    <Compile Include="Algorithms\Numeric\SimpleNumericAlgoritms.cs" />
     <Compile Include="Algorithms\Sorting\BubbleSorting.cs" />
     <Compile Include="Algorithms\Sorting\InsertionSorting.cs" />
     <Compile Include="Algorithms\Sorting\SelectionSorting.cs" />
     <Compile Include="DataStructures\MyBinarySearchTree.cs" />
     <Compile Include="DataStructures\MyBitArray.cs" />
+    <Compile Include="DataStructures\MyCircularLinkedList.cs" />
     <Compile Include="DataStructures\MyHashSet.cs" />
     <Compile Include="DataStructures\MyList.cs" />
     <Compile Include="DataStructures\MyQueue.cs" />
@@ -74,10 +70,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

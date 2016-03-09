@@ -3,20 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Breifico.DataStructures
 {
     /// <summary>
-    /// Имплементация связанного списка
+    /// Имплементация связного списка
     /// </summary>
-    /// <typeparam name="T">Тип элементов в связанном списке</typeparam>
+    /// <typeparam name="T">Тип элементов в связном списке</typeparam>
     [DebuggerDisplay("MyLinkedList<T>: {Count} element(s)")]
     public class MyLinkedList<T> : IList<T>
     {
         /// <summary>
-        /// Нода связанного списка
+        /// Нода связного списка
         /// </summary>
         /// <typeparam name="TR">Тип значения в ноде</typeparam>
         [DebuggerDisplay("{Previous} <- {Value} -> {Next}")]
@@ -60,9 +58,9 @@ namespace Breifico.DataStructures
         protected Node<T> LastNode;
 
         /// <summary>
-        /// Количество элементов в связанном списке
+        /// Количество элементов в связном списке
         /// </summary>
-        public int Count { get; private set; }
+        public int Count { get; protected set; }
 
         public bool IsReadOnly { get; } = false;
 
@@ -77,7 +75,7 @@ namespace Breifico.DataStructures
             set { this.GetNodeByIndex(index).Value = value; }
         }
 
-        private Node<T> GetNodeByIndex(int index) {
+        protected Node<T> GetNodeByIndex(int index) {
             if (index < 0 || index >= this.Count) {
                 throw new IndexOutOfRangeException();
             }
@@ -99,7 +97,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Вставляет элемент в начало связанного списка
+        /// Вставляет элемент в начало связного списка
         /// </summary>
         /// <param name="item">Добавляемый элемент</param>
         public virtual void AddFirst(T item) {
@@ -107,7 +105,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Вставляет элемент в конец связанного списка
+        /// Вставляет элемент в конец связного списка
         /// </summary>
         /// <param name="item">Добавляемый элемент</param>
         public virtual void AddLast(T item) {
@@ -129,13 +127,13 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Добавляет элемент в конец связанного списка
+        /// Добавляет элемент в конец связного списка
         /// </summary>
         /// <param name="item">Добавляемый элемент</param>
         public virtual void Add(T item) => this.AddLast(item);
 
         /// <summary>
-        /// Добавляет несколько элементов в связанный список
+        /// Добавляет несколько элементов в связный список
         /// </summary>
         /// <param name="items">Добавляемые элементы</param>
         public void AddRange(IEnumerable<T> items) {
@@ -145,7 +143,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Возвращает индекс указанного элемента в связанном списке
+        /// Возвращает индекс указанного элемента в связном списке
         /// Если указанный элемент отсутствует функция возвратит -1
         /// </summary>
         /// <param name="item">Искомый элемент</param>
@@ -162,10 +160,10 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Вставляет элемент в связанный список по указанному индексу
+        /// Вставляет элемент в связный список по указанному индексу
         /// </summary>
         /// <param name="index">Индекс, в который нужно вставить элемент</param>
-        /// <param name="item">Элемент, который необходимо вставить в связанный список</param>
+        /// <param name="item">Элемент, который необходимо вставить в связный список</param>
         /// <exception cref="IndexOutOfRangeException">Бросается в случае, если указанный 
         /// индекс меньше нуля, либо больше размера коллекции</exception>
         public virtual void Insert(int index, T item) {
@@ -199,10 +197,10 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Проверяет наличие элемента в связанном списке
+        /// Проверяет наличие элемента в связном списке
         /// </summary>
         /// <param name="item">Искомый элемент</param>
-        /// <returns>True - если элемент присутствует в связанном списке, иначе False</returns>
+        /// <returns>True - если элемент присутствует в связном списке, иначе False</returns>
         public bool Contains(T item) {
             var tempNode = this.HeadNode;
             while (tempNode != null) {
@@ -219,8 +217,8 @@ namespace Breifico.DataStructures
         /// </summary>
         /// <param name="index">Индекс элемента, который нужно удалить</param>
         /// <exception cref="IndexOutOfRangeException">Бросается в случае, если указанный 
-        /// индекс выходит за границы связанного списка</exception>
-        public void RemoveAt(int index) {
+        /// индекс выходит за границы связного списка</exception>
+        public virtual void RemoveAt(int index) {
             if (index < 0 || index >= this.Count) {
                 throw new IndexOutOfRangeException();
             }
@@ -242,7 +240,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Удаляет элемент из связанного списка
+        /// Удаляет элемент из связного списка
         /// </summary>
         /// <param name="item">Элемент, который необходимо удалить</param>
         /// <returns>True если элемент был удален, False если указанный элемент не найден</returns>
@@ -259,7 +257,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Очищает связанный список
+        /// Очищает связный список
         /// </summary>
         public void Clear() {
             this.HeadNode = this.LastNode = null;
@@ -267,7 +265,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Перечисляет элементы связанного списка в обратном порядке
+        /// Перечисляет элементы связного списка в обратном порядке
         /// </summary>
         /// <returns></returns>
         public IEnumerable<T> ReverseEnumerate() {
@@ -279,7 +277,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Возврщает строковое представление экземпляра связанного списка
+        /// Возврщает строковое представление экземпляра связного списка
         /// </summary>
         /// <returns></returns>
         public override string ToString() {
@@ -324,249 +322,5 @@ namespace Breifico.DataStructures
             return this.GetEnumerator();
         }
         #endregion
-    }
-
-    /// <summary>
-    /// Тесты к имплементации связанного списка
-    /// </summary>
-    [TestClass]
-    public class MyLinkedListTests
-    {
-        [TestMethod]
-        public void NewInstance_ShouldBeEmpty() {
-            new MyLinkedList<int>().Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void Count_ShouldReflectCollectionChanges() {
-            var list = new MyLinkedList<int>();
-            list.Count.Should().Be(0);
-            list.Add(10);
-            list.Count.Should().Be(1);
-            list.AddRange(new[] {20, 30});
-            list.Count.Should().Be(3);
-            list.RemoveAt(0);
-            list.Count.Should().Be(2);
-            list.Clear();
-            list.Count.Should().Be(0);
-        }
-
-        [TestMethod]
-        public void IndexerGet_WhenAnyElements_ShouldReturnElementByIndex() {
-            var list = new MyLinkedList<int> {10, 20, 30};
-            list[0].Should().Be(10);
-            list[1].Should().Be(20);
-            list[2].Should().Be(30);
-        }
-
-        [TestMethod]
-        public void IndexerGet_WhenIndexOutOfRange_ShouldThrowException() {
-            var list = new MyLinkedList<int> {10, 20, 30};
-            list.Invoking(l => l[-1].DoNothing())
-                .ShouldThrow<IndexOutOfRangeException>();
-            list.Invoking(l => l[10].DoNothing())
-                .ShouldThrow<IndexOutOfRangeException>();
-        }
-
-        [TestMethod]
-        public void IndexerSet_WhenAnyElements_ShouldAssignValue() {
-            var list = new MyLinkedList<int> {10, 20, 30};
-            list[0] = 100;
-            list[0].Should().Be(100);
-            list[1] = 200;
-            list[1].Should().Be(200);
-            list[2] = 300;
-            list[2].Should().Be(300);
-        }
-
-        [TestMethod]
-        public void IndexerSet_WhenIndexOutOfRange_ShouldThrowException() {
-            var list = new MyLinkedList<int> {10, 20, 30};
-            list.Invoking(l => l[-1] = 0)
-                .ShouldThrow<IndexOutOfRangeException>();
-            list.Invoking(l => l[10] = 0)
-                .ShouldThrow<IndexOutOfRangeException>();
-        }
-
-        [TestMethod]
-        public void Add_ShouldAddElements() {
-            var list = new MyLinkedList<int> {10};
-            list.Should().Equal(10);
-            list.Add(20);
-            list.Should().Equal(10, 20);
-            list.Add(30);
-            list.Should().Equal(10, 20, 30);
-        }
-
-        [TestMethod]
-        public void AddRange_ShouldAddMultipleElements() {
-            var list = new MyLinkedList<int>();
-            list.AddRange(new[] {40, 50, 60});
-            list.Should().Equal(40, 50, 60);
-            list.AddRange(new[] {70, 80});
-            list.Should().Equal(40, 50, 60, 70, 80);
-        }
-
-        [TestMethod]
-        public void IndexOf_WhenItemNotExists_ShouldReturnMinusOne() {
-            var list = new MyLinkedList<int>();
-            list.AddRange(new[] { 40, 50, 60 });
-            list.IndexOf(-1).Should().Be(-1);
-            list.IndexOf(3).Should().Be(-1);
-            list.IndexOf(12).Should().Be(-1);
-        }
-
-        [TestMethod]
-        public void IndexOf_WhenItemExists_ShouldReturnIndex() {
-            var list = new MyLinkedList<int>();
-            list.AddRange(new[] { 40, 50, 60 });
-            list.IndexOf(40).Should().Be(0);
-            list.IndexOf(50).Should().Be(1);
-            list.IndexOf(60).Should().Be(2);
-        }
-
-        [TestMethod]
-        public void Insert_WhenEmptyList_ShouldThrowException() {
-            var list = new MyLinkedList<int>();
-            list.Invoking(l => l.Insert(-1, 0))
-                .ShouldThrow<IndexOutOfRangeException>();
-            list.Invoking(l => l.Insert(1, 0))
-                .ShouldThrow<IndexOutOfRangeException>();
-        }
-
-        [TestMethod]
-        public void Insert_WhenValidIndex_ShouldInsertElements() {
-            var list = new MyLinkedList<int>();
-            list.Insert(0, 10);
-            list.Should().Equal(10);
-            list.Insert(0, 20);
-            list.Should().Equal(20, 10);
-            list.Insert(2, 30);
-            list.Should().Equal(20, 10, 30);
-            list.Insert(1, 40);
-            list.Should().Equal(20, 40, 10, 30);
-            list.Insert(1, 10);
-            list.Should().Equal(20, 10, 40, 10, 30);
-        }
-
-        [TestMethod]
-        public void Insert_WhenIndexOutOfRange_ShouldThrowException() {
-            var list = new MyLinkedList<int>();
-            list.AddRange(new[] {10, 20, 30, 40});
-            list.Invoking(l => l.Insert(5, 0))
-                .ShouldThrow<IndexOutOfRangeException>();
-            list.Invoking(l => l.Insert(-1, 0))
-                .ShouldThrow<IndexOutOfRangeException>();
-        }
-
-        [TestMethod]
-        public void Contains_WhenEmpty_ShouldAlwaysReturnFalse() {
-            var list = new MyLinkedList<int>();
-            list.Contains(0).Should().BeFalse();
-        }
-
-        [TestMethod]
-        public void Contains_ShouldReturnTrueIfContains() {
-            var list = new MyLinkedList<int> { 10, 20, 30 };
-            list.Contains(10).Should().BeTrue();
-            list.Contains(15).Should().BeFalse();
-            list.Contains(30).Should().BeTrue();
-            list.Contains(20).Should().BeTrue();
-            list.Contains(25).Should().BeFalse();
-        }
-
-        [TestMethod]
-        public void Remove_WhenEmpty_ShouldThrowExcepetion() {
-            var list = new MyLinkedList<int>();
-            list.Invoking(l => l.RemoveAt(0))
-                .ShouldThrow<IndexOutOfRangeException>();
-        }
-
-        [TestMethod]
-        public void Remove_WhenAnyElements_ShouldRemoveElement() {
-            var list = new MyLinkedList<int> {1, 2, 3};
-            list.RemoveAt(0);
-            list.Should().Equal(2, 3);
-            list.RemoveAt(1);
-            list.Should().Equal(2);
-            list.RemoveAt(0);
-            list.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void Remove_WhenIndexOutOfRange_ShouldThrowException() {
-            var list = new MyLinkedList<int> {1, 2, 3};
-            list.Invoking(l => l.RemoveAt(-1))
-                .ShouldThrow<IndexOutOfRangeException>();
-            list.Invoking(l => l.RemoveAt(10))
-                .ShouldThrow<IndexOutOfRangeException>();
-        }
-
-        [TestMethod]
-        public void Remove_WhenLastIndexMultipleTimes_ShouldNotThrowException() {
-            var list = new MyLinkedList<int> {1, 2, 3};
-            list.RemoveAt(2);
-            list.Add(10);
-            list.RemoveAt(2);
-        }
-
-        [TestMethod]
-        public void RemoveFirst_WhenIncluded_ShouldRemoveItemAndReturnTrue() {
-            var list = new MyLinkedList<int> {1, 2, 3};
-            list.Remove(2).Should().BeTrue();
-            list.Should().Equal(1, 3);
-
-            var list2 = new MyLinkedList<int> {1, 2, 2, 2, 3};
-            list2.Remove(2).Should().BeTrue();
-            list2.Should().Equal(1, 2, 2, 3);
-            list2.Remove(3).Should().BeTrue();
-            list2.Should().Equal(1, 2, 2);
-            list2.Remove(1).Should().BeTrue();
-            list2.Should().Equal(2, 2);
-        }
-
-        [TestMethod]
-        public void RemoveFirst_WhenNotIncluded_ShouldReturnFalse() {
-            var list = new MyLinkedList<int> {1, 2, 3};
-            list.Remove(4).Should().BeFalse();
-            list.Should().Equal(1, 2, 3);
-        }
-
-        [TestMethod]
-        public void Clear_ShouldRemoveAllElements() {
-            var list = new MyLinkedList<int> {10, 20};
-            list.Should().NotBeEmpty();
-            list.Clear();
-            list.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void ReverseEnumerate_ShouldIterateBackward() {
-            var list = new MyLinkedList<int> {10, 20, 30, 40};
-            list.ReverseEnumerate().Should().Equal(40, 30, 20, 10);
-            list.RemoveAt(0);
-            list.ReverseEnumerate().Should().Equal(40, 30, 20);
-            list.Clear();
-            list.ReverseEnumerate().Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void ToString_ShouldReturnString() {
-            var list1 = new MyLinkedList<int> { 10, 20 };
-            list1.ToString().Should().Be("S: 10, E: 20");
-
-            var list2 = new MyLinkedList<int>();
-            list2.ToString().Should().Be("S: null, E: null");
-        }
-
-        [TestMethod]
-        public void SyncRoot_ShouldBeObject() {
-            new MyLinkedList<int>().SyncRoot.Should().NotBeNull().And.BeOfType<object>();
-        }
-
-        [TestMethod]
-        public void IsSynchronized_ShouldBeFalse() {
-            new MyLinkedList<int>().IsSynchronized.Should().BeFalse();
-        }
     }
 }
