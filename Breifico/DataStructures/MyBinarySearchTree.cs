@@ -25,6 +25,7 @@ namespace Breifico.DataStructures
             /// Левая нода
             /// </summary>
             public Node<TR> Left { get; set; }
+
             /// <summary>
             /// Правая нода
             /// </summary>
@@ -143,7 +144,7 @@ namespace Breifico.DataStructures
             /// Создает новую обертку над нодой
             /// </summary>
             /// <param name="refNode">Исходная нода</param>
-            /// <param name="parent">Родитель исохдной ноды</param>
+            /// <param name="parent">Родитель исходной ноды</param>
             /// <param name="position">Положение исходной ноды по отношению к родителю</param>
             public SmartNode(Node<TR> refNode, Node<TR> parent, NodePosition position) {
                 this.RefNode = refNode;
@@ -316,6 +317,10 @@ namespace Breifico.DataStructures
             return node == null ? def : node.Value;
         }
 
+        /// <summary>
+        /// Добавляет элементы указанной коллекции в бинарное дерево
+        /// </summary>
+        /// <param name="items">Коллекция с добавляемыми элементами</param>
         public void AddRange(IEnumerable<T> items) {
             foreach (var item in items) {
                 this.Add(item);

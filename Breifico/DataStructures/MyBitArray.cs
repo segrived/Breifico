@@ -8,6 +8,9 @@ namespace Breifico.DataStructures
 {
     public class MyBitArray : IEnumerable<bool>, IEquatable<MyBitArray>
     {
+        /// <summary>
+        /// Размер буфера по умолчанию
+        /// </summary>
         private const int DefaultBufferSize = 4;
 
         private readonly MyList<byte> _internalBuffer;
@@ -153,7 +156,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Славнивает два битовых массивов
+        /// Сравнивает два битовых массивов
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>

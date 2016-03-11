@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Breifico.TestApp
+﻿namespace Breifico.TestApp
 {
     class Program
     {

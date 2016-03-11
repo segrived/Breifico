@@ -53,6 +53,8 @@
     <Compile Include="Algorithms\Numeric\LinearCongruentialGenerator.cs" />
     <Compile Include="Algorithms\Numeric\PrimeNumbers.cs" />
     <Compile Include="Algorithms\Numeric\SimpleNumericAlgoritms.cs" />
+    <Compile Include="Algorithms\Searching\BinarySearch.cs" />
+    <Compile Include="Algorithms\Searching\LinearSearch.cs" />
     <Compile Include="Algorithms\Sorting\BubbleSorting.cs" />
     <Compile Include="Algorithms\Sorting\BucketSorting.cs" />
     <Compile Include="Algorithms\Sorting\CountingSorting.cs" />
