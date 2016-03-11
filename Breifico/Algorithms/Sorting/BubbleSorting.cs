@@ -3,11 +3,16 @@
 namespace Breifico.Algorithms.Sorting
 {
     /// <summary>
-    /// Пузьрькова сортировка. Работает за O(N^2)
+    /// Пузьрьковая сортировка. Работает за O(N^2)
     /// </summary>
     /// <typeparam name="T">Тип элементов, которые необходимо отсортировать</typeparam>
     public class BubbleSorting<T> : ISorter<T> where T : IComparable<T>
     {
+        /// <summary>
+        /// Сортирует in-place исходный массив методом пузырька и возвращает его
+        /// </summary>
+        /// <param name="input">Исходный массив</param>
+        /// <returns>Отсортированный массив</returns>
         public T[] Sort(T[] input) {
             if (input.Length <= 1) {
                 return input;
@@ -21,7 +26,8 @@ namespace Breifico.Algorithms.Sorting
                 bool wasChanged = false;
                 for (int j = 0; j <= i; j++) {
                     if (input[j].CompareTo(input[j + 1]) == -1) {
-                        // если за последний проход ничего не изменилось - значит коллекция отсортирована
+                        // если за последний проход ничего не изменилось - 
+                        // значит уже коллекция отсортирована
                         continue;
                     }
                     CommonHelpers.Swap(ref input[j], ref input[j + 1]);

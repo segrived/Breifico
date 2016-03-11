@@ -8,6 +8,11 @@ namespace Breifico.Algorithms.Sorting
     /// <typeparam name="T">Тип элементов, которые необходимо отсортировать</typeparam>
     public class SelectionSorting<T> : ISorter<T> where T : IComparable<T>
     {
+        /// <summary>
+        /// Сортирует in-place исходный массив методом сортировки выбором и возвращает его
+        /// </summary>
+        /// <param name="input">Исходный массив</param>
+        /// <returns>Отсортированный массив</returns>
         public T[] Sort(T[] input) {
             for (int i = 0; i < input.Length - 1; i++) {
                 int minIndex = i;

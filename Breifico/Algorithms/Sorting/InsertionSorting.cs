@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Breifico.Algorithms.Sorting
 {
     /// <summary>
@@ -7,6 +8,11 @@ namespace Breifico.Algorithms.Sorting
     /// <typeparam name="T">Тип элементов, которые необходимо отсортировать</typeparam>
     public class InsertionSorting<T> : ISorter<T> where T : IComparable<T>
     {
+        /// <summary>
+        /// Сортирует in-place исходный массив методом вставок и возвращает его
+        /// </summary>
+        /// <param name="input">Исходный массив</param>
+        /// <returns>Отсортированный массив</returns>
         public T[] Sort(T[] input) {
             for (int i = 1; i < input.Length; i++) {
                 var item = input[i];

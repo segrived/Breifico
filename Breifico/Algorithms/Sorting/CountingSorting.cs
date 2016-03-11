@@ -2,6 +2,9 @@
 
 namespace Breifico.Algorithms.Sorting
 {
+    /// <summary>
+    /// Сортировка подсчетом. Работает за O(N+K)
+    /// </summary>
     public class CountingSorting : ISorter<uint>
     {
         private const int DefaulMaxElement = 100000;
@@ -16,11 +19,12 @@ namespace Breifico.Algorithms.Sorting
 
         /// <summary>
         /// Ищет максимальный элемент в массиве. Если элемент превышает 
-        /// значение MaxElement, функция вернет null
+        /// значение <see cref="_maxElement"/>, функция вернет null
         /// </summary>
         /// <param name="input">Исходный массив</param>
-        /// <returns>Максимальный элемент в массиве</returns>
-        private uint? FindMax(uint[] input) {
+        /// <returns>Максимальный элемент в массиве или null, если максимальный 
+        /// элемент превышает значение <see cref="_maxElement"/></returns>
+        private uint? FindMaxElement(uint[] input) {
             if (input.Length == 0) {
                 throw new ArgumentException("Empty array, can't find maximum element");
             }
@@ -37,11 +41,16 @@ namespace Breifico.Algorithms.Sorting
             return maxElement;
         }
 
+        /// <summary>
+        /// Сортирует in-place исходный массив методом подсчета и возвращает его
+        /// </summary>
+        /// <param name="input">Исходный массив</param>
+        /// <returns>Отсортированный массив</returns>
         public uint[] Sort(uint[] input) {
             if (input.Length <= 1) {
                 return input;
             }
-            uint? maxElement = this.FindMax(input);
+            uint? maxElement = this.FindMaxElement(input);
             if (maxElement == null) {
                 throw new Exception($"Array contains number which exceeds the limit ({this._maxElement})");
             }

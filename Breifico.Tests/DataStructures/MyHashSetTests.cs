@@ -64,19 +64,55 @@ namespace Breifico.Tests.DataStructures
         [TestMethod]
         public void Remove_WhenExists_ShouldRemoveElement() {
             var hashSet = new MyHashSet<int> { 10, 20, 30, 40 };
-            hashSet.Remove(20);
+            hashSet.Remove(20).Should().BeTrue();
             hashSet.Should().Equal(10, 30, 40);
-            hashSet.Remove(20);
+            hashSet.Remove(20).Should().BeFalse();
             hashSet.Should().Equal(10, 30, 40);
-            hashSet.Remove(10);
+            hashSet.Remove(10).Should().BeTrue();
             hashSet.Should().Equal(30, 40);
         }
 
         [TestMethod]
         public void Remove_WhenEmpty_ShouldDoNothing() {
             var hashSet = new MyHashSet<int>();
-            hashSet.Remove(0);
+            hashSet.Remove(0).Should().BeFalse();
             hashSet.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void IsSubsetOf_Test() {
+            var hashSet1 = new MyHashSet<int>();
+            hashSet1.AddRange(new [] { 1, 2, 3, 4, 5 });
+
+            var hashSet2 = new MyHashSet<int>();
+            hashSet2.AddRange(new[] { 2, 3, 4 });
+
+            var hashSet3 = new MyHashSet<int>();
+            hashSet3.AddRange(new[] { 2, 3, 4 });
+
+            hashSet2.IsSubsetOf(hashSet1).Should().BeTrue();
+            hashSet1.IsSubsetOf(hashSet2).Should().BeFalse();
+
+            hashSet2.IsSubsetOf(hashSet3).Should().BeTrue();
+            hashSet3.IsSubsetOf(hashSet2).Should().BeTrue();
+        }
+
+        [TestMethod]
+        public void IsSupersetOf_Test() {
+            var hashSet1 = new MyHashSet<int>();
+            hashSet1.AddRange(new[] { 1, 2, 3, 4, 5 });
+
+            var hashSet2 = new MyHashSet<int>();
+            hashSet2.AddRange(new[] { 2, 3, 4 });
+
+            var hashSet3 = new MyHashSet<int>();
+            hashSet3.AddRange(new[] { 2, 3, 4 });
+
+            hashSet2.IsSupersetOf(hashSet1).Should().BeFalse();
+            hashSet1.IsSupersetOf(hashSet2).Should().BeTrue();
+
+            hashSet2.IsSupersetOf(hashSet3).Should().BeTrue();
+            hashSet3.IsSupersetOf(hashSet2).Should().BeTrue();
         }
 
         [TestMethod]

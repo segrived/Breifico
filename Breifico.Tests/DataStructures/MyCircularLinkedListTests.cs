@@ -9,13 +9,12 @@ namespace Breifico.Tests.DataStructures
     public class MyCircularLinkedListTests
     {
         [TestMethod]
-        public void Count_ShouldReflectCollectionChanges()
-        {
+        public void Count_ShouldReflectCollectionChanges() {
             var list = new MyCircularLinkedList<int>();
             list.Count.Should().Be(0);
             list.Add(1);
             list.Count.Should().Be(1);
-            list.AddRange(new [] {2, 4});
+            list.AddRange(new[] {2, 4});
             list.Count.Should().Be(3);
             list.RemoveAt(0);
             list.Count.Should().Be(2);
