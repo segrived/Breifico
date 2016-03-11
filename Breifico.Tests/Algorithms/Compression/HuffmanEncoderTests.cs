@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Breifico.Algorithms.Compression;
 using Breifico.Algorithms.Compression.Huffman;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

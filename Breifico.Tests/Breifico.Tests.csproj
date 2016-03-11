@@ -72,6 +72,7 @@
     <Compile Include="Algorithms\Numeric\PrimeNumbersTests.cs" />
     <Compile Include="Algorithms\Numeric\SimpleNumericAlgoritmsTests.cs" />
     <Compile Include="Algorithms\Sorting\BubbleSortingTests.cs" />
+    <Compile Include="Algorithms\Sorting\CountingSortingTests.cs" />
     <Compile Include="Algorithms\Sorting\InsertionSortingTests.cs" />
     <Compile Include="Algorithms\Sorting\SelectionSortingTests.cs" />
     <Compile Include="DataStructures\MyBinarySearchTreeTests.cs" />

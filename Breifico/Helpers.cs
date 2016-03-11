@@ -16,6 +16,10 @@ namespace Breifico
         public static T[] MySort<T>(this T[] input, ISorter<T> sorter) where T : IComparable<T> {
             return sorter.Sort(input);
         }
+
+        public static uint[] MySort(this uint[] input, ISorter<uint> sorter) {
+            return sorter.Sort(input);
+        }
     }
 
     public static class TestHelperExtensions

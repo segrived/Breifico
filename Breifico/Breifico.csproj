@@ -54,8 +54,16 @@
     <Compile Include="Algorithms\Numeric\PrimeNumbers.cs" />
     <Compile Include="Algorithms\Numeric\SimpleNumericAlgoritms.cs" />
     <Compile Include="Algorithms\Sorting\BubbleSorting.cs" />
+    <Compile Include="Algorithms\Sorting\BucketSorting.cs" />
+    <Compile Include="Algorithms\Sorting\CountingSorting.cs" />
     <Compile Include="Algorithms\Sorting\InsertionSorting.cs" />
     <Compile Include="Algorithms\Sorting\SelectionSorting.cs" />
+    <Compile Include="BinaryArithmetic\BitExtensions.cs" />
+    <Compile Include="BinaryArithmetic\GenericOps\ByteWrapper.cs" />
+    <Compile Include="BinaryArithmetic\Num.cs" />
+    <Compile Include="BinaryArithmetic\GenericOps\IntWrapper.cs" />
+    <Compile Include="BinaryArithmetic\GenericOps\LongWrapper.cs" />
+    <Compile Include="BinaryArithmetic\GenericOps\ShortWrapper.cs" />
     <Compile Include="DataStructures\MyBinarySearchTree.cs" />
     <Compile Include="DataStructures\MyBitArray.cs" />
     <Compile Include="DataStructures\MyCircularLinkedList.cs" />

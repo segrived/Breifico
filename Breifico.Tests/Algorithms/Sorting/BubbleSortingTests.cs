@@ -35,9 +35,6 @@ namespace Breifico.Tests.Algorithms.Sorting
 
             var input5 = new[] {1, 2, 3, 4, 5, 6, 7};
             input5.MySort(new BubbleSorting<int>()).Should().Equal(1, 2, 3, 4, 5, 6, 7);
-
-            var input6 = new[] { 1, 2, 4, 3 };
-            input5.MySort(new BubbleSorting<int>()).Should().Equal(1, 2, 3, 4, 5, 6, 7);
         }
     }
 }
