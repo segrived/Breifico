@@ -198,3 +198,5 @@ FakesAssemblies/
 
 *.sublime-workspace
 *.sublime-project
+
+Docs/
