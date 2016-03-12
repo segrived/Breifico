@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Breifico.DataStructures
 {
+    /// <summary>
+    /// Имплементация битового массива
+    /// </summary>
     public class MyBitArray : IEnumerable<bool>, IEquatable<MyBitArray>
     {
         /// <summary>

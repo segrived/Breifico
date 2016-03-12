@@ -7,9 +7,9 @@ using System.Threading;
 namespace Breifico.DataStructures
 {
     /// <summary>
-    /// Имплементация стэка
+    /// Имплементация стека
     /// </summary>
-    /// <typeparam name="T">Тип элементов в стэке</typeparam>
+    /// <typeparam name="T">Тип элементов в стеке</typeparam>
     [DebuggerDisplay("MyStack<T>: {Count} element(s)")]
     public class MyStack<T> : IEnumerable<T>, ICollection
     {
@@ -21,20 +21,20 @@ namespace Breifico.DataStructures
         private int LastIndex => this.Count - 1;
 
         /// <summary>
-        /// Количество элементов в стэке
+        /// Количество элементов в стеке
         /// </summary>
         public int Count => this._stackData.Count;
 
         /// <summary>
-        /// Возвращает True если стэк непустой, иначе False
+        /// Возвращает True если стек непустой, иначе False
         /// </summary>
         public bool IsEmpty => this.Count == 0;
 
         /// <summary>
-        /// Возвращает первый элемент из стэка, после чего удаляет его
+        /// Возвращает первый элемент из стека, после чего удаляет его
         /// </summary>
-        /// <returns>Первый элемент стэка</returns>
-        /// <exception cref="InvalidOperationException">Бросается в случае, если стэк пуст</exception>
+        /// <returns>Первый элемент стека</returns>
+        /// <exception cref="InvalidOperationException">Бросается в случае, если стек пуст</exception>
         public T Pop() {
             if (this.IsEmpty) {
                 throw new InvalidOperationException("Stack is empty");
@@ -45,7 +45,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Добавляет новый элемент в начало стэка
+        /// Добавляет новый элемент в начало стека
         /// </summary>
         /// <param name="value">Добавляемый элемент</param>
         public void Push(T value) {
@@ -53,10 +53,10 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Возвращает первый элемент из стэка, но не удаляет его
+        /// Возвращает первый элемент из стека, но не удаляет его
         /// </summary>
-        /// <returns>Первый элемент стэка</returns>
-        /// <exception cref="InvalidOperationException">Бросается в случае, если стэк пуст</exception>
+        /// <returns>Первый элемент стека</returns>
+        /// <exception cref="InvalidOperationException">Бросается в случае, если стек пуст</exception>
         public T Peek() {
             if (this.IsEmpty) {
                 throw new InvalidOperationException("Stack is empty");
@@ -65,7 +65,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Очищает стэк
+        /// Очищает стек
         /// </summary>
         public void Clear() {
             this._stackData.Clear();

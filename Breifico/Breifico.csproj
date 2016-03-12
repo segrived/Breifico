@@ -41,11 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\StreamBinaryReader.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanDecoder.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanTree.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanEncoder.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanTreeBuilder.cs" />
     <Compile Include="Algorithms\Crypto\XorChiper.cs" />
+    <Compile Include="Algorithms\ErrorDetection\CRC32.cs" />
+    <Compile Include="Algorithms\Formats\BmpReader.cs" />
+    <Compile Include="Algorithms\ImageProcessing\FastImage.cs" />
     <Compile Include="Algorithms\Numeric\FibonacciNumbers.cs" />
     <Compile Include="Algorithms\Numeric\FunctionDerivative.cs" />
     <Compile Include="Algorithms\Numeric\FunctionIntegration.cs" />
@@ -75,6 +79,7 @@
     <Compile Include="DataStructures\MySortedLinkedList.cs" />
     <Compile Include="DataStructures\MyStack.cs" />
     <Compile Include="DataStructures\MyLinkedList.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

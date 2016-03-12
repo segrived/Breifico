@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Breifico.Algorithms.Numeric;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,6 +13,7 @@ namespace Breifico.Tests.Algorithms.Numeric
         [TestMethod]
         public void NewInstance_WhenDefaultSeed_ShouldGenerateDifferentData() {
             int g1Value = new LinearCongruentialGenerator().Next();
+            Thread.Sleep(2); // почему бы и нет
             int g2Value = new LinearCongruentialGenerator().Next();
             g1Value.Should().NotBe(g2Value);
         }

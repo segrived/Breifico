@@ -80,6 +80,93 @@ namespace Breifico.Tests.DataStructures
         }
 
         [TestMethod]
+        public void Union_Test() {
+            var hashSet1 = new MyHashSet<int>();
+            hashSet1.AddRange(new[] { 2, 3, 4 });
+            var hashSet2 = new MyHashSet<int>();
+            hashSet2.AddRange(new[] { 4, 5, 6 });
+            hashSet1.Union(hashSet2).Should().Equal(2, 3, 4, 5, 6);
+
+            var hashSet3 = new MyHashSet<int>();
+            hashSet3.AddRange(new[] { 5, 10, 20 });
+            var hashSet4 = new MyHashSet<int>();
+            hashSet4.AddRange(new[] { 20, 10, 5 });
+            hashSet3.Union(hashSet4).Should().Equal(5, 10, 20);
+
+            var hashSet5 = new MyHashSet<int>();
+            hashSet5.AddRange(new int[0]);
+            var hashSet6 = new MyHashSet<int>();
+            hashSet6.AddRange(new[] { -5 });
+            hashSet5.Union(hashSet6).Should().Equal(-5);
+        }
+
+        [TestMethod]
+        public void Intersection_Test() {
+            var hashSet1 = new MyHashSet<int>();
+            hashSet1.AddRange(new[] { 2, 3, 4 });
+            var hashSet2 = new MyHashSet<int>();
+            hashSet2.AddRange(new[] { 4, 5, 6 });
+            hashSet1.Intersection(hashSet2).Should().Equal(4);
+
+            var hashSet3 = new MyHashSet<int>();
+            hashSet3.AddRange(new[] { 5, 10, 20 });
+            var hashSet4 = new MyHashSet<int>();
+            hashSet4.AddRange(new[] { 20, 10, 5 });
+            hashSet3.Intersection(hashSet4).Should().Equal(5, 10, 20);
+
+            var hashSet5 = new MyHashSet<int>();
+            hashSet5.AddRange(new int[0]);
+            var hashSet6 = new MyHashSet<int>();
+            hashSet6.AddRange(new[] { -5 });
+            hashSet5.Intersection(hashSet6).Should().Equal();
+        }
+
+        [TestMethod]
+        public void Complement_Test() {
+            var hashSet1 = new MyHashSet<int>();
+            hashSet1.AddRange(new[] { 2, 3, 4 });
+            var hashSet2 = new MyHashSet<int>();
+            hashSet2.AddRange(new[] { 4, 5, 6 });
+            hashSet1.Complement(hashSet2).Should().Equal(2, 3);
+            hashSet2.Complement(hashSet1).Should().Equal(5, 6);
+
+            var hashSet3 = new MyHashSet<int>();
+            hashSet3.AddRange(new[] { 5, 10, 20 });
+            var hashSet4 = new MyHashSet<int>();
+            hashSet4.AddRange(new[] { 20, 10, 5 });
+            hashSet3.Complement(hashSet4).Should().BeEmpty();
+            hashSet4.Complement(hashSet3).Should().BeEmpty();
+
+            var hashSet5 = new MyHashSet<int>();
+            hashSet5.AddRange(new int[0]);
+            var hashSet6 = new MyHashSet<int>();
+            hashSet6.AddRange(new[] { -5 });
+            hashSet5.Complement(hashSet6).Should().BeEmpty();
+            hashSet6.Complement(hashSet5).Should().Equal(-5);
+        }
+
+        [TestMethod]
+        public void Difference_Test() {
+            var hashSet1 = new MyHashSet<int>();
+            hashSet1.AddRange(new[] { 2, 3, 4 });
+            var hashSet2 = new MyHashSet<int>();
+            hashSet2.AddRange(new[] { 4, 5, 6 });
+            hashSet1.Difference(hashSet2).Should().Equal(2, 3, 5, 6);
+
+            var hashSet3 = new MyHashSet<int>();
+            hashSet3.AddRange(new[] { 5, 10, 20 });
+            var hashSet4 = new MyHashSet<int>();
+            hashSet4.AddRange(new[] { 20, 10, 5 });
+            hashSet3.Difference(hashSet4).Should().BeEmpty();
+
+            var hashSet5 = new MyHashSet<int>();
+            hashSet5.AddRange(new int[0]);
+            var hashSet6 = new MyHashSet<int>();
+            hashSet6.AddRange(new[] { -5 });
+            hashSet5.Difference(hashSet6).Should().Equal(-5);
+        }
+
+        [TestMethod]
         public void IsSubsetOf_Test() {
             var hashSet1 = new MyHashSet<int>();
             hashSet1.AddRange(new [] { 1, 2, 3, 4, 5 });

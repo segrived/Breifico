@@ -7,7 +7,7 @@ using System.Threading;
 namespace Breifico.DataStructures
 {
     /// <summary>
-    /// Реализация списка
+    /// Имплементация списка
     /// </summary>
     /// <typeparam name="T">Тип элементов в списке</typeparam>
     [DebuggerDisplay("MyList<T>: Count: {Count} / Capacity: {Capacity}")]

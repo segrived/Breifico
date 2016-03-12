@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Breifico.DataStructures
 {
@@ -17,7 +18,8 @@ namespace Breifico.DataStructures
         /// <summary>
         /// Нода бинарного дерева
         /// </summary>
-        /// <typeparam name="TR"></typeparam>
+        /// <typeparam name="TR">Тип элементов в бинарном дереве. Тип должен
+        /// имплементировать интерфейс <see cref="IComparable{T}"/></typeparam>
         [DebuggerDisplay("{Value}")]
         public class Node<TR> where TR : IComparable<TR>
         {
@@ -87,7 +89,7 @@ namespace Breifico.DataStructures
             var currentNode = this._rootNode;
             while (true) {
                 int compareResult = item.CompareTo(currentNode.Value);
-                // do not add duplicates
+                // игноритровать дубликаты
                 if (compareResult == 0) {
                     return;
                 }
@@ -231,7 +233,7 @@ namespace Breifico.DataStructures
                 if (node.Parent == null) {
                     this._rootNode = null;
                 } else {
-                    node.ReplaceNode(null);
+                    node.RemoveNode();
                 }
             // Если у ноды один ребенок
             } else if (node.RefNode.HasOnlyOneChild) {
@@ -244,6 +246,7 @@ namespace Breifico.DataStructures
                 }
             // Если у ноды два ребенка
             } else {
+                // TODO: оптимизировать удаление ноды в данном ситуации
                 var x = node.RefNode.Right;
                 var parent = node.RefNode;
                 bool isLeftNode = false;
@@ -350,7 +353,7 @@ namespace Breifico.DataStructures
 
         #region ICollection implementation
         public void CopyTo(Array array, int index) {
-            throw new NotImplementedException();
+            Array.Copy(this.ToArray(), 0, array, index, this.Count);
         }
 
         public object SyncRoot {
