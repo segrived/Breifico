@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\Compression\Huffman\Decoder.cs" />
-    <Compile Include="Algorithms\Compression\Huffman\Tree.cs" />
-    <Compile Include="Algorithms\Compression\Huffman\Encoder.cs" />
-    <Compile Include="Algorithms\Compression\Huffman\TreeBuilder.cs" />
+    <Compile Include="Algorithms\Compression\Huffman\HuffmanDecoder.cs" />
+    <Compile Include="Algorithms\Compression\Huffman\HuffmanTree.cs" />
+    <Compile Include="Algorithms\Compression\Huffman\HuffmanEncoder.cs" />
+    <Compile Include="Algorithms\Compression\Huffman\HuffmanTreeBuilder.cs" />
     <Compile Include="Algorithms\Crypto\XorChiper.cs" />
     <Compile Include="Algorithms\Numeric\FibonacciNumbers.cs" />
     <Compile Include="Algorithms\Numeric\FunctionDerivative.cs" />

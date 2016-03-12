@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Breifico.DataStructures
 {
@@ -7,6 +8,7 @@ namespace Breifico.DataStructures
     /// </summary>
     /// <typeparam name="T">Тип элементов в сортированном связном списке
     /// Указанный тип должен имлементировать интерфейс IComparable</typeparam>
+    [DebuggerDisplay("MySortedLinkedList<T>: {Count} element(s)")]
     public class MySortedLinkedList<T> : MyLinkedList<T> where T : IComparable<T>
     {
         /// <summary>

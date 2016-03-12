@@ -17,11 +17,14 @@ namespace Breifico.Algorithms.Compression.Huffman
         }
     }
 
-    public class Encoder
+    /// <summary>
+    /// Кодирует исходные данные алгоритмом Хаффмана
+    /// </summary>
+    public class HuffmanEncoder
     {
         private readonly byte[] _inputData;
 
-        public Encoder(byte[] inputData) {
+        public HuffmanEncoder(byte[] inputData) {
             this._inputData = inputData;
         }
 
@@ -40,7 +43,7 @@ namespace Breifico.Algorithms.Compression.Huffman
         public HuffmanCompressedData Encode() {
             var outputBuffer = new MyBitArray();
             var freq = this.ComputeFrequencies();
-            var tree = Tree.Create(freq);
+            var tree = HuffmanTree.Create(freq);
 
             foreach (byte b in this._inputData) {
                 if (!this._cache.ContainsKey(b)) {

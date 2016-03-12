@@ -11,7 +11,7 @@ namespace Breifico.DataStructures
     /// </summary>
     /// <typeparam name="T">Тип элементов в связном списке</typeparam>
     [DebuggerDisplay("MyLinkedList<T>: {Count} element(s)")]
-    public class MyLinkedList<T> : IList<T>
+    public class MyLinkedList<T> : IList<T>, ICollection
     {
         /// <summary>
         /// Нода связного списка
@@ -54,7 +54,14 @@ namespace Breifico.DataStructures
 
         private object _syncRoot;
 
+        /// <summary>
+        /// Начальная (первая) нода в связном списке
+        /// </summary>
         protected Node<T> HeadNode;
+
+        /// <summary>
+        /// Конечная (последняя) нода в связном списке
+        /// </summary>
         protected Node<T> LastNode;
 
         /// <summary>
@@ -75,6 +82,11 @@ namespace Breifico.DataStructures
             set { this.GetNodeByIndex(index).Value = value; }
         }
 
+        /// <summary>
+        /// Возвращает ноду по указанному индексу
+        /// </summary>
+        /// <param name="index">Индекс элемента</param>
+        /// <returns>Нода по указанному индексу</returns>
         protected Node<T> GetNodeByIndex(int index) {
             if (index < 0 || index >= this.Count) {
                 throw new IndexOutOfRangeException();
@@ -277,9 +289,9 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Возврщает строковое представление экземпляра связного списка
+        /// Возвращает строковое представление экземпляра связного списка
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Строковое представление экземпляра связного списка</returns>
         public override string ToString() {
             string headNodeText = this.HeadNode?.ToString() ?? "null";
             string lastNodeText = this.LastNode?.ToString() ?? "null";

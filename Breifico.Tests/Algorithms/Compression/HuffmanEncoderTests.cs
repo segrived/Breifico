@@ -10,7 +10,7 @@ namespace Breifico.Tests.Algorithms.Compression
         [TestMethod]
         public void HuffmanEncoder_Test() {
             var bytes = File.ReadAllBytes(@"D:\My Files\TGPL_WorkFiles\url_adresses.txt");
-            var x = new Encoder(bytes);
+            var x = new HuffmanEncoder(bytes);
             var encoded = x.Encode();
         }
     }

@@ -74,6 +74,7 @@
     <Compile Include="Algorithms\Searching\BinarySearchTests.cs" />
     <Compile Include="Algorithms\Searching\LinearSearchTests.cs" />
     <Compile Include="Algorithms\Sorting\BubbleSortingTests.cs" />
+    <Compile Include="Algorithms\Sorting\BucketSortingTests.cs" />
     <Compile Include="Algorithms\Sorting\CountingSortingTests.cs" />
     <Compile Include="Algorithms\Sorting\InsertionSortingTests.cs" />
     <Compile Include="Algorithms\Sorting\SelectionSortingTests.cs" />

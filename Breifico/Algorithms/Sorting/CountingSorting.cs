@@ -25,9 +25,6 @@ namespace Breifico.Algorithms.Sorting
         /// <returns>Максимальный элемент в массиве или null, если максимальный 
         /// элемент превышает значение <see cref="_maxElement"/></returns>
         private uint? FindMaxElement(uint[] input) {
-            if (input.Length == 0) {
-                throw new ArgumentException("Empty array, can't find maximum element");
-            }
             uint maxElement = input[0];
             for (int i = 1; i < input.Length; i++) {
                 if (input[i] <= maxElement) {

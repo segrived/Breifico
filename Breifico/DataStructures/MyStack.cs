@@ -6,22 +6,12 @@ using System.Threading;
 
 namespace Breifico.DataStructures
 {
-    public interface IMyStack<T> : IEnumerable<T>, ICollection
-    {
-        bool IsEmpty { get; }
-
-        void Clear();
-        T Pop();
-        T Peek();
-        void Push(T value);
-    }
-
     /// <summary>
     /// Имплементация стэка
     /// </summary>
     /// <typeparam name="T">Тип элементов в стэке</typeparam>
     [DebuggerDisplay("MyStack<T>: {Count} element(s)")]
-    public class MyStack<T> : IMyStack<T>
+    public class MyStack<T> : IEnumerable<T>, ICollection
     {
         private readonly MyLinkedList<T> _stackData
             = new MyLinkedList<T>();

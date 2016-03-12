@@ -6,22 +6,12 @@ using System.Threading;
 
 namespace Breifico.DataStructures
 {
-    public interface IMyQueue<T> : IEnumerable<T>, ICollection
-    {
-        bool IsEmpty { get; }
-
-        void Enqueue(T item);
-        T Dequeue();
-        T Peek();
-        void Clear();
-    }
-
     /// <summary>
     /// Имплементация очереди
     /// </summary>
     /// <typeparam name="T">Тип элементов в очереди</typeparam>
     [DebuggerDisplay("MyQueue<T>: {Count} element(s)")]
-    public class MyQueue<T> : IMyQueue<T>
+    public class MyQueue<T> : IEnumerable<T>, ICollection
     {
         private object _syncRoot;
 

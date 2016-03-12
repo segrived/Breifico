@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 namespace Breifico.DataStructures
@@ -9,13 +10,17 @@ namespace Breifico.DataStructures
     /// Реализация списка
     /// </summary>
     /// <typeparam name="T">Тип элементов в списке</typeparam>
-    public class MyList<T> : IList<T>
+    [DebuggerDisplay("MyList<T>: Count: {Count} / Capacity: {Capacity}")]
+    public class MyList<T> : IList<T>, ICollection
     {
         private const int StartSize = 8;
         private T[] _internalArray;
 
         private object _syncRoot;
 
+        /// <summary>
+        /// Создает новый список с вместимостью по умолчанию
+        /// </summary>
         public MyList() : this(StartSize) {}
 
         /// <summary>
@@ -64,6 +69,13 @@ namespace Breifico.DataStructures
             }
         }
 
+        /// <summary>
+        /// Возвращает или устанавливает значение в списке по указанному индексу
+        /// </summary>
+        /// <param name="index">Индекс искомого элемента</param>
+        /// <returns>Значение по указанному индексу</returns>
+        /// <exception cref="IndexOutOfRangeException">Бросается, если указаннный индекс
+        /// выходит за границы доступных значений</exception>
         public T this[int index]
         {
             get
@@ -166,8 +178,8 @@ namespace Breifico.DataStructures
         /// </summary>
         /// <param name="index">Индекс, в который нужно вставить элемент</param>
         /// <param name="item">Элемент, который необходимо вставить в список</param>
-        /// <exception cref="IndexOutOfRangeException">Бросается в случае, если указанный 
-        /// индекс меньше нуля, либо больше размера коллекции</exception>
+        /// <exception cref="IndexOutOfRangeException">Бросается, если указаннный индекс
+        /// выходит за границы доступных значений</exception>
         public void Insert(int index, T item) {
             if (index < 0 || index > this.Count) {
                 throw new IndexOutOfRangeException();
@@ -191,8 +203,8 @@ namespace Breifico.DataStructures
         /// Удаляет элемент по указанному индексу
         /// </summary>
         /// <param name="index">Индекс элемента, который нужно удалить</param>
-        /// <exception cref="IndexOutOfRangeException">Бросается в случае, если указанный 
-        /// индекс выходит за границы списка</exception>
+        /// <exception cref="IndexOutOfRangeException">Бросается, если указаннный индекс
+        /// выходит за границы доступных значений</exception>
         public void RemoveAt(int index) {
             if (index < 0 || index > this.LastIndex) {
                 throw new IndexOutOfRangeException();

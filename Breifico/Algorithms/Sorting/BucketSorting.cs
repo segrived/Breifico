@@ -14,7 +14,7 @@ namespace Breifico.Algorithms.Sorting
         /// </summary>
         private const int DefaultBucketsCount = 1000;
 
-        private readonly MyLinkedList<T>[] _buckets;
+        private readonly MySortedLinkedList<T>[] _buckets;
         private readonly Func<T, T, T, int, int> _bucketSelectorFunction;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Breifico.Algorithms.Sorting
         /// <param name="bucketsCount">Колиество блоков</param>
         /// <param name="f">Функция распределения элементов по блокам</param>
         public BucketSorting(int bucketsCount, Func<T, T, T, int, int> f) {
-            this._buckets = new MyLinkedList<T>[bucketsCount];
+            this._buckets = new MySortedLinkedList<T>[bucketsCount];
             this._bucketSelectorFunction = f;
         }
 
@@ -42,10 +42,7 @@ namespace Breifico.Algorithms.Sorting
         /// <param name="input">Исходный массив</param>
         /// <returns>Кортеж, где первое значение - минимальный элемент, а
         /// второе - максимальное</returns>
-        private Tuple<T, T> FindMaxElement(T[] input) {
-            if (input.Length == 0) {
-                throw new ArgumentException("Array is empty, can't find maximum element");
-            }
+        private Tuple<T, T> FindMinMaxElement(T[] input) {
             var minElement = input[0];
             var maxElement = input[0];
             foreach (var iterItem in input) {
@@ -64,17 +61,20 @@ namespace Breifico.Algorithms.Sorting
         /// <param name="input">Исходный массив</param>
         /// <returns>Отсортированный массив</returns>
         public T[] Sort(T[] input) {
-            var minmax = this.FindMaxElement(input);
+            if (input.Length <= 1) {
+                return input;
+            }
+            var minmax = this.FindMinMaxElement(input);
             for (int i = 0; i < input.Length; i++) {
                 int bucketNumber = this._bucketSelectorFunction(input[i], 
-                    minmax.Item1, minmax.Item2, this._buckets.Length);
+                    minmax.Item1, minmax.Item2, this._buckets.Length - 1);
                 // функция не должна возвращать значение меньше нуля или больше, чем
                 // общее число блоков
                 if (bucketNumber < 0 || bucketNumber >= this._buckets.Length) {
                     throw new Exception("Invalid bucket number, please check bucket selector function");
                 }
                 if (this._buckets[bucketNumber] == null) {
-                    this._buckets[bucketNumber] = new MyLinkedList<T>();
+                    this._buckets[bucketNumber] = new MySortedLinkedList<T>();
                 }
                 this._buckets[bucketNumber].Add(input[i]);
             }
@@ -91,5 +91,27 @@ namespace Breifico.Algorithms.Sorting
             }
             return input;
         }
+    }
+
+    /// <summary>
+    /// Реализация блочной сортировки для целых 32-битных чисел
+    /// </summary>
+    public class BucketIntSorting : BucketSorting<int>
+    {
+        private static readonly Func<int, int, int, int, int> Sorter = (i, min, max, len) => {
+            return (int)Math.Round(((double)i - min) / (max - min) * len);
+        };
+
+        /// <summary>
+        /// Создает новый экземпляр <see cref="BucketIntSorting"/>
+        /// </summary>
+        public BucketIntSorting() : base(Sorter) {}
+
+        /// <summary>
+        /// Создает новый экземпляр <see cref="BucketIntSorting"/> с указанным количеством блоков
+        /// </summary>
+        /// <param name="bucketsCount">Количество блоков</param>
+        public BucketIntSorting(int bucketsCount) 
+            : base(bucketsCount, Sorter) {}
     }
 }

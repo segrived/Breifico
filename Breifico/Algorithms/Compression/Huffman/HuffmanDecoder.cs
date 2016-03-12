@@ -3,11 +3,11 @@ using Breifico.DataStructures;
 
 namespace Breifico.Algorithms.Compression.Huffman
 {
-    public class Decoder
+    public class HuffmanDecoder
     {
         private readonly HuffmanCompressedData _data;
 
-        public Decoder(HuffmanCompressedData data) {
+        public HuffmanDecoder(HuffmanCompressedData data) {
             this._data = data;
         }
 
