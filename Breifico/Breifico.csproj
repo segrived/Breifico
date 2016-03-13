@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,7 +49,7 @@
     <Compile Include="Algorithms\Compression\Huffman\HuffmanTreeBuilder.cs" />
     <Compile Include="Algorithms\Crypto\XorChiper.cs" />
     <Compile Include="Algorithms\ErrorDetection\CRC32.cs" />
-    <Compile Include="Algorithms\Formats\BmpReader.cs" />
+    <Compile Include="Algorithms\Formats\BmpFile.cs" />
     <Compile Include="Algorithms\ImageProcessing\FastImage.cs" />
     <Compile Include="Algorithms\Numeric\FibonacciNumbers.cs" />
     <Compile Include="Algorithms\Numeric\FunctionDerivative.cs" />
