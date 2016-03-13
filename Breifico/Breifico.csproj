@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\ImageProcessing\ImageTransformation.cs" />
+    <Compile Include="Algorithms\ImageProcessing\InvertImageTransformation.cs" />
     <Compile Include="Algorithms\StreamBinaryReader.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanDecoder.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanTree.cs" />
@@ -50,7 +52,6 @@
     <Compile Include="Algorithms\Crypto\XorChiper.cs" />
     <Compile Include="Algorithms\ErrorDetection\CRC32.cs" />
     <Compile Include="Algorithms\Formats\BmpFile.cs" />
-    <Compile Include="Algorithms\ImageProcessing\FastImage.cs" />
     <Compile Include="Algorithms\Numeric\FibonacciNumbers.cs" />
     <Compile Include="Algorithms\Numeric\FunctionDerivative.cs" />
     <Compile Include="Algorithms\Numeric\FunctionIntegration.cs" />

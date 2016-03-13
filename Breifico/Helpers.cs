@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using Breifico.Algorithms.Formats;
 
 namespace Breifico
 {
@@ -22,14 +24,17 @@ namespace Breifico
         }
     }
 
-    public static class TestHelperExtensions
-    {
-        public static bool AreEqualApproximately(this double v1, double v2, double epsilon) {
-            return Math.Abs(v1 - v2) <= epsilon;
-        }
 
-        public static void DoNothing<T>(this T item) {
-            return;
+    public static class ImageExtenstions
+    {
+        public static IImage Transform(this IImage image, Func<int, int, Color, Color> f) {
+            var bitmap = new BmpFile(image.Width, image.Height);
+            for (int i = 0; i < image.Width; i++) {
+                for (int j = 0; j < image.Height; j++) {
+                    bitmap[i, j] = f(i, j, image[i, j]);
+                }
+            }
+            return bitmap;
         }
     }
 }

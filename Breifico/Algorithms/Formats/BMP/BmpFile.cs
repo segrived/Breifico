@@ -1,72 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 
-namespace Breifico.Algorithms.Formats
+namespace Breifico.Algorithms.Formats.BMP
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public struct BitmapFileHeader
-    {
-        /// <summary>
-        /// Сингатура BMP-файла
-        /// </summary>
-        public ushort Signature { get; set; }
-
-        /// <summary>
-        /// Полный размер BMP-файла в байтах
-        /// </summary>
-        public uint FileSize { get; set; }
-
-        /// <summary>
-        /// Зарезевированное значение
-        /// </summary>
-        public ushort Res1 { get; set; }
-
-        /// <summary>
-        /// Зарезевированное значение
-        /// </summary>
-        public ushort Res2 { get; set; }
-
-        /// <summary>
-        /// Оффсет, с которого начинается последовательность пикселей
-        /// </summary>
-        public uint StartOffset { get; set; }
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct DibHeader
-    {
-        /// <summary>
-        /// Размер этого заголовка
-        /// </summary>
-        public uint HeaderSize { get; set; }
-
-        /// <summary>
-        /// Ширина картинки
-        /// </summary>
-        public uint Width { get; set; }
-
-        /// <summary>
-        /// Высотка картинки
-        /// </summary>
-        public uint Height { get; set; }
-        public ushort ColorPlanes { get; set; }
-        public ushort BitsPerPixel { get; set; }
-
-        /// <summary>
-        /// Метод сжатия BMP-файла
-        /// </summary>
-        public uint CompressionMethod { get; set; }
-        public uint Size { get; set; }
-        public uint HorizontalRes { get; set; }
-        public uint VertcalRes { get; set; }
-        public uint ColorsInPalette { get; set; }
-        public uint ImportantColors { get; set; }
-    }
-
     public class BmpFile : IImage
     {
         public BmpFile(string fileName) {
@@ -76,12 +13,12 @@ namespace Breifico.Algorithms.Formats
         /// <summary>
         /// Создает новое изображение указанной размерности
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="width">Ширина изображения</param>
+        /// <param name="height">Высота изображения</param>
         public BmpFile(int width, int height) {
-            this.Width = width;
             this.Height = height;
-            this.ImageData = new Color[height, width];
+            this.Width = width;
+            this.ImageData = new Color[width, height];
         }
 
         /// <summary>
@@ -99,6 +36,14 @@ namespace Breifico.Algorithms.Formats
         /// </summary>
         public int Height { get; private set; }
 
+        /// <summary>
+        /// Получает или устанавливает значение указанного пикселя
+        /// </summary>
+        /// <param name="x">Строка в изображении</param>
+        /// <param name="y">Ряд в строке</param>
+        /// <returns>Значение пикселя в указанных координатах</returns>
+        /// <exception cref="IndexOutOfRangeException">Бросается, если x или y меньше 
+        /// нуля, либо выходят за пределы количества строк и столбцов соответсвенно</exception>
         public Color this[int x, int y]
         {
             get
@@ -162,19 +107,19 @@ namespace Breifico.Algorithms.Formats
                 this.Width = (int)dibHeader.Width;
                 this.Height = (int)dibHeader.Height;
 
-                this.ImageData = new Color[(int)dibHeader.Height, (int)dibHeader.Width];
+                this.ImageData = new Color[(int)dibHeader.Width, (int)dibHeader.Height];
 
                 // перемещаемся к оффсету, с которого начинаются пиксели
                 reader.InternalStream.Seek(bitMapHeader.StartOffset, SeekOrigin.Begin);
 
-                for (int i = (int)(dibHeader.Height - 1); i >= 0; i--) {
-                    int imageBytes = (int)((dibHeader.Width * 3 + 3) & ~0x03);
+                for (int i = this.Height - 1; i >= 0; i--) {
+                    int imageBytes = (this.Width * 3 + 3) & ~0x03;
                     byte[] b = reader.ReadBytes(imageBytes);
                     for (int j = 0; j < dibHeader.Width; j++) {
                         byte bComp = b[j * 3];
                         byte gComp = b[j * 3 + 1];
                         byte rComp = b[j * 3 + 2];
-                        this.ImageData[i, j] = Color.FromArgb(rComp, gComp, bComp);
+                        this.ImageData[j, i] = Color.FromArgb(rComp, gComp, bComp);
                     }
                 }
             }
@@ -183,12 +128,13 @@ namespace Breifico.Algorithms.Formats
         /// <summary>
         /// Конвертирует изображение в экземпляр класса <see cref="Bitmap"/> 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Экземпляр класса <see cref="Bitmap"/>, представляющее данное изображение</returns>
         public Bitmap ToBitmap() {
+            // TODO: использовать LockBits
             var bitmap = new Bitmap(this.Width, this.Height);
             for (int i = 0; i < this.Width; i++) {
                 for (int j = 0; j < this.Height; j++) {
-                    bitmap.SetPixel(i, j, this.ImageData[j, i]);
+                    bitmap.SetPixel(i, j, this.ImageData[i, j]);
                 }
             }
             return bitmap;

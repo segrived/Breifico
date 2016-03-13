@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Windows.Forms;
 using Breifico.Algorithms.Formats;
+using Breifico.Algorithms.Formats.BMP;
+using Breifico.Algorithms.ImageProcessing;
 
 namespace Breifico.ImageEditor
 {
@@ -20,8 +22,7 @@ namespace Breifico.ImageEditor
             string fileName = openFileDialog.FileName;
             try {
                 this._inputImage = new BmpFile(fileName);
-                var picture = this._inputImage.ToBitmap();
-                this.pbImage.Image = picture;
+                this.UpdatePicture();
             } catch (InvalidBmpImageException ex) {
                 MessageBox.Show($"BMP processing exception: {ex.Message}");
             } catch (IOException ex) {
@@ -30,7 +31,13 @@ namespace Breifico.ImageEditor
         }
 
         private void tsmiInvert_Click(object sender, System.EventArgs e) {
+            var transform = new InvertImageTransformation();
+            this._inputImage = transform.Tranform(this._inputImage);
+            this.UpdatePicture();
+        }
 
+        private void UpdatePicture() {
+            this.pbImage.Image = this._inputImage.ToBitmap();
         }
     }
 }
