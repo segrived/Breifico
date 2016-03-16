@@ -42,8 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\ImageProcessing\ImageTransformation.cs" />
-    <Compile Include="Algorithms\ImageProcessing\InvertImageTransformation.cs" />
+    <Compile Include="Algorithms\Compression\RLE\RleDecoder.cs" />
+    <Compile Include="Algorithms\Compression\RLE\RleEncoder.cs" />
+    <Compile Include="Algorithms\Formats\BMP\BitmapFileHeader.cs" />
+    <Compile Include="Algorithms\Formats\BMP\DibHeader.cs" />
+    <Compile Include="Algorithms\ImageProcessing\InvertTransformation.cs" />
+    <Compile Include="Algorithms\Numeric\NumberBaseConverter.cs" />
     <Compile Include="Algorithms\StreamBinaryReader.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanDecoder.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanTree.cs" />
@@ -51,7 +55,7 @@
     <Compile Include="Algorithms\Compression\Huffman\HuffmanTreeBuilder.cs" />
     <Compile Include="Algorithms\Crypto\XorChiper.cs" />
     <Compile Include="Algorithms\ErrorDetection\CRC32.cs" />
-    <Compile Include="Algorithms\Formats\BmpFile.cs" />
+    <Compile Include="Algorithms\Formats\BMP\BmpFile.cs" />
     <Compile Include="Algorithms\Numeric\FibonacciNumbers.cs" />
     <Compile Include="Algorithms\Numeric\FunctionDerivative.cs" />
     <Compile Include="Algorithms\Numeric\FunctionIntegration.cs" />

@@ -250,6 +250,10 @@ namespace Breifico.DataStructures
             Array.Copy(this._internalArray, 0, array, index, this.Count);
         }
 
+        public void CopyTo(T[] array, int index, int count) {
+            Array.Copy(this._internalArray, 0, array, index, count);
+        }
+
         public object SyncRoot
         {
             get

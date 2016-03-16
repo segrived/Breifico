@@ -76,15 +76,15 @@ namespace Breifico.Algorithms.Compression.Huffman
         private readonly List<Node> _nodes;
 
         public static HuffmanTree Create(int[] freqData) {
-            if (freqData.Length > 255) {
+            if (freqData.Length > 256) {
                 throw new Exception();
             }
-            var nodes = new List<Node>(255);
-            for (byte i = 0; i < freqData.Length; i++) {
+            var nodes = new List<Node>(256);
+            for (int i = 0; i < freqData.Length; i++) {
                 if (freqData[i] == 0) {
                     continue;
                 }
-                nodes.Add(new Node(i, freqData[i]));
+                nodes.Add(new Node((byte)i, freqData[i]));
             }
             return new HuffmanTree(nodes);
         }

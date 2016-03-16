@@ -4,9 +4,15 @@ using Breifico.Algorithms.Numeric;
 
 namespace Breifico.Algorithms.Crypto
 {
+    /// <summary>
+    /// XOR-шифрование
+    /// </summary>
     public class XorChiper
     {
-        public byte[] Key { get; private set; }
+        /// <summary>
+        /// Ключ шифрования
+        /// </summary>
+        public byte[] Key { get; }
 
         public XorChiper(byte[] key) {
             this.Key = key;
@@ -22,6 +28,11 @@ namespace Breifico.Algorithms.Crypto
             this.Key = bytes;
         }
 
+        /// <summary>
+        /// Шифрует указанный байтовый массив
+        /// </summary>
+        /// <param name="input">Исходный байтовый массив</param>
+        /// <returns>Шифрованный байтовый массив</returns>
         public byte[] Process(byte[] input) {
             var output = new byte[input.Length];
             for (int i = 0; i < input.Length; i++) {

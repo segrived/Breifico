@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\Compression\HuffmanCompressionTests.cs" />
     <Compile Include="Algorithms\Compression\HuffmanEncoderTests.cs" />
+    <Compile Include="Algorithms\Compression\RLE\RleEncoderTests.cs" />
     <Compile Include="Algorithms\Crypto\XorChiperTests.cs" />
     <Compile Include="Algorithms\Numeric\FibonacciNumbersTests.cs" />
     <Compile Include="Algorithms\Numeric\FunctionDerivativeTests.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="DataStructures\MyQueueTests.cs" />
     <Compile Include="DataStructures\MySortedLinkedListTests.cs" />
     <Compile Include="DataStructures\MyStackTests.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -25,6 +25,13 @@ namespace Breifico.Tests.DataStructures
             list.Count.Should().Be(2);
             list.Clear();
             list.Count.Should().Be(0);
+
+            var list2 = new MyLinkedList<int> {10, 15, 20};
+            var list3 = new MyLinkedList<int> {7, 9, 11};
+            list2.Count.Should().Be(3);
+            list2.Count.Should().Be(3);
+            list2.Append(list3);
+            list2.Count.Should().Be(6);
         }
 
         [TestMethod]
@@ -81,6 +88,44 @@ namespace Breifico.Tests.DataStructures
             list.Should().Equal(40, 50, 60);
             list.AddRange(new[] {70, 80});
             list.Should().Equal(40, 50, 60, 70, 80);
+        }
+
+        [TestMethod]
+        public void Append_WhenBothListsHasElements_ConcatenateLinkedLists() {
+            var list1 = new MyLinkedList<int> { 10, 20, 30 };
+            var list2 = new MyLinkedList<int> { 40, 50, 60 };
+            list1.Append(list2);
+            list1.Should().Equal(10, 20, 30, 40, 50, 60);
+            list1.ReverseEnumerate().Should().Equal(60, 50, 40, 30, 20, 10);
+        }
+
+        [TestMethod]
+        public void Append_WhenFirstListIsEmpty() {
+            var list = new MyLinkedList<int> { 12, 13 };
+            var list2 = new MyLinkedList<int>();
+            list.Append(list2);
+            list.Should().Equal(12, 13);
+            list.ReverseEnumerate().Should().Equal(13, 12);
+        }
+
+
+        [TestMethod]
+        public void Append_WhenSecondListIsEmpty() {
+            var list = new MyLinkedList<int>();
+            var list2 = new MyLinkedList<int> { 12, 13 };
+            list.Append(list2);
+            list.Should().Equal(12, 13);
+            list.ReverseEnumerate().Should().Equal(13, 12);
+        }
+
+
+        [TestMethod]
+        public void Append_WhenBothListsAreEmpty() {
+            var list = new MyLinkedList<int>();
+            var list2 = new MyLinkedList<int>();
+            list.Append(list2);
+            list.Should().BeEmpty();
+            list.ReverseEnumerate().Should().BeEmpty();
         }
 
         [TestMethod]

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace Breifico.DataStructures
@@ -152,6 +153,25 @@ namespace Breifico.DataStructures
             foreach (var item in items) {
                 this.Add(item);
             }
+        }
+
+        /// <summary>
+        /// Объеденяет текщуий связный список с другим, добавляя его элементы в конец
+        /// </summary>
+        /// <param name="list">Другой двусвязный список</param>
+        public void Append(MyLinkedList<T> list) {
+            if (list.Count == 0) {
+                return;
+            }
+            if (this.Count == 0) {
+                this.HeadNode = list.HeadNode;
+                this.LastNode = list.LastNode;
+            } else {
+                this.LastNode.Next = list.HeadNode;
+                this.LastNode.Next.Previous = this.LastNode;
+                this.LastNode = list.LastNode;
+            }
+            this.Count += list.Count;
         }
 
         /// <summary>

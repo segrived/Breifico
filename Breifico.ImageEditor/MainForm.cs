@@ -31,7 +31,7 @@ namespace Breifico.ImageEditor
         }
 
         private void tsmiInvert_Click(object sender, System.EventArgs e) {
-            var transform = new InvertImageTransformation();
+            var transform = new InvertTransformation();
             this._inputImage = transform.Tranform(this._inputImage);
             this.UpdatePicture();
         }

@@ -29,7 +29,7 @@ namespace Breifico.Algorithms.Compression.Huffman
         }
 
         private int[] ComputeFrequencies() {
-            var nodes = new int[255];
+            var nodes = new int[256];
 
             foreach (byte b in this._inputData) {
                 nodes[b] += 1;
