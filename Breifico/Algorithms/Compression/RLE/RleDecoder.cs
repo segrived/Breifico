@@ -19,9 +19,9 @@ namespace Breifico.Algorithms.Compression.RLE
             MyList<byte> output = new MyList<byte>();
             for (int i = 0; i < this._input.Length;) {
                 byte b = this._input[i];
-                if (this._input[i] != 0x00) {
+                if (b != 0x00) {
                     byte byteCode = this._input[i + 1];
-                    for (int j = 0; j < this._input[i]; j++) {
+                    for (int j = 0; j < b; j++) {
                         output.Add(byteCode);
                     }
                     i += 2;

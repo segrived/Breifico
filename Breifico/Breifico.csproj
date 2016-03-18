@@ -48,7 +48,6 @@
     <Compile Include="Algorithms\Formats\BMP\DibHeader.cs" />
     <Compile Include="Algorithms\ImageProcessing\InvertTransformation.cs" />
     <Compile Include="Algorithms\Numeric\NumberBaseConverter.cs" />
-    <Compile Include="Algorithms\StreamBinaryReader.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanDecoder.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanTree.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanEncoder.cs" />
@@ -88,11 +87,13 @@
     <Compile Include="Exceptions.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Interfaces.cs" />
+    <Compile Include="IO\BitArrayReader.cs" />
+    <Compile Include="IO\StreamBinaryReader.cs" />
+    <Compile Include="IO\StreamBinaryWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

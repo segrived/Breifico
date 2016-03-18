@@ -11,7 +11,7 @@ namespace Breifico.Tests.Algorithms.Compression
         public void HuffmanEncoder_Test() {
             var bytes = File.ReadAllBytes(@"D:\My Files\TGPL_WorkFiles\url_adresses.txt");
             var x = new HuffmanEncoder(bytes);
-            var encoded = x.Encode();
+            var encoded = x.EncodeTableTree();
         }
     }
     }

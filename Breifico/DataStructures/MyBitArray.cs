@@ -23,6 +23,8 @@ namespace Breifico.DataStructures
         /// </summary>
         public int Count { get; private set; }
 
+        public int ByteCount => this._internalBuffer.Count;
+
         public int FreeBits => (8 - this.NextBitPosition) % 8;
 
         private int BytePosition => this.Count / 8;
@@ -39,6 +41,13 @@ namespace Breifico.DataStructures
         /// <param name="initSizeInBytes">Начальный размер битового массива</param>
         public MyBitArray(int initSizeInBytes) {
             this._internalBuffer = new MyList<byte>(initSizeInBytes);
+        }
+
+        public MyBitArray(byte[] input, int freeBits = 0) {
+            var newList = new MyList<byte>();
+            newList.AddRange(input);
+            this._internalBuffer = newList;
+            this.Count = input.Length * 8 - freeBits;
         }
 
         /// <summary>
@@ -139,6 +148,20 @@ namespace Breifico.DataStructures
                     this._internalBuffer[byteIndex] &= (byte)~mask;
                 }
             }
+        }
+
+        public byte GetByteFromPosition(int position) {
+            if (position + 8 > this.Count) {
+                throw new Exception();
+            }
+            if (position % 8 == 0) {
+                return this._internalBuffer[position / 8];
+            }
+            var ba = new MyBitArray();
+            for (int i = 0; i < 8; i++) {
+                ba.Append(this[position + i]);
+            }
+            return ba._internalBuffer[0];
         }
 
         /// <summary>

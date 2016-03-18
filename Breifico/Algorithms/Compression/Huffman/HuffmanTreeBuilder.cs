@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Breifico.Algorithms.Compression.Huffman
 {
@@ -7,7 +9,7 @@ namespace Breifico.Algorithms.Compression.Huffman
     /// </summary>
     public class HuffmanTreeBuilder
     {
-        private readonly int[] _freqTable = new int[255];
+        private readonly int[] _freqTable = new int[256];
 
         /// <summary>
         /// Добавляет байт в список частот
@@ -22,8 +24,17 @@ namespace Breifico.Algorithms.Compression.Huffman
         /// </summary>
         /// <returns>Дерево Хаффмана</returns>
         public HuffmanTree ToTree() {
-            var tree = HuffmanTree.Create(this._freqTable);
-            return tree;
+            if (this._freqTable.Length > 256) {
+                throw new Exception();
+            }
+            var nodes = new List<HuffmanTree.Node>(256);
+            for (int i = 0; i < this._freqTable.Length; i++) {
+                if (this._freqTable[i] == 0) {
+                    continue;
+                }
+                nodes.Add(new HuffmanTree.Node((byte)i, this._freqTable[i]));
+            }
+            return new HuffmanTree(nodes);
         }
 
         /// <summary>

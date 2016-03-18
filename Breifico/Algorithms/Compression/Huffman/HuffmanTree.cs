@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Breifico.DataStructures;
+using Breifico.IO;
 
 namespace Breifico.Algorithms.Compression.Huffman
 {
@@ -12,7 +14,7 @@ namespace Breifico.Algorithms.Compression.Huffman
         /// <summary>
         /// Нода бинарного дерева Хаффмана
         /// </summary>
-        private class Node : IComparable<Node>
+        public class Node : IComparable<Node>
         {
             /// <summary>
             /// Левая нода
@@ -33,6 +35,16 @@ namespace Breifico.Algorithms.Compression.Huffman
             /// Частота вхождения списка байтов
             /// </summary>
             public int Frequency { get; }
+
+            public Node() {
+                this.Bytes = new List<byte>() { 0x00 };
+            }
+
+            public Node(Node left, Node right) {
+                this.LeftNode = left;
+                this.RightNode = right;
+                this.Bytes = new List<byte>() {0x00};
+            }
 
             /// <summary>
             /// Создает новую ноду с массивом байт и указанной частотой вхождения
@@ -73,43 +85,30 @@ namespace Breifico.Algorithms.Compression.Huffman
             }
         }
 
-        private readonly List<Node> _nodes;
+        public Node Root { get; private set; }
 
-        public static HuffmanTree Create(int[] freqData) {
-            if (freqData.Length > 256) {
-                throw new Exception();
-            }
-            var nodes = new List<Node>(256);
-            for (int i = 0; i < freqData.Length; i++) {
-                if (freqData[i] == 0) {
-                    continue;
-                }
-                nodes.Add(new Node((byte)i, freqData[i]));
-            }
-            return new HuffmanTree(nodes);
+        public HuffmanTree(List<Node> nodes) {
+            this.Build(nodes);
         }
 
-        private HuffmanTree(List<Node> nodes) {
-            this._nodes = nodes;
-            this.Build();
-        }
+        public MyBitArray Table { get; private set; }
 
         /// <summary>
         /// Строит дерево Хаффмана на основе доабвленных данных
         /// </summary>
-        private void Build() {
-            while (this._nodes.Count > 1) {
+        private void Build(List<Node> nodes) {
+            while (nodes.Count > 1) {
                 // Сортируем ноды по частоте, самые  редкие окажутся в конце списка
-                this._nodes.Sort();
+                nodes.Sort();
                
                 // Временно сохраняем значения нод
-                var node1 = this._nodes[this._nodes.Count - 1];
-                var node2 = this._nodes[this._nodes.Count - 2];
+                var node1 = nodes[nodes.Count - 1];
+                var node2 = nodes[nodes.Count - 2];
 
                 // Удаляет две последние ноды
-                int count = this._nodes.Count;
-                this._nodes.RemoveAt(count - 1);
-                this._nodes.RemoveAt(count - 2);
+                int count = nodes.Count;
+                nodes.RemoveAt(count - 1);
+                nodes.RemoveAt(count - 2);
 
                 // Объеденяем список байт с двух последних нод
                 var newBytes = new List<byte>();
@@ -121,8 +120,9 @@ namespace Breifico.Algorithms.Compression.Huffman
                     LeftNode = node1,
                     RightNode = node2
                 };
-                this._nodes.Add(newNode);
+                nodes.Add(newNode);
             }
+            this.Root = nodes[0];
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Breifico.Algorithms.Compression.Huffman
         /// <returns></returns>
         public MyBitArray GetCode(byte b) {
             var bitArray = new MyBitArray();
-            var tempNode = this._nodes[0];
+            var tempNode = this.Root;
             while (!tempNode.IsLeafNode) {
                 if (tempNode.LeftNode.Bytes.Contains(b)) {
                     tempNode = tempNode.LeftNode;

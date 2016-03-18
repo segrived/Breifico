@@ -11,7 +11,7 @@ namespace Breifico.Tests.Algorithms.Compression.RLE
         public void Test_RLE_Encode() {
             //var encoder = new RleEncoder();
             //var b = File.ReadAllBytes(@"D:\My Files\Unit\my_big.bmp");
-            //var x = encoder.Encode(b);
+            //var x = encoder.EncodeTableTree(b);
             //var y = encoder.Decode(x);
         }
     }

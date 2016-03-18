@@ -42,7 +42,18 @@ namespace Breifico.Algorithms.Compression.RLE
 
             for (int i = 0; i < this._input.Length; i++) {
                 if (i - this._startIndex == Byte.MaxValue) {
-                    this.AppendSeq(Byte.MaxValue, i - this._startIndex, i);
+                    if (this._state == State.IdenticalSeq) {
+                        this.AppendSeq(this._lastByte.Value, i - this._startIndex, i);
+                    } else if (this._state == State.DifferentSeq){
+                        var arr = new byte[i - this._startIndex - 1];
+                        this._output.Add(0);
+                        this._output.Add((byte)(i - this._startIndex - 1));
+                        Array.Copy(this._input, this._startIndex, arr, 0, i - this._startIndex - 1);
+                        this._output.AddRange(arr);
+
+                        this._startIndex = i - 1;
+                        this._state = State.IdenticalSeq;
+                    }
                 }
                 byte currentByte = this._input[i];
                 switch (this._state) {
@@ -77,14 +88,18 @@ namespace Breifico.Algorithms.Compression.RLE
                 this._lastByte = currentByte;
             }
 
-            if (this._state == State.IdenticalSeq) {
-                this.AppendSeq(this._lastByte.Value, this._input.Length - this._startIndex, 0);
-            } else if (this._state == State.DifferentSeq || this._state == State.Undetermined) {
-                var arr = new byte[this._input.Length - this._startIndex];
-                this._output.Add(0);
-                this._output.Add((byte)(this._input.Length - this._startIndex));
-                Array.Copy(this._input, this._startIndex, arr, 0, this._input.Length  - this._startIndex);
-                this._output.AddRange(arr);
+            switch (this._state) {
+                case State.IdenticalSeq:
+                    this.AppendSeq(this._lastByte.Value, this._input.Length - this._startIndex, 0);
+                    break;
+                case State.DifferentSeq:
+                case State.Undetermined:
+                    var arr = new byte[this._input.Length - this._startIndex];
+                    this._output.Add(0);
+                    this._output.Add((byte)(this._input.Length - this._startIndex));
+                    Array.Copy(this._input, this._startIndex, arr, 0, this._input.Length  - this._startIndex);
+                    this._output.AddRange(arr);
+                    break;
             }
 
             return this._output.ToArray();
