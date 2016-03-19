@@ -1,6 +1,4 @@
-﻿using System.IO;
-using Breifico.Algorithms.Compression.RLE;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Breifico.Tests.Algorithms.Compression.RLE
 {

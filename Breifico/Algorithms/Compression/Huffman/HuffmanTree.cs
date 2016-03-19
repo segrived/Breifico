@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Breifico.DataStructures;
-using Breifico.IO;
 
 namespace Breifico.Algorithms.Compression.Huffman
 {

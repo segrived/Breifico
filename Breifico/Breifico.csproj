@@ -47,6 +47,7 @@
     <Compile Include="Algorithms\Formats\BMP\BitmapFileHeader.cs" />
     <Compile Include="Algorithms\Formats\BMP\DibHeader.cs" />
     <Compile Include="Algorithms\ImageProcessing\InvertTransformation.cs" />
+    <Compile Include="Algorithms\ImageProcessing\SepiaTransformation.cs" />
     <Compile Include="Algorithms\Numeric\NumberBaseConverter.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanDecoder.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanTree.cs" />

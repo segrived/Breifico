@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Xml.Schema;
 using Breifico.Algorithms.Formats.BMP;
 
 namespace Breifico
@@ -16,6 +17,10 @@ namespace Breifico
             var temp = lhs;
             lhs = rhs;
             rhs = temp;
+        }
+
+        public static int ToRange(this int number, int min, int max) {
+            return number < min ? min : (number > max ? max : number);
         }
     }
 

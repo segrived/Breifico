@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Breifico.Functional">
+      <HintPath>..\Breifico.Functional\bin\Debug\Breifico.Functional.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=4.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
@@ -89,6 +92,7 @@
     <Compile Include="DataStructures\MySortedLinkedListTests.cs" />
     <Compile Include="DataStructures\MyStackTests.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Functional\Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

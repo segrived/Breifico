@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Breifico.DataStructures;
 
 namespace Breifico.Algorithms.Compression.Huffman

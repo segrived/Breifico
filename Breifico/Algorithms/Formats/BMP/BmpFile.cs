@@ -25,7 +25,7 @@ namespace Breifico.Algorithms.Formats.BMP
         /// <summary>
         /// Цвета всех пикселей в изображении
         /// </summary>
-        public Color[,] ImageData { get; private set; }
+        private Color[,] ImageData { get; set; }
 
         /// <summary>
         /// Ширина картинки
@@ -36,6 +36,11 @@ namespace Breifico.Algorithms.Formats.BMP
         /// Высота картинки
         /// </summary>
         public int Height { get; private set; }
+
+        /// <summary>
+        /// Количество бит на пиксель (24 или 32)
+        /// </summary>
+        public int BitsPerPixel { get; private set; }
 
         /// <summary>
         /// Получает или устанавливает значение указанного пикселя
@@ -63,7 +68,11 @@ namespace Breifico.Algorithms.Formats.BMP
             }
         }
 
-        public void Read(Stream s) {
+        /// <summary>
+        /// Читает изображение из потока
+        /// </summary>
+        /// <param name="s">Исходный поток, из которого читается BMP-изображение</param>
+        private void Read(Stream s) {
             using (var reader = new StreamBinaryReader(s)) {
                 // Чтение BMP заголовка
                 ushort signature = reader.ReadUInt16();
@@ -97,7 +106,8 @@ namespace Breifico.Algorithms.Formats.BMP
                     ImportantColors = reader.ReadUInt32()
                 };
 
-                if (dibHeader.BitsPerPixel != 24) {
+                // пока поддерживаются только 24- и 32-битные BMP
+                if (dibHeader.BitsPerPixel != 24 && dibHeader.BitsPerPixel != 32) {
                     throw new InvalidBmpImageException("Only 24bit/pixel BMP images is supported");
                 }
 
@@ -105,6 +115,7 @@ namespace Breifico.Algorithms.Formats.BMP
                     throw new InvalidBmpImageException("Compressed BMP images is not supported");
                 }
 
+                this.BitsPerPixel = dibHeader.BitsPerPixel;
                 this.Width = (int)dibHeader.Width;
                 this.Height = (int)dibHeader.Height;
 
@@ -113,15 +124,40 @@ namespace Breifico.Algorithms.Formats.BMP
                 // перемещаемся к оффсету, с которого начинаются пиксели
                 reader.InternalStream.Seek(bitMapHeader.StartOffset, SeekOrigin.Begin);
 
-                for (int i = this.Height - 1; i >= 0; i--) {
-                    int imageBytes = (this.Width * 3 + 3) & ~0x03;
-                    byte[] b = reader.ReadBytes(imageBytes);
-                    for (int j = 0; j < dibHeader.Width; j++) {
-                        byte bComp = b[j * 3];
-                        byte gComp = b[j * 3 + 1];
-                        byte rComp = b[j * 3 + 2];
-                        this.ImageData[j, i] = Color.FromArgb(rComp, gComp, bComp);
-                    }
+                switch (this.BitsPerPixel) {
+                    case 24:
+                        this.Read24BitPixelData(reader);
+                        break;
+                    case 32:
+                        this.Read32BitPixelData(reader);
+                        break;
+                }
+            }
+        }
+
+        private void Read24BitPixelData(StreamBinaryReader reader) {
+            for (int i = this.Height - 1; i >= 0; i--) {
+                int imageBytes = (this.Width * 3 + 3) & ~0x03;
+                byte[] b = reader.ReadBytes(imageBytes);
+                for (int j = 0; j < this.Width; j++) {
+                    byte bComp = b[j * 3];
+                    byte gComp = b[j * 3 + 1];
+                    byte rComp = b[j * 3 + 2];
+                    this.ImageData[j, i] = Color.FromArgb(rComp, gComp, bComp);
+                }
+            }
+        }
+
+        private void Read32BitPixelData(StreamBinaryReader reader) {
+            for (int i = this.Height - 1; i >= 0; i--) {
+                // выравнивание в 4 байта не нужно
+                byte[] b = reader.ReadBytes(this.Width * 4);
+                for (int j = 0; j < this.Width; j++) {
+                    byte bComp = b[j * 4];
+                    byte gComp = b[j * 4 + 1];
+                    byte rComp = b[j * 4 + 2];
+                    byte aComp = b[j * 4 + 3];
+                    this.ImageData[j, i] = Color.FromArgb(aComp, rComp, gComp, bComp);
                 }
             }
         }
