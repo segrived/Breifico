@@ -82,17 +82,18 @@
     <Compile Include="Algorithms\Sorting\CountingSortingTests.cs" />
     <Compile Include="Algorithms\Sorting\InsertionSortingTests.cs" />
     <Compile Include="Algorithms\Sorting\SelectionSortingTests.cs" />
+    <Compile Include="DataStructures\MyBinaryHeapTests.cs" />
     <Compile Include="DataStructures\MyBinarySearchTreeTests.cs" />
     <Compile Include="DataStructures\MyBitArrayTests.cs" />
     <Compile Include="DataStructures\MyCircularLinkedListTests.cs" />
     <Compile Include="DataStructures\MyHashSetTests.cs" />
     <Compile Include="DataStructures\MyLinkedListTests.cs" />
     <Compile Include="DataStructures\MyListTests.cs" />
+    <Compile Include="DataStructures\MyPriorityQueueTests.cs" />
     <Compile Include="DataStructures\MyQueueTests.cs" />
     <Compile Include="DataStructures\MySortedLinkedListTests.cs" />
     <Compile Include="DataStructures\MyStackTests.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Functional\Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

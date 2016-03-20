@@ -5,6 +5,6 @@ module LinkedList =
 
     let EmptyList = LinkedListNode.NilNode
 
-    let rec add item head = function
-        | FilledNode(a, node)-> add item head node
+    let rec add item = function
+        | FilledNode(a, node)-> node :: add item node
         | NilNode -> FilledNode(item, NilNode)

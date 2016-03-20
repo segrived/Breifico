@@ -76,11 +76,13 @@
     <Compile Include="BinaryArithmetic\GenericOps\IntWrapper.cs" />
     <Compile Include="BinaryArithmetic\GenericOps\LongWrapper.cs" />
     <Compile Include="BinaryArithmetic\GenericOps\ShortWrapper.cs" />
+    <Compile Include="DataStructures\MyBinaryHeap.cs" />
     <Compile Include="DataStructures\MyBinarySearchTree.cs" />
     <Compile Include="DataStructures\MyBitArray.cs" />
     <Compile Include="DataStructures\MyCircularLinkedList.cs" />
     <Compile Include="DataStructures\MyHashSet.cs" />
     <Compile Include="DataStructures\MyList.cs" />
+    <Compile Include="DataStructures\MyPriorityQueue.cs" />
     <Compile Include="DataStructures\MyQueue.cs" />
     <Compile Include="DataStructures\MySortedLinkedList.cs" />
     <Compile Include="DataStructures\MyStack.cs" />

@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breifico.Archiver", "Apps\B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breifico.ImageEditor", "Apps\Breifico.ImageEditor\Breifico.ImageEditor.csproj", "{C4CC7A44-7398-4E8C-9708-6F668EBC5977}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Breifico.Functional", "Breifico.Functional\Breifico.Functional.fsproj", "{CCD2FF7C-DF9F-460F-8B3C-E6F596283672}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{BBBD9498-34DA-41F9-B0ED-903EC1041326}"
 EndProject
 Global
@@ -43,10 +41,6 @@ Global
 		{C4CC7A44-7398-4E8C-9708-6F668EBC5977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4CC7A44-7398-4E8C-9708-6F668EBC5977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4CC7A44-7398-4E8C-9708-6F668EBC5977}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CCD2FF7C-DF9F-460F-8B3C-E6F596283672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCD2FF7C-DF9F-460F-8B3C-E6F596283672}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CCD2FF7C-DF9F-460F-8B3C-E6F596283672}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CCD2FF7C-DF9F-460F-8B3C-E6F596283672}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
