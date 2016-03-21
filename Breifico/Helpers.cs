@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Drawing;
-using System.Xml.Schema;
 using Breifico.Algorithms.Formats.BMP;
 
 namespace Breifico
 {
+    /// <summary>
+    /// Общие расширения
+    /// </summary>
     public static class CommonHelpers
     {
         /// <summary>
@@ -19,13 +21,30 @@ namespace Breifico
             rhs = temp;
         }
 
+        /// <summary>
+        /// Укладывает переданное число в указанные рамки
+        /// </summary>
+        /// <param name="number">Укладываемое в рамки число</param>
+        /// <param name="min">Минимальное значение</param>
+        /// <param name="max">Максимальное значение</param>
+        /// <returns>Число в границах от<see cref="min"/> и до <see cref="max"/></returns>
         public static int ToRange(this int number, int min, int max) {
             return number < min ? min : (number > max ? max : number);
         }
     }
 
+    /// <summary>
+    /// Расширение функций сортировки
+    /// </summary>
     public static class SortExtensions
     {
+        /// <summary>
+        /// Сортирует массив (in-place), используя указанный сортировщик (<see cref="ISorter{T}"/>)
+        /// </summary>
+        /// <typeparam name="T">Тип элементов в массиве</typeparam>
+        /// <param name="input">сходный массив</param>
+        /// <param name="sorter">Сортировщик</param>
+        /// <returns>Отсортированная коллекция</returns>
         public static T[] MySort<T>(this T[] input, ISorter<T> sorter) where T : IComparable<T> {
             return sorter.Sort(input);
         }
@@ -35,7 +54,9 @@ namespace Breifico
         }
     }
 
-
+    /// <summary>
+    /// Расширения для работы с изображениями
+    /// </summary>
     public static class ImageExtenstions
     {
         /// <summary>

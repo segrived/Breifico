@@ -74,10 +74,9 @@ namespace Breifico
     {
         /// <summary>
         /// Трансформирует указанное изображение и возвращает его.
-        /// Изображение должно меняться на месте
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
+        /// <param name="input">Исходное изображение</param>
+        /// <returns>Трансформированное изображение</returns>
         IImage Tranform(IImage input);
     }
 }

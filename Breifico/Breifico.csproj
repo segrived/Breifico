@@ -93,6 +93,7 @@
     <Compile Include="IO\BitArrayReader.cs" />
     <Compile Include="IO\StreamBinaryReader.cs" />
     <Compile Include="IO\StreamBinaryWriter.cs" />
+    <Compile Include="Mathematics\MyVector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,9 @@
-﻿namespace Breifico.BinaryArithmetic
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using Breifico.BinaryArithmetic.GenericOps;
+
+namespace Breifico.BinaryArithmetic
 {
     public static class BitExtensions
     {
@@ -44,5 +49,15 @@
         /// </summary>
         public static Num<T> IsolateRightmostOneBit<T>(Num<T> b)
             => b.Neg().And(b);
+
+        public static T SumElements<T>(this IEnumerable<Num<T>> input) {
+            IEnumerable<Num<T>> enumerable = input as Num<T>[] ?? input.ToArray();
+            if (!enumerable.Any()) {
+                return default(T);
+            }
+            var first = enumerable.First();
+            first = enumerable.Skip(1).Aggregate(first, (current, x) => current.Add(x));
+            return first.Value;
+        }
     }
 }

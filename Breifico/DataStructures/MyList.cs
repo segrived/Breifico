@@ -14,6 +14,7 @@ namespace Breifico.DataStructures
     public class MyList<T> : IList<T>, ICollection
     {
         private const int StartSize = 8;
+
         private T[] _internalArray;
 
         private object _syncRoot;
@@ -43,14 +44,14 @@ namespace Breifico.DataStructures
         /// True если коллекция доступна только для чтения, иначе False
         /// </summary>
         public bool IsReadOnly { get; } = false;
-        
+
         /// <summary>
         /// Количество элементов в коллекции
         /// </summary>
         public int Count { get; private set; }
 
         /// <summary>
-        /// True если коллекция пустая, иначе False
+        /// Возвращает True если коллекция пустая, иначе False
         /// </summary>
         public bool IsEmpty => this.Count == 0;
 
@@ -74,8 +75,10 @@ namespace Breifico.DataStructures
         /// </summary>
         /// <param name="index">Индекс искомого элемента</param>
         /// <returns>Значение по указанному индексу</returns>
-        /// <exception cref="IndexOutOfRangeException">Бросается, если указаннный индекс
-        /// выходит за границы доступных значений</exception>
+        /// <exception cref="IndexOutOfRangeException">
+        /// Бросается, если указаннный индекс
+        /// выходит за границы доступных значений
+        /// </exception>
         public T this[int index]
         {
             get
@@ -97,8 +100,10 @@ namespace Breifico.DataStructures
         /// <summary>
         /// Увеличивает вместимость списка для указанного количества элементов
         /// </summary>
-        /// <param name="forItems">Общее количество элементов, 
-        /// которое должна содержать коллекция</param>
+        /// <param name="forItems">
+        /// Общее количество элементов,
+        /// которое должна содержать коллекция
+        /// </param>
         private void IncreaseCapacity(int forItems) {
             int newSize = this.Capacity;
             do {
@@ -143,7 +148,7 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Удаляет элемент из списка
+        /// Удаляет первый указанный элемент из списка
         /// </summary>
         /// <param name="item">Элемент, который необходимо удалить</param>
         /// <returns>True если элемент был удален, False если указанный элемент не найден</returns>
@@ -178,8 +183,10 @@ namespace Breifico.DataStructures
         /// </summary>
         /// <param name="index">Индекс, в который нужно вставить элемент</param>
         /// <param name="item">Элемент, который необходимо вставить в список</param>
-        /// <exception cref="IndexOutOfRangeException">Бросается, если указаннный индекс
-        /// выходит за границы доступных значений</exception>
+        /// <exception cref="IndexOutOfRangeException">
+        /// Бросается, если указаннный индекс
+        /// выходит за границы доступных значений
+        /// </exception>
         public void Insert(int index, T item) {
             if (index < 0 || index > this.Count) {
                 throw new IndexOutOfRangeException();
@@ -196,15 +203,16 @@ namespace Breifico.DataStructures
                 Array.Copy(secondPart, 0, this._internalArray, index + 1, secondPart.Length);
             }
             this.Count += 1;
-
         }
 
         /// <summary>
         /// Удаляет элемент по указанному индексу
         /// </summary>
         /// <param name="index">Индекс элемента, который нужно удалить</param>
-        /// <exception cref="IndexOutOfRangeException">Бросается, если указаннный индекс
-        /// выходит за границы доступных значений</exception>
+        /// <exception cref="IndexOutOfRangeException">
+        /// Бросается, если указаннный индекс
+        /// выходит за границы доступных значений
+        /// </exception>
         public void RemoveAt(int index) {
             if (index < 0 || index > this.LastIndex) {
                 throw new IndexOutOfRangeException();

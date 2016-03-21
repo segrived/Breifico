@@ -8,8 +8,6 @@ namespace Breifico.Tests
             return Math.Abs(v1 - v2) <= epsilon;
         }
 
-        public static void DoNothing<T>(this T item) {
-            return;
-        }
+        public static void DoNothing<T>(this T item) {}
     }
 }
