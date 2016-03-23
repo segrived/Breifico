@@ -54,7 +54,6 @@
     <Compile Include="Algorithms\Compression\Huffman\HuffmanEncoder.cs" />
     <Compile Include="Algorithms\Compression\Huffman\HuffmanTreeBuilder.cs" />
     <Compile Include="Algorithms\Crypto\XorChiper.cs" />
-    <Compile Include="Algorithms\ErrorDetection\CRC32.cs" />
     <Compile Include="Algorithms\Formats\BMP\BmpFile.cs" />
     <Compile Include="Algorithms\Numeric\FibonacciNumbers.cs" />
     <Compile Include="Algorithms\Numeric\FunctionDerivative.cs" />
@@ -98,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Algorithms\ErrorDetection\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

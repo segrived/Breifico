@@ -2,6 +2,9 @@
 
 namespace Breifico.Algorithms.ImageProcessing
 {
+    /// <summary>
+    /// Применение эффекта "Сепия" к изображению
+    /// </summary>
     public class SepiaTransformation : IImageTransformation
     {
         public IImage Tranform(IImage input) {

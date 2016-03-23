@@ -2,6 +2,9 @@
 
 namespace Breifico.Algorithms.ImageProcessing
 {
+    /// <summary>
+    /// Инвертирование изображения
+    /// </summary>
     public class InvertTransformation : IImageTransformation
     {
         public IImage Tranform(IImage input) {

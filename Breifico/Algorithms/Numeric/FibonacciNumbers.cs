@@ -34,8 +34,9 @@ namespace Breifico.Algorithms.Numeric
             if (n < 0) {
                 throw new ArgumentException();
             }
-            if (n == 0 || n == 1)
+            if (n == 0 || n == 1) {
                 return n;
+            }
             var arr = new BigInteger[n + 1];
             arr[0] = 0; arr[1] = 1;
 

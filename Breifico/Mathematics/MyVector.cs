@@ -47,6 +47,10 @@ namespace Breifico.Mathematics
             return sum;
         }
 
+        /// <summary>
+        /// Возвращает среднее арифметическое вектора
+        /// </summary>
+        /// <returns>Среднее арифметическое вектора</returns>
         public double ArithmeticMean() {
             if (this.Values.Length == 0) {
                 return double.NaN;
@@ -54,6 +58,10 @@ namespace Breifico.Mathematics
             return this.Sum() / this.Values.Length;
         }
 
+        /// <summary>
+        /// Возвращает среднее геометрическое вектора
+        /// </summary>
+        /// <returns>Среднее геометрическое вектора</returns>
         public double GeometricMean() {
             if (this.Values.Length == 0) {
                 return double.NaN;
@@ -65,6 +73,10 @@ namespace Breifico.Mathematics
             return Math.Pow(mul, 1.0 / this.Values.Length);
         }
 
+        /// <summary>
+        /// Возвращает среднее гармническое вектора
+        /// </summary>
+        /// <returns>Среднее гармническое вектора</returns>
         public double HarmonicMean() {
             if (this.Values.Length == 0) {
                 return double.NaN;
@@ -74,13 +86,6 @@ namespace Breifico.Mathematics
                 sum += 1.0 / this.Values[i];
             }
             return this.Values.Length / sum;
-        }
-
-        public double Mode() {
-            var dict = new Dictionary<double, int>();
-            for (int i = 0; i < this.Values.Length; i++) {
-                dict[this.Values[i]] += 1;
-            }
         }
     }
 }

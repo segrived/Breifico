@@ -14,14 +14,30 @@ namespace Breifico.Algorithms.Crypto
         /// </summary>
         public byte[] Key { get; }
 
+
+        /// <summary>
+        /// Создает новый экзепляр <see cref="XorChiper"/> используя
+        /// указанный массив байт в качестве ключа
+        /// </summary>
+        /// <param name="key">Массив байт, используемый в качестве ключа</param>
         public XorChiper(byte[] key) {
             this.Key = key;
         }
 
+        /// <summary>
+        /// Создает новый экзепляр <see cref="XorChiper"/> используя
+        /// указанную строку в качестве ключа
+        /// </summary>
+        /// <param name="key">Строка, используемая в качестве ключа</param>
         public XorChiper(string key) {
             this.Key = Encoding.Unicode.GetBytes(key);
         }
 
+        /// <summary>
+        /// Создает новый экземпляр <see cref="XorChiper"/> с указанной
+        /// длиной ключа
+        /// </summary>
+        /// <param name="keyLength">Длина ключа</param>
         public XorChiper(int keyLength) {
             var rnd = new LinearCongruentialGenerator();
             var bytes = rnd.GenerateBytes().Take(keyLength).ToArray();
