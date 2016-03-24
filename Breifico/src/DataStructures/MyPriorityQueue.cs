@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Breifico.DataStructures
 {
@@ -6,7 +8,7 @@ namespace Breifico.DataStructures
     /// Имплементация приоритетной очереди
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class MyPriorityQueue<T> where T : IComparable<T>
+    public class MyPriorityQueue<T> : IEnumerable<T> where T : IComparable<T>
     {
         private class QueueItem<TR> : IComparable<QueueItem<TR>>
         {
@@ -86,6 +88,30 @@ namespace Breifico.DataStructures
         /// </summary>
         public void Clear() {
             this._internalHeap.Clear();
+        }
+
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator{T}" />, который может использоваться
+        /// для перебора коллекции
+        /// </returns>
+        public IEnumerator<T> GetEnumerator() {
+            foreach (var item in this._internalHeap) {
+                yield return item.Item;
+            }
+        }
+
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator" />, который может использоваться для 
+        /// перебора коллекции
+        /// </returns>
+        IEnumerator IEnumerable.GetEnumerator() {
+            return this.GetEnumerator();
         }
     }
 }

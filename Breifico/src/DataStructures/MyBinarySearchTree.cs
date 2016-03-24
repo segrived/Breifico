@@ -21,7 +21,7 @@ namespace Breifico.DataStructures
         /// <typeparam name="TR">Тип элементов в бинарном дереве. Тип должен
         /// имплементировать интерфейс <see cref="IComparable{T}"/></typeparam>
         [DebuggerDisplay("{Value}")]
-        public class Node<TR> where TR : IComparable<TR>
+        private class Node<TR> where TR : IComparable<TR>
         {
             /// <summary>
             /// Левая нода
@@ -329,6 +329,13 @@ namespace Breifico.DataStructures
         }
 
         #region IEnumerable<T> implementation
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator{T}" />, который может использоваться
+        /// для перебора коллекции
+        /// </returns>
         public IEnumerator<T> GetEnumerator() {
             var stack = new MyStack<Node<T>>();
             var node = this._rootNode;
@@ -344,6 +351,13 @@ namespace Breifico.DataStructures
             }
         }
 
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator" />, который может использоваться для 
+        /// перебора коллекции
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator() {
             return this.GetEnumerator();
         }

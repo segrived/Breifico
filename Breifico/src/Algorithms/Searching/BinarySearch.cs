@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Breifico.Algorithms.Searching
 {
+    /// <summary>
+    /// Имплементация бинарного поиска. Работает за O(log N)
+    /// </summary>
+    /// <typeparam name="T">Тип элементов в коллекции</typeparam>
     public class BinarySearch<T> : ISearcher<T> where T : IComparable<T>
     {
         /// <summary>

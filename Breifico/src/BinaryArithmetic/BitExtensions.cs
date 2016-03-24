@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using Breifico.BinaryArithmetic.GenericOps;
-
-namespace Breifico.BinaryArithmetic
+﻿namespace Breifico.BinaryArithmetic
 {
     public static class BitExtensions
     {
-        public static Num<T> AddOne<T>(this Num<T> n) => n.Add(n.One);
-        public static Num<T> SubOne<T>(this Num<T> n) => n.Sub(n.One);
+        private static Num<T> AddOne<T>(this Num<T> n) => n.Add(n.One);
+        private static Num<T> SubOne<T>(this Num<T> n) => n.Sub(n.One);
 
         /// <summary>
         /// "Выключает" последний единичный бит в числе
@@ -49,15 +44,5 @@ namespace Breifico.BinaryArithmetic
         /// </summary>
         public static Num<T> IsolateRightmostOneBit<T>(Num<T> b)
             => b.Neg().And(b);
-
-        public static T SumElements<T>(this IEnumerable<Num<T>> input) {
-            IEnumerable<Num<T>> enumerable = input as Num<T>[] ?? input.ToArray();
-            if (!enumerable.Any()) {
-                return default(T);
-            }
-            var first = enumerable.First();
-            first = enumerable.Skip(1).Aggregate(first, (current, x) => current.Add(x));
-            return first.Value;
-        }
     }
 }

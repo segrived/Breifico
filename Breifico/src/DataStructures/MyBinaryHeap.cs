@@ -35,8 +35,6 @@ namespace Breifico.DataStructures
         public MyBinaryHeap(Comparison<T> comparision)
             : this(Comparer<T>.Create(comparision)) {}
 
-        private MyBinaryHeap() {}
-
         /// <summary>
         /// Создает новый экземпляр бинарной кучи (Max-Heap) и возвращает ее
         /// </summary>
@@ -162,12 +160,26 @@ namespace Breifico.DataStructures
         #endregion
 
         #region IEnumerable<T> implementation
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator{T}" />, который может использоваться
+        /// для перебора коллекции
+        /// </returns>
         public IEnumerator<T> GetEnumerator() {
             for (int i = 0; i < this.Count; i++) {
                 yield return this._data[i];
             }
         }
 
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator" />, который может использоваться для 
+        /// перебора коллекции
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator() {
             return this.GetEnumerator();
         }

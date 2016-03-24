@@ -1,4 +1,5 @@
-﻿using Breifico.DataStructures;
+﻿using System;
+using Breifico.DataStructures;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,21 +9,41 @@ namespace Breifico.Tests.DataStructures
     public class MyPriorityQueueTests
     {
         [TestMethod]
-        public void Test1() {
-            var x = new MyPriorityQueue<int>();
-            x.Enqueue(122, 7);
-            x.Enqueue(342, 4);
-            x.Enqueue(234, 8);
-            x.Enqueue(6754, 11);
-            x.Enqueue(2334, 2);
-            x.Enqueue(546, 6);
+        public void Enqueue_ShouldAppendElements() {
+            var queue = new MyPriorityQueue<int>();
+            queue.Count.Should().Be(0);
+            queue.Enqueue(10, 7);
+            queue.Should().Equal(10);
+            queue.Enqueue(20, 8);
+            queue.Should().Equal(20, 10);
+            queue.Enqueue(30, 4);
+            queue.Should().Equal(20, 10, 30);
+            queue.Enqueue(40, 6);
+            queue.Should().Equal(20, 10, 40, 30);
+            queue.Count.Should().Be(4);
+        }
 
-            x.Dequeue().Should().Be(6754);
-            x.Dequeue().Should().Be(234);
-            x.Dequeue().Should().Be(122);
-            x.Dequeue().Should().Be(546);
-            x.Dequeue().Should().Be(342);
-            x.Dequeue().Should().Be(2334);
+        [TestMethod]
+        public void Enqueue_WhenAnyElements_ShouldExtractElements() {
+            var queue = new MyPriorityQueue<int>();
+            queue.Enqueue(10, 7);
+            queue.Enqueue(20, 4);
+            queue.Enqueue(30, 8);
+
+            queue.Dequeue().Should().Be(30);
+            queue.Dequeue().Should().Be(10);
+            queue.Dequeue().Should().Be(20);
+        }
+
+        [TestMethod]
+        public void Enqueue_WhenEmpty_ShouldThrowException() {
+            var queue = new MyPriorityQueue<int>();
+            queue.Invoking(q => q.Dequeue()).ShouldThrow<ArgumentOutOfRangeException>();
+
+            var queue2 = new MyPriorityQueue<int>();
+            queue2.Enqueue(12, 1);
+            queue2.Dequeue();
+            queue2.Invoking(q => q.Dequeue()).ShouldThrow<ArgumentOutOfRangeException>();
         }
     }
 }

@@ -341,6 +341,13 @@ namespace Breifico.DataStructures
         #endregion
 
         #region IEnumerable<T> implementation
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator{T}" />, который может использоваться
+        /// для перебора коллекции
+        /// </returns>
         public IEnumerator<T> GetEnumerator() {
             var tempNode = this.HeadNode;
             while (tempNode != null) {
@@ -349,6 +356,13 @@ namespace Breifico.DataStructures
             }
         }
 
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator" />, который может использоваться для 
+        /// перебора коллекции
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator() {
             return this.GetEnumerator();
         }

@@ -52,8 +52,8 @@ namespace Breifico.Algorithms.Sorting
                 throw new Exception($"Array contains number which exceeds the limit ({this._maxElement})");
             }
             var outCollection = new int[maxElement.Value + 9];
-            for (int i = 0; i < input.Length; i++) {
-                outCollection[input[i]] += 1;
+            foreach (uint s in input) {
+                outCollection[s] += 1;
             }
             int outIndex = 0;
             for (uint i = 0; i < outCollection.Length; i++) {

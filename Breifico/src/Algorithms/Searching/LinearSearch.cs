@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Breifico.Algorithms.Searching
 {
     /// <summary>
-    /// Линейный поиск. Работает за O(N)
+    /// Имплементация линейного поиска. Работает за O(N)
     /// </summary>
     /// <typeparam name="T">Тип элементов в коллекции</typeparam>
     public class LinearSearch<T> : ISearcher<T> where T : IComparable<T>

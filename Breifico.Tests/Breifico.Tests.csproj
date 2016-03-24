@@ -95,6 +95,7 @@
     <Compile Include="DataStructures\MySortedLinkedListTests.cs" />
     <Compile Include="DataStructures\MyStackTests.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="MyLinqTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

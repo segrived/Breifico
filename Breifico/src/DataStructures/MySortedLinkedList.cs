@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace Breifico.DataStructures
 {
     /// <summary>
-    /// Сортированный связный список
+    /// Имплементация сортированного связного списка
     /// </summary>
     /// <typeparam name="T">Тип элементов в сортированном связном списке
     /// Указанный тип должен имлементировать интерфейс IComparable</typeparam>

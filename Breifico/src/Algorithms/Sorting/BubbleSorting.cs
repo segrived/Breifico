@@ -3,7 +3,7 @@
 namespace Breifico.Algorithms.Sorting
 {
     /// <summary>
-    /// Пузьрьковая сортировка. Работает за O(N^2)
+    /// Пузырьковая сортировка. Работает за O(N^2)
     /// </summary>
     /// <typeparam name="T">Тип элементов, которые необходимо отсортировать</typeparam>
     public class BubbleSorting<T> : ISorter<T> where T : IComparable<T>

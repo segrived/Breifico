@@ -223,12 +223,26 @@ namespace Breifico.DataStructures
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator{T}" />, который может использоваться
+        /// для перебора коллекции
+        /// </returns>
         public IEnumerator<bool> GetEnumerator() {
             for (int i = 0; i < this.Count; i++) {
                 yield return this[i];
             }
         }
 
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator" />, который может использоваться для 
+        /// перебора коллекции
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator() {
             return this.GetEnumerator();
         }

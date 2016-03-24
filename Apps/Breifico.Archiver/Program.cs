@@ -7,7 +7,7 @@ using CommandLine;
 
 namespace Breifico.Archiver
 {
-    internal class Program
+    internal static class Program
     {
         private static void Main(string[] args) {
             Parser.Default.ParseArguments<Options>(args).WithParsed(CompressFile);

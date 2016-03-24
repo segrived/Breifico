@@ -98,9 +98,8 @@ namespace Breifico.Algorithms.Sorting
     /// </summary>
     public class BucketIntSorting : BucketSorting<int>
     {
-        private static readonly Func<int, int, int, int, int> Sorter = (i, min, max, len) => {
-            return (int)Math.Round(((double)i - min) / (max - min) * len);
-        };
+        private static readonly Func<int, int, int, int, int> Sorter = (i, min, max, len) 
+            => (int)Math.Round(((double)i - min) / (max - min) * len);
 
         /// <summary>
         /// Создает новый экземпляр <see cref="BucketIntSorting"/>

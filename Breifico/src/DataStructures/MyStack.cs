@@ -72,10 +72,24 @@ namespace Breifico.DataStructures
         }
 
         #region IEnumerable<T> implementation
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator{T}" />, который может использоваться
+        /// для перебора коллекции
+        /// </returns>
         public IEnumerator<T> GetEnumerator() {
             return this._stackData.ReverseEnumerate().GetEnumerator();
         }
 
+        /// <summary>
+        /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
+        /// </summary>
+        /// <returns>
+        /// Объект <see cref="IEnumerator" />, который может использоваться для 
+        /// перебора коллекции
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator() {
             return this.GetEnumerator();
         }

@@ -6,7 +6,7 @@ using System.Threading;
 namespace Breifico.DataStructures
 {
     /// <summary>
-    /// Имплеменация хеш-сета (методом цепочек, на основе двусвязного списка)
+    /// Имплементация хеш-сета (методом цепочек, на основе двусвязного списка)
     /// </summary>
     /// <typeparam name="T">Тип элементов в хеш-сете</typeparam>
     public class MyHashSet<T> : IEnumerable<T>, ICollection
