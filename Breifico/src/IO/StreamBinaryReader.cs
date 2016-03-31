@@ -24,8 +24,9 @@ namespace Breifico.IO
     /// </summary>
     public class StreamBinaryReader : IDisposable
     {
-        public Stream InternalStream { get; }
         private readonly Endianness _endianness;
+
+        public Stream InternalStream { get; }
 
         /// <summary>
         /// Создает новый экземпляр класса <see cref="StreamBinaryReader" />
@@ -48,10 +49,7 @@ namespace Breifico.IO
         /// </summary>
         /// <param name="bytesCount">Количество считываемых байт</param>
         /// <returns>Байтовый массив со считанными данными</returns>
-        /// <exception cref="IOException">
-        /// Бросается, если количество считанных данных меньше,
-        /// чем запрошенных
-        /// </exception>
+        /// <exception cref="IOException">Если количество считанных данных меньше, чем запрошено</exception>
         public byte[] ReadBytes(int bytesCount) {
             var b = new byte[bytesCount];
             int c = this.InternalStream.Read(b, 0, bytesCount);
@@ -77,10 +75,7 @@ namespace Breifico.IO
         /// Читает следующее 16-битное целое число из потока
         /// </summary>
         /// <returns>Значение типа <see cref="Int16" /></returns>
-        /// <exception cref="IOException">
-        /// Бросается, если количество считанных данных меньше,
-        /// чем запрошенных
-        /// </exception>
+        /// <exception cref="IOException">Если количество считанных данных меньше, чем запрошено</exception>
         public short ReadInt16() {
             byte[] b = this.ReadBytes(2);
             return this._endianness == Endianness.LittleEndian
@@ -92,10 +87,7 @@ namespace Breifico.IO
         /// Читает следующее беззнаковое 16-битное целое число из потока
         /// </summary>
         /// <returns>Значение типа <see cref="UInt16" /></returns>
-        /// <exception cref="IOException">
-        /// Бросается, если количество считанных данных меньше,
-        /// чем запрошенных
-        /// </exception>
+        /// <exception cref="IOException">Если количество считанных данных меньше, чем запрошено</exception>
         public ushort ReadUInt16() {
             byte[] b = this.ReadBytes(2);
             return this._endianness == Endianness.LittleEndian
@@ -107,10 +99,7 @@ namespace Breifico.IO
         /// Читает следующее 32-битное целое число из потока
         /// </summary>
         /// <returns>Значение типа <see cref="Int32" /></returns>
-        /// <exception cref="IOException">
-        /// Бросается, если количество считанных данных меньше,
-        /// чем запрошенных
-        /// </exception>
+        /// <exception cref="IOException">Если количество считанных данных меньше, чем запрошено</exception>
         public int ReadInt32() {
             byte[] b = this.ReadBytes(4);
             return this._endianness == Endianness.LittleEndian
@@ -122,10 +111,7 @@ namespace Breifico.IO
         /// Читает следующее беззнаковое 32-битное целое число из потока
         /// </summary>
         /// <returns>Значение типа <see cref="UInt32" /></returns>
-        /// <exception cref="IOException">
-        /// Бросается, если количество считанных данных меньше,
-        /// чем запрошенных
-        /// </exception>
+        /// <exception cref="IOException">Если количество считанных данных меньше, чем запрошено</exception>
         public uint ReadUInt32() {
             byte[] b = this.ReadBytes(4);
             return this._endianness == Endianness.LittleEndian
@@ -137,10 +123,7 @@ namespace Breifico.IO
         /// Читает следующее 64-битное целое число из потока
         /// </summary>
         /// <returns>Значение типа <see cref="Int64" /></returns>
-        /// <exception cref="IOException">
-        /// Бросается, если количество считанных данных меньше,
-        /// чем запрошенных
-        /// </exception>
+        /// <exception cref="IOException">Если количество считанных данных меньше, чем запрошено</exception>
         public long ReadInt64() {
             byte[] b = this.ReadBytes(8);
             return this._endianness == Endianness.LittleEndian
@@ -154,10 +137,7 @@ namespace Breifico.IO
         /// Читает следующее беззнаковое 64-битное целое число из потока
         /// </summary>
         /// <returns>Значение типа <see cref="UInt64" /></returns>
-        /// <exception cref="IOException">
-        /// Бросается, если количество считанных данных меньше,
-        /// чем запрошенных
-        /// </exception>
+        /// <exception cref="IOException">Если количество считанных данных меньше, чем запрошено</exception>
         public ulong ReadUInt64() {
             byte[] b = this.ReadBytes(8);
             return this._endianness == Endianness.LittleEndian
@@ -167,6 +147,10 @@ namespace Breifico.IO
                           + (b[2] << 40) + (b[1] << 48) + (b[0] << 56));
         }
 
+        /// <summary>
+        /// Читает следующий битовый массив из потока
+        /// </summary>
+        /// <returns>Значение типа <see cref="MyBitArray" /></returns>
         public MyBitArray ReadBitArray() {
             int length = this.ReadInt32();
             int freeBits = this.ReadByte();
@@ -174,6 +158,9 @@ namespace Breifico.IO
             return new MyBitArray(content, freeBits);
         }
 
+        /// <summary>
+        /// Освобождает ресурсы
+        /// </summary>
         public void Dispose() {
             this.InternalStream?.Dispose();
         }

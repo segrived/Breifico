@@ -11,7 +11,7 @@ namespace Breifico.Algorithms.Numeric
         }
 
         public double NewtonRaphsonSolve(double l, double h, double delta = 0.01, int maxSteps = 1000) {
-            var xi = l + (h - l) / 2;
+            double xi = l + (h - l) / 2;
             var funcDer = new FunctionDerivative(this._func).GetDerivativeThreePoint();
             while (maxSteps > 0) {
                 double funcValue = this._func(xi);

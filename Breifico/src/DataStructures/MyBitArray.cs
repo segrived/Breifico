@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Threading;
+using Breifico.IO;
 
 namespace Breifico.DataStructures
 {
     /// <summary>
     /// Имплементация битового массива
     /// </summary>
-    public class MyBitArray : IEnumerable<bool>, IEquatable<MyBitArray>
+    public class MyBitArray : ICollection, IEnumerable<bool>, IEquatable<MyBitArray>
     {
         /// <summary>
         /// Размер буфера по умолчанию
         /// </summary>
         private const int DefaultBufferSize = 4;
+
+        private object _syncRoot;
 
         private readonly MyList<byte> _internalBuffer;
 
@@ -23,11 +26,24 @@ namespace Breifico.DataStructures
         /// </summary>
         public int Count { get; private set; }
 
+        /// <summary>
+        /// Количество байт, которым представлен битовый массив
+        /// </summary>
         public int ByteCount => this._internalBuffer.Count;
 
+        /// <summary>
+        /// Количестве неиспользуемых бит в последнем байте
+        /// </summary>
         public int FreeBits => (8 - this.NextBitPosition) % 8;
 
-        private int BytePosition => this.Count / 8;
+        /// <summary>
+        /// Индекс байта, в который будет записан следующий элемент
+        /// </summary>
+        private int ByteCursorPosition => this.Count / 8;
+
+        /// <summary>
+        /// Индекс бита, в который будет запсан следующий элемент
+        /// </summary>
         private int NextBitPosition => this.Count % 8;
 
         /// <summary>
@@ -43,7 +59,15 @@ namespace Breifico.DataStructures
             this._internalBuffer = new MyList<byte>(initSizeInBytes);
         }
 
+        /// <summary>
+        /// Инициализирует новый битовый массив указанными данными
+        /// </summary>
+        /// <param name="input">Массив байт, которым будет инициализирован битовый массив</param>
+        /// <param name="freeBits">Количество неиспользуемых байт в последнем байте масива</param>
         public MyBitArray(byte[] input, int freeBits = 0) {
+            if (freeBits > 7) {
+                throw new ArgumentException("Количество неиспользуемых битов должено быть меньше 7");
+            }
             var newList = new MyList<byte>();
             newList.AddRange(input);
             this._internalBuffer = newList;
@@ -56,12 +80,12 @@ namespace Breifico.DataStructures
         /// </summary>
         /// <param name="bit">Добавляемый бит</param>
         public void Append(bool bit) {
-            if (this._internalBuffer.Count <= this.BytePosition) {
+            if (this._internalBuffer.Count <= this.ByteCursorPosition) {
                 this._internalBuffer.Add(0x00);
             }
             if (bit) {
                 byte op = (byte)(1 << (7 - this.NextBitPosition));
-                this._internalBuffer[this.BytePosition] ^= op;
+                this._internalBuffer[this.ByteCursorPosition] ^= op;
             }
             this.Count++;
         }
@@ -83,7 +107,7 @@ namespace Breifico.DataStructures
         public void Append(byte b) {
             if (this.NextBitPosition == 0) {
                 this._internalBuffer.Add(b);
-                this.Count += 8;
+                this.Count += sizeof(byte);
                 return;
             }
             for (int i = 7; i >= 0; i--) {
@@ -105,12 +129,13 @@ namespace Breifico.DataStructures
         /// Инвертирует все биты в битовом массиве
         /// </summary>
         public void Negative() {
-            if (this.BytePosition > 0) {
-                for (int i = 0; i < this.BytePosition; i++) {
+            if (this.ByteCursorPosition > 0) {
+                for (int i = 0; i < this.ByteCursorPosition; i++) {
                     this._internalBuffer[i] = (byte)~this._internalBuffer[i];
                 } 
             }
-            for (int i = this.BytePosition * 8; i < this.Count; i++) {
+            int startIndex = this.ByteCursorPosition * 8;
+            for (int i = startIndex; i < this.Count; i++) {
                 this[i] = !this[i];
             }
         }
@@ -150,9 +175,14 @@ namespace Breifico.DataStructures
             }
         }
 
+        /// <summary>
+        /// Возвращает байт начиная с бита, находящегося на указанной позиции
+        /// </summary>
+        /// <param name="position">Начальная позиция</param>
+        /// <returns>Байт, начиная с указанного индекса</returns>
         public byte GetByteFromPosition(int position) {
             if (position + 8 > this.Count) {
-                throw new Exception();
+                throw new IndexOutOfRangeException();
             }
             if (position % 8 == 0) {
                 return this._internalBuffer[position / 8];
@@ -162,6 +192,22 @@ namespace Breifico.DataStructures
                 ba.Append(this[position + i]);
             }
             return ba._internalBuffer[0];
+        }
+
+        /// <summary>
+        /// Заменяет все биты на указанное значение
+        /// </summary>
+        /// <param name="value">Бит, которым будут заменены все значения</param>
+        public void SetAll(bool value) {
+            if (this.ByteCursorPosition > 0) {
+                for (int i = 0; i < this.ByteCursorPosition; i++) {
+                    this._internalBuffer[i] = value ? (byte)0xff : (byte)0x00;
+                }
+            }
+            int startIndex = this.ByteCursorPosition * 8;
+            for (int i = startIndex; i < this.Count; i++) {
+                this[i] = value;
+            }
         }
 
         /// <summary>
@@ -182,10 +228,18 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
+        /// Возвращает экземпляр <see cref="BitArrayReader"/>, предназначенный для чтения данных из битового массива
+        /// </summary>
+        /// <returns>Экземпляр класса <see cref="BitArrayReader"/></returns>
+        public BitArrayReader GetReader() {
+            return new BitArrayReader(this);
+        }
+
+        /// <summary>
         /// Сравнивает два битовых массивов
         /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
+        /// <param name="other">Второй массив</param>
+        /// <returns>True - если битовые массивы равны, иначе False</returns>
         public bool Equals(MyBitArray other) {
             if (this.Count != other.Count) {
                 return false;
@@ -223,6 +277,7 @@ namespace Breifico.DataStructures
             return sb.ToString();
         }
 
+        #region IEnumerable<T> implementation
         /// <summary>
         /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
         /// </summary>
@@ -246,5 +301,24 @@ namespace Breifico.DataStructures
         IEnumerator IEnumerable.GetEnumerator() {
             return this.GetEnumerator();
         }
+        #endregion
+
+        #region ICollectiom implementation
+        public void CopyTo(Array array, int index) {
+            throw new NotImplementedException();
+        }
+
+        public object SyncRoot {
+            get
+            {
+                if (this._syncRoot == null) {
+                    Interlocked.CompareExchange(ref this._syncRoot, new object(), null);
+                }
+                return this._syncRoot;
+            }
+        }
+
+        public bool IsSynchronized { get; } = false;
+        #endregion
     }
 }

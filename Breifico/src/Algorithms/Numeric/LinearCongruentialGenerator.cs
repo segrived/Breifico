@@ -16,9 +16,16 @@ namespace Breifico.Algorithms.Numeric
 
         private int _currentState;
 
+        /// <summary>
+        /// Создает новый генератор с сидом по умолчанию
+        /// </summary>
         public LinearCongruentialGenerator() :
             this(DateTime.Now.Millisecond) {}
 
+        /// <summary>
+        /// Создает новый генератор с указанным сидом
+        /// </summary>
+        /// <param name="seed">Начальное значение генератора (сид)</param>
         public LinearCongruentialGenerator(int seed) {
             this._currentState = seed;
         }

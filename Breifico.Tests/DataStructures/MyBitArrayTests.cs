@@ -132,6 +132,20 @@ namespace Breifico.Tests.DataStructures
         }
 
         [TestMethod]
+        public void SetAll_ShouldSetAllBitsToValue() {
+            var bitArray = new MyBitArray();
+            bitArray.Append(true, true, true, false, false, true);
+            bitArray.SetAll(true);
+            bitArray.Should().Equal(true, true, true, true, true, true);
+            bitArray.SetAll(false);
+            bitArray.Should().Equal(false, false, false, false, false, false);
+            var bitArray2 = new MyBitArray();
+            bitArray2.Append(true, false, true, false, true, false, true, false, true, false);
+            bitArray2.SetAll(false);
+            bitArray2.Should().Equal(false, false, false, false, false, false, false, false, false, false);
+        }
+
+        [TestMethod]
         public void Clear_ShouldRemoveAllElements() {
             var bitArray = new MyBitArray();
             bitArray.Append(125);

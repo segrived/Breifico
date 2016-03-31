@@ -13,7 +13,9 @@ namespace Breifico.Algorithms.Numeric
             this._func = func;
         }
 
-        private double Integrate(double lower, double upper, int steps, Func<double, double, double> f) {
+        public delegate double IntegrateFunction(double a, double b);
+
+        public double Integrate(double lower, double upper, int steps, IntegrateFunction f) {
 
             double dx = (upper - lower) / steps;
             double totalArea = 0.0;

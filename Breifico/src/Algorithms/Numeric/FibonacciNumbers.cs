@@ -13,7 +13,7 @@ namespace Breifico.Algorithms.Numeric
         /// Работает за O(2^n)
         /// </summary>
         /// <param name="n">Порядковый номер числа Фибоначчи</param>
-        /// <returns></returns>
+        /// <returns>n-нное число Фибоначчи</returns>
         public static BigInteger GetFibonacciRecursive(int n) {
             if (n < 0) {
                 throw new ArgumentException();
@@ -29,7 +29,7 @@ namespace Breifico.Algorithms.Numeric
         /// Работает за O(n)
         /// </summary>
         /// <param name="n">Порядковый номер числа Фибоначчи</param>
-        /// <returns></returns>
+        /// <returns>n-нное число Фибоначчи</returns>
         public static BigInteger GetFibonacciIterative(int n) {
             if (n < 0) {
                 throw new ArgumentException();

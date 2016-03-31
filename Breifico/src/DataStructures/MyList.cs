@@ -242,11 +242,29 @@ namespace Breifico.DataStructures
         }
 
         /// <summary>
-        /// Очищает список
+        /// Очищает список от элементов
         /// </summary>
         public void Clear() {
             Array.Clear(this._internalArray, 0, this.Count);
             this.Count = 0;
+        }
+
+        /// <summary>
+        /// Копирует элементы из списка в новый массив и возращает его
+        /// </summary>
+        /// <returns>Массив, содержащий скопированные элементы списка</returns>
+        public T[] ToArray() {
+            var a = new T[this.Count];
+            this.CopyTo(a, 0);
+            return a;
+        }
+
+        /// <summary>
+        /// Возвращает строковое представление экземпляра списка
+        /// </summary>
+        /// <returns>Строковое представление экземпляра списка</returns>
+        public override string ToString() {
+            return $"MyList<{typeof(T)}>: {this.Count} element(s)";
         }
 
         #region ICollection implementation
