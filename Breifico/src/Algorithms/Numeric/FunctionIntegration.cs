@@ -35,9 +35,7 @@ namespace Breifico.Algorithms.Numeric
         /// <param name="steps">Количество шагов, чем выше - тем точнее результат</param>
         /// <returns>Функция, вычисляющая интеграл в указанном отрезке методом левых прямоугольников</returns>
         public double RectangleIntegration(double lower, double upper, int steps = 500) {
-            return this.Integrate(lower, upper, steps, (a, b) => {
-                return (b - a) * this._func(a);
-            });
+            return this.Integrate(lower, upper, steps, (a, b) => (b - a) * this._func(a));
         }
 
         /// <summary>
@@ -48,9 +46,7 @@ namespace Breifico.Algorithms.Numeric
         /// <param name="steps">Количество шагов, чем выше - тем точнее результат</param>
         /// <returns>Функция, вычисляющая интеграл в указанном отрезке методом средних прямоугольников</returns>
         public double MidpointIntegration(double lower, double upper, int steps = 500) {
-            return this.Integrate(lower, upper, steps, (a, b) => {
-                return (b - a) * this._func((a + b) / 2.0);
-            });
+            return this.Integrate(lower, upper, steps, (a, b) => (b - a) * this._func((a + b) / 2.0));
         }
 
         /// <summary>
@@ -61,9 +57,7 @@ namespace Breifico.Algorithms.Numeric
         /// <param name="steps">Количество шагов, чем выше - тем точнее результат</param>
         /// <returns>Функция, вычисляющая интеграл в указанном отрезке методом трапеций</returns>
         public double TrapezoidIntegration(double lower, double upper, int steps = 500) {
-            return this.Integrate(lower, upper, steps, (a, b) => {
-                return (b - a) * (this._func(a) + this._func(b)) / 2.0;
-            });
+            return this.Integrate(lower, upper, steps, (a, b) => (b - a) * (this._func(a) + this._func(b)) / 2.0);
         }
 
         /// <summary>
@@ -74,9 +68,8 @@ namespace Breifico.Algorithms.Numeric
         /// <param name="steps">Количество шагов, чем выше - тем точнее результат</param>
         /// <returns>Функция, вычисляющая интеграл в указанном отрезке по формуле Симпсона</returns>
         public double SimpsonIntegration(double lower, double upper, int steps = 500) {
-            return this.Integrate(lower, upper, steps, (a, b) => {
-                return (b - a) / 6.0 * (this._func(a) + this._func(b) + 4 * this._func((a + b) / 2.0));
-            });
+            return this.Integrate(lower, upper, steps, (a, b) 
+                => (b - a) / 6.0 * (this._func(a) + this._func(b) + 4 * this._func((a + b) / 2.0)));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Breifico.DataStructures;
+using Breifico.Functional;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

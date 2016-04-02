@@ -13,13 +13,13 @@ namespace Breifico.Tests.DataStructures
             var queue = new MyPriorityQueue<int>();
             queue.Count.Should().Be(0);
             queue.Enqueue(10, 7);
-            queue.Should().Equal(10);
+            queue.Should().BeEquivalentTo(10);
             queue.Enqueue(20, 8);
-            queue.Should().Equal(20, 10);
+            queue.Should().BeEquivalentTo(20, 10);
             queue.Enqueue(30, 4);
-            queue.Should().Equal(20, 10, 30);
+            queue.Should().BeEquivalentTo(20, 10, 30);
             queue.Enqueue(40, 6);
-            queue.Should().Equal(20, 10, 40, 30);
+            queue.Should().BeEquivalentTo(20, 10, 40, 30);
             queue.Count.Should().Be(4);
         }
 

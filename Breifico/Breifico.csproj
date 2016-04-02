@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -69,12 +70,7 @@
     <Compile Include="src\Algorithms\Sorting\CountingSorting.cs" />
     <Compile Include="src\Algorithms\Sorting\InsertionSorting.cs" />
     <Compile Include="src\Algorithms\Sorting\SelectionSorting.cs" />
-    <Compile Include="src\BinaryArithmetic\BitExtensions.cs" />
-    <Compile Include="src\BinaryArithmetic\GenericOps\ByteWrapper.cs" />
-    <Compile Include="src\BinaryArithmetic\Num.cs" />
-    <Compile Include="src\BinaryArithmetic\GenericOps\IntWrapper.cs" />
-    <Compile Include="src\BinaryArithmetic\GenericOps\LongWrapper.cs" />
-    <Compile Include="src\BinaryArithmetic\GenericOps\ShortWrapper.cs" />
+    <Compile Include="src\Algorithms\BitArithmetic.cs" />
     <Compile Include="src\DataStructures\MyBinaryHeap.cs" />
     <Compile Include="src\DataStructures\MyBinarySearchTree.cs" />
     <Compile Include="src\DataStructures\MyBitArray.cs" />
@@ -94,7 +90,7 @@
     <Compile Include="src\IO\StreamBinaryWriter.cs" />
     <Compile Include="src\Mathematics\MyVector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\MyLinq.cs" />
+    <Compile Include="src\Functional\MyLinq.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

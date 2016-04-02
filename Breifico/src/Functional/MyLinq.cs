@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Breifico.DataStructures;
 
 // ReSharper disable LoopCanBeConvertedToQuery
-namespace Breifico
+namespace Breifico.Functional
 {
     public static class MyLinq
     {

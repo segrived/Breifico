@@ -107,7 +107,7 @@ namespace Breifico.DataStructures
         public void Append(byte b) {
             if (this.NextBitPosition == 0) {
                 this._internalBuffer.Add(b);
-                this.Count += sizeof(byte);
+                this.Count += 8;
                 return;
             }
             for (int i = 7; i >= 0; i--) {
@@ -131,7 +131,7 @@ namespace Breifico.DataStructures
         public void Negative() {
             if (this.ByteCursorPosition > 0) {
                 for (int i = 0; i < this.ByteCursorPosition; i++) {
-                    this._internalBuffer[i] = (byte)~this._internalBuffer[i];
+                    this._internalBuffer[i] = unchecked ((byte)~this._internalBuffer[i]);
                 } 
             }
             int startIndex = this.ByteCursorPosition * 8;
@@ -168,9 +168,9 @@ namespace Breifico.DataStructures
                 int positionIndex = position % 8;
                 int mask = 1 << (7 - positionIndex);
                 if (value) {
-                    this._internalBuffer[byteIndex] |= (byte)mask;
+                    this._internalBuffer[byteIndex] |= unchecked((byte)mask);
                 } else {
-                    this._internalBuffer[byteIndex] &= (byte)~mask;
+                    this._internalBuffer[byteIndex] &= unchecked((byte)~mask);
                 }
             }
         }
