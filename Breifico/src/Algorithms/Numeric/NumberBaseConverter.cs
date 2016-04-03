@@ -6,7 +6,7 @@ namespace Breifico.Algorithms.Numeric
     /// <summary>
     /// Предназначен для конвертации числа из одной системы счисления в другую
     /// </summary>
-    public class NumberBaseConverter
+    public sealed class NumberBaseConverter
     {
         public int NumberBase { get; }
 

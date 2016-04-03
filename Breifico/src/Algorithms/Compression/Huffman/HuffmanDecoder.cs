@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using Breifico.DataStructures;
+﻿using Breifico.DataStructures;
 using Breifico.IO;
 
 namespace Breifico.Algorithms.Compression.Huffman
 {
-    public class HuffmanDecoder
+    public sealed class HuffmanDecoder
     {
         private readonly HuffmanCompressedData _data;
 

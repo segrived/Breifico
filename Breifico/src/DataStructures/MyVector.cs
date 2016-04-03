@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Breifico.Mathematics
+namespace Breifico.DataStructures
 {
-    public class MyVector : IReadOnlyCollection<double>
+    public sealed class MyVector : IReadOnlyCollection<double>
     {
         private double[] Values { get; }
 
@@ -43,12 +42,33 @@ namespace Breifico.Mathematics
             return new MyVector(v.Select(i => i * value));
         }
 
+        public static MyVector operator *(MyVector v, MyVector v2) {
+            if (v.Count != v2.Count) {
+                throw new DifferentSizeException();
+            }
+            return new MyVector(v.Zip(v2, (a, b) => a * b));
+        }
+
         public static MyVector operator -(MyVector v, double value) {
             return new MyVector(v.Select(i => i - value));
         }
 
+        public static MyVector operator -(MyVector v, MyVector v2) {
+            if (v.Count != v2.Count) {
+                throw new DifferentSizeException();
+            }
+            return new MyVector(v.Zip(v2, (a, b) => a - b));
+        }
+
         public static MyVector operator /(MyVector v, double value) {
             return new MyVector(v.Select(i => i / value));
+        }
+
+        public static MyVector operator /(MyVector v, MyVector v2) {
+            if (v.Count != v2.Count) {
+                throw new DifferentSizeException();
+            }
+            return new MyVector(v.Zip(v2, (a, b) => a / b));
         }
 
         public void NegativeAll() {
@@ -92,7 +112,7 @@ namespace Breifico.Mathematics
             for (int i = 0; i < this.Count; i++) {
                 mul *= this[i];
             }
-            return Math.Pow(mul, 1.0 / this.Count);
+            return System.Math.Pow(mul, 1.0 / this.Count);
         }
 
         /// <summary>
@@ -118,7 +138,7 @@ namespace Breifico.Mathematics
             double sum = 0.0;
             double avg = this.GetArithmeticMean();
             for (int i = 0; i < this.Count; i++) {
-                sum += Math.Pow(this[i] - avg, 2.0);
+                sum += System.Math.Pow(this[i] - avg, 2.0);
             }
             return sum / (this.Count - 1);
         }
@@ -127,7 +147,7 @@ namespace Breifico.Mathematics
         /// Возвращает среднеквадратическое отклонение элементов вектора
         /// </summary>
         /// <returns>Среднеквадратическое отклонение элементов вектора</returns>
-        public double GetStandardDeviation() => Math.Sqrt(this.GetVariance());
+        public double GetStandardDeviation() => System.Math.Sqrt(this.GetVariance());
 
         public IEnumerator<double> GetEnumerator() {
             return ((IEnumerable<double>)this.Values).GetEnumerator();

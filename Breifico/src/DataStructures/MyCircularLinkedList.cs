@@ -6,7 +6,7 @@ namespace Breifico.DataStructures
     /// Имплементация циклического связного списка
     /// </summary>
     /// <typeparam name="T">Тип элементов в циклическом связном списке</typeparam>
-    public class MyCircularLinkedList<T> : MyLinkedList<T>
+    public sealed class MyCircularLinkedList<T> : MyLinkedList<T>
     {
         /// <summary>
         /// Вставляет элемент в циклический связный список

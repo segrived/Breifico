@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Breifico.DataStructures;
 
 namespace Breifico.Algorithms.Compression.RLE
@@ -7,7 +6,7 @@ namespace Breifico.Algorithms.Compression.RLE
     /// <summary>
     /// RLE (Run-Length кодирование)
     /// </summary>
-    public class RleEncoder
+    public sealed class RleEncoder
     {
         private enum State
         {
@@ -21,7 +20,7 @@ namespace Breifico.Algorithms.Compression.RLE
         int _startIndex;
         State _state = State.Undetermined;
         byte? _lastByte;
-        private byte[] _input;
+        private readonly byte[] _input;
 
         void AppendSeq(byte s, int count, int newStartIndex) {
                 this._output.Add((byte)count);
@@ -44,7 +43,7 @@ namespace Breifico.Algorithms.Compression.RLE
                 if (i - this._startIndex == Byte.MaxValue) {
                     if (this._state == State.IdenticalSeq) {
                         this.AppendSeq(this._lastByte.Value, i - this._startIndex, i);
-                    } else if (this._state == State.DifferentSeq){
+                    } else if (this._state == State.DifferentSeq) {
                         var arr = new byte[i - this._startIndex - 1];
                         this._output.Add(0);
                         this._output.Add((byte)(i - this._startIndex - 1));

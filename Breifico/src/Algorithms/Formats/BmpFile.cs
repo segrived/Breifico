@@ -1,11 +1,122 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using Breifico.IO;
 
-namespace Breifico.Algorithms.Formats.BMP
+namespace Breifico.Algorithms.Formats
 {
-    public class BmpFile : IImage
+    /// <summary>
+    /// Заголовок BMP-файла
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    public struct BitmapFileHeader
+    {
+        /// <summary>
+        /// Сингатура BMP-файла
+        /// </summary>
+        [FieldOffset(0)]
+        public readonly ushort Signature;
+
+        /// <summary>
+        /// Полный размер BMP-файла в байтах
+        /// </summary>
+        [FieldOffset(2)]
+        public readonly uint FileSize;
+
+        /// <summary>
+        /// Зарезевированное значение
+        /// </summary>
+        [FieldOffset(6)]
+        public readonly ushort Res1;
+
+        /// <summary>
+        /// Зарезевированное значение
+        /// </summary>
+        [FieldOffset(8)]
+        public readonly ushort Res2;
+
+        /// <summary>
+        /// Оффсет, с которого начинается последовательность пикселей
+        /// </summary>
+        [FieldOffset(10)]
+        public readonly uint StartOffset;
+    }
+
+    /// <summary>
+    /// DIB-заголовок (BITMAPINFOHEADER)
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    public struct DibHeader
+    {
+        /// <summary>
+        /// Размер этого заголовка
+        /// </summary>
+        [FieldOffset(0)]
+        public readonly uint HeaderSize;
+
+        /// <summary>
+        /// Ширина картинки
+        /// </summary>
+        [FieldOffset(4)]
+        public readonly uint Width;
+
+        /// <summary>
+        /// Высотка картинки
+        /// </summary>
+        [FieldOffset(8)]
+        public readonly uint Height;
+
+        /// <summary>
+        /// Количество цветовых плоскостей
+        /// </summary>
+        [FieldOffset(12)]
+        public readonly ushort ColorPlanes;
+
+        /// <summary>
+        /// Бит на пиксель
+        /// </summary>
+        [FieldOffset(14)]
+        public readonly ushort BitsPerPixel;
+
+        /// <summary>
+        /// Метод сжатия BMP-файла
+        /// </summary>
+        [FieldOffset(16)]
+        public readonly uint CompressionMethod;
+
+        /// <summary>
+        /// Размер изображения
+        /// </summary>
+        [FieldOffset(20)]
+        public readonly uint Size;
+
+        /// <summary>
+        /// Горизонтальное разрешение
+        /// </summary>
+        [FieldOffset(24)]
+        public readonly uint HorizontalRes;
+
+        /// <summary>
+        /// Вертикальное разрешение
+        /// </summary>
+        [FieldOffset(28)]
+        public readonly uint VertcalRes;
+
+        /// <summary>
+        /// Количество цветов в палитре
+        /// </summary>
+        [FieldOffset(32)]
+        public readonly uint ColorsInPalette;
+
+        /// <summary>
+        /// Количество "важных" цветов
+        /// </summary>
+        [FieldOffset(36)]
+        public readonly uint ImportantColors;
+    }
+
+    public sealed class BmpFile : IImage
     {
         public BmpFile(string fileName) {
             this.Read(File.OpenRead(fileName));
@@ -75,36 +186,18 @@ namespace Breifico.Algorithms.Formats.BMP
         private void Read(Stream s) {
             using (var reader = new StreamBinaryReader(s)) {
                 // Чтение BMP заголовка
-                ushort signature = reader.ReadUInt16();
-                if (signature != 0x4D42) {
-                    throw new InvalidBmpImageException($"Unknown BMP signature (0x{signature:X4})");
+                var bitmapHeader = reader.ReadStruct<BitmapFileHeader>();
+
+                if (bitmapHeader.Signature != 0x4D42) {
+                    throw new InvalidBmpImageException($"Unknown BMP signature (0x{bitmapHeader.Signature:X4})");
                 }
-                var bitMapHeader = new BitmapFileHeader {
-                    Signature = signature,
-                    FileSize = reader.ReadUInt32(),
-                    Res1 = reader.ReadUInt16(),
-                    Res2 = reader.ReadUInt16(),
-                    StartOffset = reader.ReadUInt32()
-                };
 
                 // Чтение DIB-заголовка (поддерживается только 40-байтный BITMAPINFOHEADER заголовок)
-                uint headerSize = reader.ReadUInt32();
-                if (headerSize != 40) {
+                var dibHeader = reader.ReadStruct<DibHeader>();
+
+                if (dibHeader.HeaderSize != 40) {
                     throw new InvalidBmpImageException("Only BITMAPINFOHEADER header is supported");
                 }
-                var dibHeader = new DibHeader {
-                    HeaderSize = headerSize,
-                    Width = reader.ReadUInt32(),
-                    Height = reader.ReadUInt32(),
-                    ColorPlanes = reader.ReadUInt16(),
-                    BitsPerPixel = reader.ReadUInt16(),
-                    CompressionMethod = reader.ReadUInt32(),
-                    Size = reader.ReadUInt32(),
-                    HorizontalRes = reader.ReadUInt32(),
-                    VertcalRes = reader.ReadUInt32(),
-                    ColorsInPalette = reader.ReadUInt32(),
-                    ImportantColors = reader.ReadUInt32()
-                };
 
                 // пока поддерживаются только 24- и 32-битные BMP
                 if (dibHeader.BitsPerPixel != 24 && dibHeader.BitsPerPixel != 32) {
@@ -122,7 +215,7 @@ namespace Breifico.Algorithms.Formats.BMP
                 this.ImageData = new Color[(int)dibHeader.Width, (int)dibHeader.Height];
 
                 // перемещаемся к оффсету, с которого начинаются пиксели
-                reader.InternalStream.Seek(bitMapHeader.StartOffset, SeekOrigin.Begin);
+                reader.InternalStream.Seek(bitmapHeader.StartOffset, SeekOrigin.Begin);
 
                 switch (this.BitsPerPixel) {
                     case 24:

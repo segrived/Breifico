@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Breifico.DataStructures;
 
 namespace Breifico.IO
@@ -13,6 +14,7 @@ namespace Breifico.IO
         /// От младшего к старшему
         /// </summary>
         LittleEndian,
+
         /// <summary>
         /// От старшего к младшему
         /// </summary>
@@ -22,7 +24,7 @@ namespace Breifico.IO
     /// <summary>
     /// Читает бинарные данные из потока
     /// </summary>
-    public class StreamBinaryReader : IDisposable
+    public sealed class StreamBinaryReader : IDisposable
     {
         private readonly Endianness _endianness;
 
@@ -145,6 +147,14 @@ namespace Breifico.IO
                           + (b[5] << 40) + (b[6] << 48) + (b[7] << 56))
                 : (ulong)(b[7] + (b[6] << 8) + (b[5] << 16) + (b[4] << 24) + (b[3] << 32)
                           + (b[2] << 40) + (b[1] << 48) + (b[0] << 56));
+        }
+
+        public T ReadStruct<T>() where T : struct {
+            byte[] bytes = this.ReadBytes(Marshal.SizeOf(typeof(T)));
+            var handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+            var structData = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
+            handle.Free();
+            return structData;
         }
 
         /// <summary>

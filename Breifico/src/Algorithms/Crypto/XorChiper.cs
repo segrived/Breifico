@@ -7,7 +7,7 @@ namespace Breifico.Algorithms.Crypto
     /// <summary>
     /// XOR-шифрование
     /// </summary>
-    public class XorChiper
+    public sealed class XorChiper
     {
         /// <summary>
         /// Ключ шифрования

@@ -9,7 +9,7 @@ namespace Breifico.DataStructures
     /// Имплементация хеш-сета (методом цепочек, на основе двусвязного списка)
     /// </summary>
     /// <typeparam name="T">Тип элементов в хеш-сете</typeparam>
-    public class MyHashSet<T> : IEnumerable<T>, ICollection
+    public sealed class MyHashSet<T> : IEnumerable<T>, ICollection
     {
         /// <summary>
         /// Количество блоков в хэш-таблице по умолчанию

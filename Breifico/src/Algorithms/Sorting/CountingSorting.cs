@@ -5,7 +5,7 @@ namespace Breifico.Algorithms.Sorting
     /// <summary>
     /// Сортировка подсчетом. Работает за O(N+K)
     /// </summary>
-    public class CountingSorting : ISorter<uint>
+    public sealed class CountingSorting : ISorter<uint>
     {
         private const int DefaulMaxElement = 100000;
 

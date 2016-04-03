@@ -6,7 +6,7 @@ namespace Breifico.IO
     /// <summary>
     /// Предназначен для чтения данных из битового массива
     /// </summary>
-    public class BitArrayReader
+    public sealed class BitArrayReader
     {
         private readonly MyBitArray _internalArray;
         private int _currentPosition = 0;

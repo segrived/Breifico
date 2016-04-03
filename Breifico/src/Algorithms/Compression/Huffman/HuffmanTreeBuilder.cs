@@ -7,7 +7,7 @@ namespace Breifico.Algorithms.Compression.Huffman
     /// <summary>
     /// Строит дерево Хаффмана на основе исходных данных
     /// </summary>
-    public class HuffmanTreeBuilder
+    public sealed class HuffmanTreeBuilder
     {
         private readonly int[] _freqTable = new int[256];
 

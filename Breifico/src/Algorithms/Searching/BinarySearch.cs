@@ -7,7 +7,7 @@ namespace Breifico.Algorithms.Searching
     /// Имплементация бинарного поиска. Работает за O(log N)
     /// </summary>
     /// <typeparam name="T">Тип элементов в коллекции</typeparam>
-    public class BinarySearch<T> : ISearcher<T> where T : IComparable<T>
+    public sealed class BinarySearch<T> : ISearcher<T> where T : IComparable<T>
     {
         /// <summary>
         /// Выполняет поиск в коллекции и возвращает индекс искомного элемента
@@ -31,15 +31,12 @@ namespace Breifico.Algorithms.Searching
             while (left < right) {
                 int midPoint = left + (right - left) / 2;
 
-                switch (input[midPoint].CompareTo(element)) {
-                    case 0:
-                        return midPoint;
-                    case -1:
-                        left = midPoint + 1;
-                        break;
-                    default:
-                        right = midPoint - 1;
-                        break;
+                if (input[midPoint].CompareTo(element) == 0) {
+                    return midPoint;
+                } else if (input[midPoint].CompareTo(element) < 0) {
+                    left = midPoint + 1;
+                } else {
+                    right = midPoint - 1;
                 }
             }
             return input[left].CompareTo(element) == 0 ? left : -1;

@@ -46,9 +46,9 @@ namespace Breifico.Algorithms.Sorting
             var minElement = input[0];
             var maxElement = input[0];
             foreach (var iterItem in input) {
-                if (iterItem.CompareTo(maxElement) == 1) {
+                if (iterItem.CompareTo(maxElement) > 0) {
                     maxElement = iterItem;
-                } else if (iterItem.CompareTo(minElement) == -1) {
+                } else if (iterItem.CompareTo(minElement) < 0) {
                     minElement = iterItem;
                 }
             }
@@ -96,7 +96,7 @@ namespace Breifico.Algorithms.Sorting
     /// <summary>
     /// Реализация блочной сортировки для целых 32-битных чисел
     /// </summary>
-    public class BucketIntSorting : BucketSorting<int>
+    public sealed class BucketIntSorting : BucketSorting<int>
     {
         private static readonly Func<int, int, int, int, int> Sorter = (i, min, max, len) 
             => (int)Math.Round(((double)i - min) / (max - min) * len);

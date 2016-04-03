@@ -11,7 +11,7 @@ namespace Breifico.DataStructures
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [DebuggerDisplay("MyBinarySearchTree<T>: {Count} element(s)")]
-    public class MyBinarySearchTree<T> : IEnumerable<T>, ICollection where T : IComparable<T>
+    public sealed class MyBinarySearchTree<T> : IEnumerable<T>, ICollection where T : IComparable<T>
     {
         private enum NodePosition { Left, Right }
 

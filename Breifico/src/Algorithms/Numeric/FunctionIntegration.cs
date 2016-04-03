@@ -5,7 +5,7 @@ namespace Breifico.Algorithms.Numeric
     /// <summary>
     /// Предоставляет функции для численного интегрирования функций
     /// </summary>
-    public class FunctionIntegration
+    public sealed class FunctionIntegration
     {
         private readonly Func<double, double> _func;
 

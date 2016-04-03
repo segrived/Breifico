@@ -11,7 +11,7 @@ namespace Breifico.DataStructures
     /// </summary>
     /// <typeparam name="T">Тип элементов в списке</typeparam>
     [DebuggerDisplay("MyList<T>: Count: {Count} / Capacity: {Capacity}")]
-    public class MyList<T> : IList<T>, ICollection
+    public sealed class MyList<T> : IList<T>, ICollection
     {
         private const int StartSize = 8;
 

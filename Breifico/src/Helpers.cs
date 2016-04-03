@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using Breifico.Algorithms.Formats.BMP;
+using Breifico.Algorithms.Formats;
 
 namespace Breifico
 {

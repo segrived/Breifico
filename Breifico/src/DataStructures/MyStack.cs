@@ -11,7 +11,7 @@ namespace Breifico.DataStructures
     /// </summary>
     /// <typeparam name="T">Тип элементов в стеке</typeparam>
     [DebuggerDisplay("MyStack<T>: {Count} element(s)")]
-    public class MyStack<T> : IEnumerable<T>, ICollection
+    public sealed class MyStack<T> : IEnumerable<T>, ICollection
     {
         private readonly MyLinkedList<T> _stackData
             = new MyLinkedList<T>();

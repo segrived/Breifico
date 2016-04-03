@@ -7,7 +7,7 @@ namespace Breifico.Algorithms.Searching
     /// Имплементация линейного поиска. Работает за O(N)
     /// </summary>
     /// <typeparam name="T">Тип элементов в коллекции</typeparam>
-    public class LinearSearch<T> : ISearcher<T> where T : IComparable<T>
+    public sealed class LinearSearch<T> : ISearcher<T> where T : IComparable<T>
     {
         /// <summary>
         /// Выполняет поиск в коллекции и возвращает индекс искомного элемента

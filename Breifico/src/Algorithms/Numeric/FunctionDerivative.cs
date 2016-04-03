@@ -5,7 +5,7 @@ namespace Breifico.Algorithms.Numeric
     /// <summary>
     /// Предоставляет функции для численного дифференцирования функций
     /// </summary>
-    public class FunctionDerivative
+    public sealed class FunctionDerivative
     {
         private readonly Func<double, double> _func;
 

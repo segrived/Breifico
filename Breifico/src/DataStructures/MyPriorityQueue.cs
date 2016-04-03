@@ -8,7 +8,7 @@ namespace Breifico.DataStructures
     /// Имплементация приоритетной очереди
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class MyPriorityQueue<T> : IEnumerable<T> where T : IComparable<T>
+    public sealed class MyPriorityQueue<T> : IEnumerable<T> where T : IComparable<T>
     {
         private class QueueItem<TR> : IComparable<QueueItem<TR>>
         {

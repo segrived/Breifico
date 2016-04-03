@@ -1,8 +1,8 @@
-﻿using Breifico.Mathematics;
+﻿using Breifico.DataStructures;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Breifico.Tests.Algorithms.Mathematics
+namespace Breifico.Tests.DataStructures
 {
     [TestClass]
     public class MyVectorTests

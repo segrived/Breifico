@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Windows.Forms;
-using Breifico.Algorithms.Formats.BMP;
+using Breifico.Algorithms.Formats;
 using Breifico.Algorithms.ImageProcessing;
 
 namespace Breifico.ImageEditor

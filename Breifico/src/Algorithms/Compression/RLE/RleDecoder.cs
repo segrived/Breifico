@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Linq;
 using Breifico.DataStructures;
 
 namespace Breifico.Algorithms.Compression.RLE
 {
-    public class RleDecoder
+    public sealed class RleDecoder
     {
         private byte[] _input;
 

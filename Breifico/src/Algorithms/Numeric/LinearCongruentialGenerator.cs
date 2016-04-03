@@ -6,7 +6,7 @@ namespace Breifico.Algorithms.Numeric
     /// <summary>
     /// Реализация генератора псевдослучайных числе (линейный конгруэнтный метод)
     /// </summary>
-    public class LinearCongruentialGenerator
+    public sealed class LinearCongruentialGenerator
     {
         #region Constants
         private const long A = 1103515245;

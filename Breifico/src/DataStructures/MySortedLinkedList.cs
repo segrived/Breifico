@@ -9,7 +9,7 @@ namespace Breifico.DataStructures
     /// <typeparam name="T">Тип элементов в сортированном связном списке
     /// Указанный тип должен имлементировать интерфейс IComparable</typeparam>
     [DebuggerDisplay("MySortedLinkedList<T>: {Count} element(s)")]
-    public class MySortedLinkedList<T> : MyLinkedList<T> where T : IComparable<T>
+    public sealed class MySortedLinkedList<T> : MyLinkedList<T> where T : IComparable<T>
     {
         /// <summary>
         /// Добавляет элемент в коллекцию по нужному индексу, чтобы держать список
@@ -19,7 +19,7 @@ namespace Breifico.DataStructures
         public override void Add(T item) {
             var tempNode = this.HeadNode;
             int index = 0;
-            while (tempNode != null && tempNode.Value.CompareTo(item) == -1) {
+            while (tempNode != null && tempNode.Value.CompareTo(item) < 0) {
                 tempNode = tempNode.Next;
                 index++;
             }

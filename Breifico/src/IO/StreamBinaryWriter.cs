@@ -4,7 +4,7 @@ using Breifico.DataStructures;
 
 namespace Breifico.IO
 {
-    public class StreamBinaryWriter : IDisposable
+    public sealed class StreamBinaryWriter : IDisposable
     {
         private readonly Stream _internalStream;
 

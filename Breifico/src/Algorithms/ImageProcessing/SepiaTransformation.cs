@@ -5,7 +5,7 @@ namespace Breifico.Algorithms.ImageProcessing
     /// <summary>
     /// Применение эффекта "Сепия" к изображению
     /// </summary>
-    public class SepiaTransformation : IImageTransformation
+    public sealed class SepiaTransformation : IImageTransformation
     {
         public IImage Tranform(IImage input) {
             return input.Transform(p => {

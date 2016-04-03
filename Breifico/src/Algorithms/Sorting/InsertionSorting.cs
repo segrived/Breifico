@@ -6,7 +6,7 @@ namespace Breifico.Algorithms.Sorting
     /// Сортировка вставками. Работает за O(N^2)
     /// </summary>
     /// <typeparam name="T">Тип элементов, которые необходимо отсортировать</typeparam>
-    public class InsertionSorting<T> : ISorter<T> where T : IComparable<T>
+    public sealed class InsertionSorting<T> : ISorter<T> where T : IComparable<T>
     {
         /// <summary>
         /// Сортирует in-place исходный массив методом вставок и возвращает его

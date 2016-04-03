@@ -11,7 +11,7 @@ namespace Breifico.DataStructures
     /// </summary>
     /// <typeparam name="T">Тип элементов в бинарной куче</typeparam>
     [DebuggerDisplay("MyBinaryHeap<T>: Count: {Count}")]
-    public class MyBinaryHeap<T> : ICollection, IEnumerable<T> where T : IComparable<T>
+    public sealed class MyBinaryHeap<T> : ICollection, IEnumerable<T> where T : IComparable<T>
     {
         private object _syncRoot;
 

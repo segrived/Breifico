@@ -11,7 +11,7 @@ namespace Breifico.DataStructures
     /// </summary>
     /// <typeparam name="T">Тип элементов в очереди</typeparam>
     [DebuggerDisplay("MyQueue<T>: {Count} element(s)")]
-    public class MyQueue<T> : IEnumerable<T>, ICollection
+    public sealed class MyQueue<T> : IEnumerable<T>, ICollection
     {
         private object _syncRoot;
 

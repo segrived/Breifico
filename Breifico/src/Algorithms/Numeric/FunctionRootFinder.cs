@@ -2,7 +2,7 @@
 
 namespace Breifico.Algorithms.Numeric
 {
-    public class FunctionRootFinder
+    public sealed class FunctionRootFinder
     {
         private readonly Func<double, double> _func;
 

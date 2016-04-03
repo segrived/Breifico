@@ -3,7 +3,7 @@ using Breifico.DataStructures;
 
 namespace Breifico.Algorithms.Compression.Huffman
 {
-    public class HuffmanCompressedData
+    public sealed class HuffmanCompressedData
     {
         public byte[] OutputBytes { get; }
         public int FreeBits { get; }
@@ -19,7 +19,7 @@ namespace Breifico.Algorithms.Compression.Huffman
     /// <summary>
     /// Кодирует исходные данные алгоритмом Хаффмана
     /// </summary>
-    public class HuffmanEncoder
+    public sealed class HuffmanEncoder
     {
         private readonly byte[] _inputData;
 

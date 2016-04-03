@@ -10,7 +10,7 @@ namespace Breifico.DataStructures
     /// <summary>
     /// Имплементация битового массива
     /// </summary>
-    public class MyBitArray : ICollection, IEnumerable<bool>, IEquatable<MyBitArray>
+    public sealed class MyBitArray : ICollection, IEnumerable<bool>, IEquatable<MyBitArray>
     {
         /// <summary>
         /// Размер буфера по умолчанию

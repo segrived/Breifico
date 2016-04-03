@@ -6,7 +6,7 @@ namespace Breifico.Algorithms.Sorting
     /// Сортировка вставками. Работает за O(N^2)
     /// </summary>
     /// <typeparam name="T">Тип элементов, которые необходимо отсортировать</typeparam>
-    public class SelectionSorting<T> : ISorter<T> where T : IComparable<T>
+    public sealed class SelectionSorting<T> : ISorter<T> where T : IComparable<T>
     {
         /// <summary>
         /// Сортирует in-place исходный массив методом сортировки выбором и возвращает его
@@ -17,7 +17,7 @@ namespace Breifico.Algorithms.Sorting
             for (int i = 0; i < input.Length - 1; i++) {
                 int minIndex = i;
                 for (int j = i + 1; j < input.Length; j++) {
-                    if (input[minIndex].CompareTo(input[j]) == 1) {
+                    if (input[minIndex].CompareTo(input[j]) > 0) {
                         minIndex = j;
                     }
                 }

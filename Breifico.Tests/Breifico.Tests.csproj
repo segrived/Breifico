@@ -68,7 +68,7 @@
     <Compile Include="Algorithms\Compression\HuffmanEncoderTests.cs" />
     <Compile Include="Algorithms\Compression\RLE\RleEncoderTests.cs" />
     <Compile Include="Algorithms\Crypto\XorChiperTests.cs" />
-    <Compile Include="Algorithms\Mathematics\MyVectorTests.cs" />
+    <Compile Include="DataStructures\MyVectorTests.cs" />
     <Compile Include="Algorithms\Numeric\FibonacciNumbersTests.cs" />
     <Compile Include="Algorithms\Numeric\FunctionDerivativeTests.cs" />
     <Compile Include="Algorithms\Numeric\FunctionIntegrationTests.cs" />

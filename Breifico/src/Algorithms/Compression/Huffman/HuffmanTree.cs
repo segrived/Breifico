@@ -7,7 +7,7 @@ namespace Breifico.Algorithms.Compression.Huffman
     /// <summary>
     /// Бинарное дерево Хаффмана
     /// </summary>
-    public class HuffmanTree
+    public sealed class HuffmanTree
     {
         /// <summary>
         /// Нода бинарного дерева Хаффмана
@@ -25,7 +25,7 @@ namespace Breifico.Algorithms.Compression.Huffman
             public Node RightNode { get; internal set; }
 
             /// <summary>
-            /// Список байтов
+            /// Список байт
             /// </summary>
             public List<byte> Bytes { get; }
 
@@ -35,13 +35,13 @@ namespace Breifico.Algorithms.Compression.Huffman
             public int Frequency { get; }
 
             public Node() {
-                this.Bytes = new List<byte>() { 0x00 };
+                this.Bytes = new List<byte> { 0x00 };
             }
 
             public Node(Node left, Node right) {
                 this.LeftNode = left;
                 this.RightNode = right;
-                this.Bytes = new List<byte>() {0x00};
+                this.Bytes = new List<byte> {0x00};
             }
 
             /// <summary>
