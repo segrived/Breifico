@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,6 +26,14 @@ namespace Breifico.DataStructures
         {
             get { return this.Values[index]; }
             set { this.Values[index] = value; }
+        }
+
+        public static MyVector Init(int length, Func<int, double> f) {
+            var l = new MyList<double>();
+            for (int i = 0; i < length; i++) {
+                l.Add(f(i));
+            }
+            return new MyVector(l);
         }
 
         public static MyVector operator +(MyVector v, double value) {
@@ -112,7 +121,7 @@ namespace Breifico.DataStructures
             for (int i = 0; i < this.Count; i++) {
                 mul *= this[i];
             }
-            return System.Math.Pow(mul, 1.0 / this.Count);
+            return Math.Pow(mul, 1.0 / this.Count);
         }
 
         /// <summary>
@@ -138,7 +147,7 @@ namespace Breifico.DataStructures
             double sum = 0.0;
             double avg = this.GetArithmeticMean();
             for (int i = 0; i < this.Count; i++) {
-                sum += System.Math.Pow(this[i] - avg, 2.0);
+                sum += Math.Pow(this[i] - avg, 2.0);
             }
             return sum / (this.Count - 1);
         }
@@ -147,7 +156,7 @@ namespace Breifico.DataStructures
         /// Возвращает среднеквадратическое отклонение элементов вектора
         /// </summary>
         /// <returns>Среднеквадратическое отклонение элементов вектора</returns>
-        public double GetStandardDeviation() => System.Math.Sqrt(this.GetVariance());
+        public double GetStandardDeviation() => Math.Sqrt(this.GetVariance());
 
         public IEnumerator<double> GetEnumerator() {
             return ((IEnumerable<double>)this.Values).GetEnumerator();

@@ -222,8 +222,8 @@ namespace Breifico.DataStructures
         /// <para />
         /// Например: A = {1, 2, 3, 4, 5}, B = {3, 4, 5, 6, 7}, A ∆ B = { 1, 2, 6, 7 }
         /// </summary>
-        /// <param name="otherSet"></param>
-        /// <returns></returns>
+        /// <param name="otherSet">Второй хеш-сет</param>
+        /// <returns>Новый хэш-сет с симметрической разностью множеств</returns>
         public MyHashSet<T> Difference(MyHashSet<T> otherSet) {
             var newSet = new MyHashSet<T>();
             foreach (var e in this) {
