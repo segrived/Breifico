@@ -64,9 +64,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Algorithms\Compression\HuffmanCompressionTests.cs" />
-    <Compile Include="Algorithms\Compression\HuffmanEncoderTests.cs" />
-    <Compile Include="Algorithms\Compression\RLE\RleEncoderTests.cs" />
     <Compile Include="Algorithms\Crypto\XorChiperTests.cs" />
     <Compile Include="Algorithms\Searching\GenericSearchTests.cs" />
     <Compile Include="Algorithms\Sorting\GenericSortingTests.cs" />
