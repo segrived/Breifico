@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using Breifico.IO;
@@ -15,7 +16,7 @@ namespace Breifico.DataStructures
         /// <summary>
         /// Размер буфера по умолчанию
         /// </summary>
-        private const int DefaultBufferSize = 4;
+        private const int DEFAULT_BUFFER_SIZE = 4;
 
         private object _syncRoot;
 
@@ -49,7 +50,7 @@ namespace Breifico.DataStructures
         /// <summary>
         /// Инициализирует новый битовый массив с размером по умолчанию
         /// </summary>
-        public MyBitArray() : this(DefaultBufferSize) {}
+        public MyBitArray() : this(DEFAULT_BUFFER_SIZE) {}
 
         /// <summary>
         /// Инициализирует новый битовый массив с указанным размером
@@ -241,11 +242,11 @@ namespace Breifico.DataStructures
         /// <param name="other">Второй массив</param>
         /// <returns>True - если битовые массивы равны, иначе False</returns>
         public bool Equals(MyBitArray other) {
-            if (this.Count != other.Count) {
+            if (other != null && this.Count != other.Count) {
                 return false;
             }
             for (int i = 0; i < this._internalBuffer.Count; i++) {
-                if (this._internalBuffer[i] != other._internalBuffer[i]) {
+                if (other != null && this._internalBuffer[i] != other._internalBuffer[i]) {
                     return false;
                 }
             }
@@ -257,13 +258,8 @@ namespace Breifico.DataStructures
         /// Для получения хэшкода ксорит все байты
         /// </summary>
         /// <returns>Хэшкод битового массива</returns>
-        public override int GetHashCode() {
-            int hashCode = 0;
-            for (int i = 0; i < this._internalBuffer.Count; i++) {
-                hashCode ^= this._internalBuffer[i];
-            }
-            return hashCode;
-        }
+        public override int GetHashCode() 
+            => this._internalBuffer.Aggregate(0, (current, t) => current ^ t);
 
         /// <summary>
         /// Строковое представление

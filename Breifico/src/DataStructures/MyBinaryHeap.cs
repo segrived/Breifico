@@ -28,12 +28,15 @@ namespace Breifico.DataStructures
         /// </summary>
         public bool IsEmpty => this._data.Count == 0;
 
-        public MyBinaryHeap(IComparer<T> comparer) {
+        public MyBinaryHeap(IComparer<T> comparer)
+        {
             this._comparer = comparer;
         }
 
         public MyBinaryHeap(Comparison<T> comparision)
-            : this(Comparer<T>.Create(comparision)) {}
+            : this(Comparer<T>.Create(comparision))
+        {
+        }
 
         /// <summary>
         /// Создает новый экземпляр бинарной кучи (Max-Heap) и возвращает ее
@@ -53,18 +56,21 @@ namespace Breifico.DataStructures
         /// Добавляет элемент в бинарную кучу
         /// </summary>
         /// <param name="item">Добавляемый элемент</param>
-        public void Add(T item) {
+        public void Add(T item)
+        {
             this._data.Add(item);
-            if (this.Count <= 1) {
+
+            if (this.Count <= 1)
                 return;
-            }
+
             int addedItemIndex = this.Count - 1;
-            while (addedItemIndex > 0) {
+            while (addedItemIndex > 0)
+            {
                 int parentIndex = (addedItemIndex - 1) / 2;
 
-                if (this._comparer.Compare(this._data[parentIndex], this._data[addedItemIndex]) > 0) {
+                if (this._comparer.Compare(this._data[parentIndex], this._data[addedItemIndex]) > 0)
                     return;
-                }
+
                 var tmp = this._data[parentIndex];
                 this._data[parentIndex] = this._data[addedItemIndex];
                 this._data[addedItemIndex] = tmp;
@@ -76,20 +82,20 @@ namespace Breifico.DataStructures
         /// Добавляет коллекцию эллементов в бинарную кучу
         /// </summary>
         /// <param name="items">Коллекция с добавляемыми элементами</param>
-        public void AddRange(IEnumerable<T> items) {
-            foreach (var item in items) {
+        public void AddRange(IEnumerable<T> items)
+        {
+            foreach (var item in items)
                 this.Add(item);
-            }
         }
 
         /// <summary>
         /// Возващает элемент из вершины бинарной кучи, но не удаляего его
         /// </summary>
         /// <returns>Элемент из вершины</returns>
-        public T Peek() {
-            if (this.Count < 1) {
+        public T Peek()
+        {
+            if (this.Count < 1)
                 throw new IndexOutOfRangeException();
-            }
             return this._data[0];
         }
 
@@ -98,32 +104,31 @@ namespace Breifico.DataStructures
         /// куча перестраивается
         /// </summary>
         /// <returns>Элемент из вершины</returns>
-        public T Extract() {
-            if (this.Count <= 0) {
+        public T Extract()
+        {
+            if (this.Count <= 0)
                 throw new ArgumentOutOfRangeException();
-            }
+
             var element = this._data[0];
             this._data[0] = this._data[this.Count - 1];
             this._data.RemoveAt(this.Count - 1);
 
             int index = 0;
 
-            while (true) {
+            while (true)
+            {
                 int lIndex = index * 2 + 1;
-                int rIndex = index * 2 + 2;
+                int rIndex = lIndex + 1;
 
-                int cmpIndex;
-                if (lIndex >= this._data.Count) {
+                if (lIndex >= this._data.Count)
                     break;
-                }
-                if (rIndex >= this._data.Count) {
-                    cmpIndex = lIndex;
-                } else {
-                    var l = this._data[lIndex];
-                    var r = this._data[rIndex];
-                    cmpIndex = this._comparer.Compare(l, r) > 0 ? lIndex : rIndex;
-                }
-                if (this._comparer.Compare(this._data[index], this._data[cmpIndex]) < 0) {
+
+                int cmpIndex = rIndex >= this._data.Count
+                    ? lIndex
+                    : (this._comparer.Compare(this._data[lIndex], this._data[rIndex]) > 0 ? lIndex : rIndex);
+
+                if (this._comparer.Compare(this._data[index], this._data[cmpIndex]) < 0)
+                {
                     var tmp = this._data[cmpIndex];
                     this._data[cmpIndex] = this._data[index];
                     this._data[index] = tmp;
@@ -136,12 +141,12 @@ namespace Breifico.DataStructures
         /// <summary>
         /// Очищает бинарную кучу
         /// </summary>
-        public void Clear() {
-            this._data.Clear();
-        }
+        public void Clear() => this._data.Clear();
 
         #region ICollection implementation
-        public void CopyTo(Array array, int index) {
+
+        public void CopyTo(Array array, int index)
+        {
             throw new NotImplementedException();
         }
 
@@ -149,17 +154,18 @@ namespace Breifico.DataStructures
         {
             get
             {
-                if (this._syncRoot == null) {
+                if (this._syncRoot == null)
                     Interlocked.CompareExchange(ref this._syncRoot, new object(), null);
-                }
                 return this._syncRoot;
             }
         }
 
         public bool IsSynchronized { get; } = false;
+
         #endregion
 
         #region IEnumerable<T> implementation
+
         /// <summary>
         /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
         /// </summary>
@@ -167,10 +173,10 @@ namespace Breifico.DataStructures
         /// Объект <see cref="IEnumerator{T}" />, который может использоваться
         /// для перебора коллекции
         /// </returns>
-        public IEnumerator<T> GetEnumerator() {
-            for (int i = 0; i < this.Count; i++) {
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < this.Count; i++)
                 yield return this._data[i];
-            }
         }
 
         /// <summary>
@@ -180,9 +186,8 @@ namespace Breifico.DataStructures
         /// Объект <see cref="IEnumerator" />, который может использоваться для 
         /// перебора коллекции
         /// </returns>
-        IEnumerator IEnumerable.GetEnumerator() {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
         #endregion
     }
 }

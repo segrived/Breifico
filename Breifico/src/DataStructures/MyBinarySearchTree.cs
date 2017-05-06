@@ -148,7 +148,8 @@ namespace Breifico.DataStructures
             /// <param name="refNode">Исходная нода</param>
             /// <param name="parent">Родитель исходной ноды</param>
             /// <param name="position">Положение исходной ноды по отношению к родителю</param>
-            public SmartNode(Node<TR> refNode, Node<TR> parent, NodePosition position) {
+            public SmartNode(Node<TR> refNode, Node<TR> parent, NodePosition position)
+            {
                 this.RefNode = refNode;
                 this.Parent = parent;
                 this.Position = position;
@@ -158,12 +159,14 @@ namespace Breifico.DataStructures
             /// Заменяет исходную ноду новой нодой
             /// </summary>
             /// <param name="newNode">Новая нода, которая заменит исходную</param>
-            public void ReplaceNode(Node<TR> newNode) {
-                if (this.Position == NodePosition.Left) {
-                    this.Parent.Left = newNode;
-                } else {
-                    this.Parent.Right = newNode;
-                }
+            public void ReplaceNode(Node<TR> newNode) => this.ProcessNode(n => newNode);
+
+            private void ProcessNode(Func<Node<TR>, Node<TR>> func)
+            {
+                if (this.Position == NodePosition.Left)
+                    this.Parent.Left = func(this.Parent.Left);
+                else
+                    this.Parent.Right = func(this.Parent.Right);
             }
 
             /// <summary>
@@ -186,9 +189,7 @@ namespace Breifico.DataStructures
         /// <param name="item">Искомая нода</param>
         /// <returns>Экземпляр класса SmartNode если элемент был найден.
         /// Если искомая нода отсуствует в коллекции, функция вернет null</returns>
-        private SmartNode<T> FindNode(Node<T> item) {
-            return this.FindNode(item.Value);
-        }
+        private SmartNode<T> FindNode(Node<T> item) => this.FindNode(item.Value);
 
         /// <summary>
         /// Ищет в дереве указанную ноду по значению
@@ -196,21 +197,26 @@ namespace Breifico.DataStructures
         /// <param name="item">Значение искомой ноды</param>
         /// <returns>Экземпляр класса SmartNode если элемент был найден.
         /// Если искомый элемент отсуствует в коллекции, функция вернет null</returns>
-        private SmartNode<T> FindNode(T item) {
+        private SmartNode<T> FindNode(T item)
+        {
             var tempNode = this._rootNode;
             Node<T> parent = null;
             var nodePosition = NodePosition.Left;
 
-            while (tempNode != null) {
+            while (tempNode != null)
+            {
                 int compResult = item.CompareTo(tempNode.Value);
-                if (compResult == 0) {
+                if (compResult == 0)
                     return new SmartNode<T>(tempNode, parent, nodePosition);
-                }
-                if (compResult < 0) {
+
+                if (compResult < 0)
+                {
                     parent = tempNode;
                     nodePosition = NodePosition.Left;
                     tempNode = tempNode.Left;
-                } else {
+                }
+                else
+                {
                     parent = tempNode;
                     nodePosition = NodePosition.Right;
                     tempNode = tempNode.Right;
@@ -223,35 +229,41 @@ namespace Breifico.DataStructures
         /// Удаляет элемент из коллекции
         /// </summary>
         /// <param name="item">Удаляемый элемент</param>
-        public void Remove(T item) {
+        public void Remove(T item)
+        {
             var node = this.FindNode(item);
-            if (node == null) {
+
+            if (node == null)
                 return;
-            }
+
             // Если нода - лист (у нее нет детей)
-            if (node.RefNode.IsLeaf) {
-                if (node.Parent == null) {
+            if (node.RefNode.IsLeaf)
+            {
+                if (node.Parent == null)
                     this._rootNode = null;
-                } else {
+                else
                     node.RemoveNode();
-                }
+            }
             // Если у ноды один ребенок
-            } else if (node.RefNode.HasOnlyOneChild) {
+            else if (node.RefNode.HasOnlyOneChild)
+            {
                 var newNode = node.RefNode.Left ?? node.RefNode.Right;
-                // if root with only one child
-                if (node.Parent == null) {
+                if (node.Parent == null)
                     this._rootNode = newNode;
-                } else {
+                else
                     node.ReplaceNode(newNode);
-                }
+            }
             // Если у ноды два ребенка
-            } else {
+            else
+            {
                 // TODO: оптимизировать удаление ноды в данном ситуации
                 var x = node.RefNode.Right;
                 var parent = node.RefNode;
                 bool isLeftNode = false;
-                while (x != null) {
-                    if (x.Left == null) {
+                while (x != null)
+                {
+                    if (x.Left == null)
+                    {
                         var nodeValue = x.Value;
                         this.Remove(isLeftNode ? parent.Left.Value : parent.Right.Value);
                         node.ReplaceNodeValue(nodeValue);

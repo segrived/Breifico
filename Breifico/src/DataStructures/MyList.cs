@@ -13,7 +13,7 @@ namespace Breifico.DataStructures
     [DebuggerDisplay("MyList<T>: Count: {Count} / Capacity: {Capacity}")]
     public sealed class MyList<T> : IList<T>, ICollection
     {
-        private const int StartSize = 8;
+        private const int START_SIZE = 8;
 
         private T[] _internalArray;
 
@@ -22,7 +22,7 @@ namespace Breifico.DataStructures
         /// <summary>
         /// Создает новый список с вместимостью по умолчанию
         /// </summary>
-        public MyList() : this(StartSize) {}
+        public MyList() : this(START_SIZE) {}
 
         /// <summary>
         /// Создает новый список с указанной вместимостью

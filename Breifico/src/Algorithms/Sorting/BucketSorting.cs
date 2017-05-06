@@ -12,7 +12,7 @@ namespace Breifico.Algorithms.Sorting
         /// <summary>
         /// Количество блоков по умолчанию
         /// </summary>
-        private const int DefaultBucketsCount = 1000;
+        private const int DEFAULT_BUCKETS_COUNT = 1000;
 
         private readonly MySortedLinkedList<T>[] _buckets;
         private readonly Func<T, T, T, int, int> _bucketSelectorFunction;
@@ -23,7 +23,7 @@ namespace Breifico.Algorithms.Sorting
         /// </summary>
         /// <param name="f"></param>
         public BucketSorting(Func<T, T, T, int, int> f) 
-            : this(DefaultBucketsCount, f) {}
+            : this(DEFAULT_BUCKETS_COUNT, f) {}
 
         /// <summary>
         /// Создает новый экземпляр <see cref="BucketSorting{T}"/> с указанным количеством блоков 
@@ -84,11 +84,17 @@ namespace Breifico.Algorithms.Sorting
                 if (this._buckets[i] == null || this._buckets[i].Count == 0) {
                     continue;
                 }
-                var enumerator = this._buckets[i].GetEnumerator();
-                while (enumerator.MoveNext()) {
-                    input[outIndex++] = enumerator.Current;
+                using (var enumerator = this._buckets[i].GetEnumerator())
+                {
+                    while (enumerator.MoveNext())
+                    {
+                        input[outIndex++] = enumerator.Current;
+                    }
                 }
             }
+
+            Array.Clear(this._buckets, 0, this._buckets.Length);
+
             return input;
         }
     }

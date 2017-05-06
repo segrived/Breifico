@@ -9,7 +9,8 @@ namespace Breifico.Tests.Algorithms.Numeric
     public class PrimeNumbersTests
     {
         [TestMethod]
-        public void IsPrime_ShouldReturnTreeIfPrime() {
+        public void IsPrime_ShouldReturnTreeIfPrime()
+        {
             PrimeNumbers.IsPrime(0).Should().BeTrue();
             PrimeNumbers.IsPrime(1).Should().BeTrue();
             PrimeNumbers.IsPrime(2).Should().BeTrue();
@@ -22,7 +23,8 @@ namespace Breifico.Tests.Algorithms.Numeric
         }
 
         [TestMethod]
-        public void IsProbablyPrimeFermat() {
+        public void IsProbablyPrimeFermat()
+        {
             PrimeNumbers.IsProbablyPrimeFermat(BigInteger.Parse("247899471379052853718361744194218517777"))
                 .Should().BeTrue();
             PrimeNumbers.IsProbablyPrimeFermat(BigInteger.Parse("11765973102324847295134644699013290089"))
@@ -49,7 +51,8 @@ namespace Breifico.Tests.Algorithms.Numeric
         }
 
         [TestMethod]
-        public void GetPrimesBruteforce() {
+        public void GetPrimesBruteforce()
+        {
             PrimeNumbers.GetPrimesBruteforce(50).Should().Equal(
                 2, 3, 5, 7, 11, 13, 17, 
                 19, 23, 29, 31, 37, 41, 43, 47);
@@ -58,7 +61,8 @@ namespace Breifico.Tests.Algorithms.Numeric
         }
 
         [TestMethod]
-        public void GetPrimes() {
+        public void GetPrimes()
+        {
             PrimeNumbers.GetPrimes(0).Should().BeEmpty();
             PrimeNumbers.GetPrimes(1).Should().BeEmpty();
             PrimeNumbers.GetPrimes(2).Should().Equal(2);

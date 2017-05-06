@@ -8,7 +8,8 @@ namespace Breifico.Tests.Algorithms.Numeric
     public class SimpleNumericAlgoritmsTests
     {
         [TestMethod]
-        public void GcdFinder_ShouldReturnGcd() {
+        public void GcdFinder_ShouldReturnGcd()
+        {
             SimpleNumericAlgoritms.GcdFinder(2, 1).Should().Be(1);
             SimpleNumericAlgoritms.GcdFinder(160, 0).Should().Be(160);
             SimpleNumericAlgoritms.GcdFinder(8, 8).Should().Be(8);
@@ -16,7 +17,8 @@ namespace Breifico.Tests.Algorithms.Numeric
         }
 
         [TestMethod]
-        public void Randomize_WhenAnyElement_ShouldRandomize() {
+        public void Randomize_WhenAnyElement_ShouldRandomize()
+        {
             var arr = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             SimpleNumericAlgoritms.RandomizeArray(arr);
             arr.Should().Contain(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
@@ -24,14 +26,16 @@ namespace Breifico.Tests.Algorithms.Numeric
         }
 
         [TestMethod]
-        public void Randomize_WhenEmpty_ShouldDoNothing() {
+        public void Randomize_WhenEmpty_ShouldDoNothing()
+        {
             var arr = new int[0];
             SimpleNumericAlgoritms.RandomizeArray(arr);
             arr.Should().BeEmpty();
         }
 
         [TestMethod]
-        public void ExpNumber_ShouldRaiseToPower() {
+        public void ExpNumber_ShouldRaiseToPower()
+        {
             SimpleNumericAlgoritms.ExpNumber(10, -2).Should()
                 .BeApproximately(0.01, 0.001);
             SimpleNumericAlgoritms.ExpNumber(10, -3).Should()

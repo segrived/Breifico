@@ -16,12 +16,11 @@ namespace Breifico.Algorithms.Searching
         /// <param name="input">Исходная коллекция</param>
         /// <param name="element">Искомый элемент</param>
         /// <returns>Индекс найденного элемента</returns>
-        public int Search(IList<T> input, T element) {
-            for (int i = 0; i < input.Count; i++) {
-                if (input[i].Equals(element)) {
+        public int Search(IList<T> input, T element)
+        {
+            for (int i = 0; i < input.Count; i++)
+                if (input[i].Equals(element))
                     return i;
-                }
-            }
             return -1;
         }
     }

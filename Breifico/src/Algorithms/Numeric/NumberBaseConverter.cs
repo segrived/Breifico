@@ -17,29 +17,27 @@ namespace Breifico.Algorithms.Numeric
         };
 
         /// <summary>
-        /// Создает и возвращает новый экземпляр <see cref="NumberBaseConverter"/> с
-        /// указанной системой счисления
+        /// Создает и возвращает новый экземпляр <see cref="NumberBaseConverter"/> с указанной системой счисления
         /// </summary>
         /// <param name="numberBase"></param>
-        public NumberBaseConverter(int numberBase) {
-            if (numberBase < 2 || numberBase > this._bases.Length) {
+        public NumberBaseConverter(int numberBase)
+        {
+            if (numberBase < 2 || numberBase > this._bases.Length)
                 throw new ArgumentException($"numberBase should be in range 2..{this._bases.Length}");
-            }
             this.NumberBase = numberBase;
         }
 
         /// <summary>
         /// Переводит число в систему счисления <see cref="NumberBase"/>
         /// </summary>
-        /// <param name="number">Число, которое необходимо перевести  другую 
-        /// систему счисления</param>
-        /// <param name="padding">Минимальное число символов, все отсутствующие
-        /// цифры будут заполнены нулями</param>
+        /// <param name="number">Число, которое необходимо перевести  другую систему счисления</param>
+        /// <param name="padding">Минимальное число символов, все отсутствующие цифры будут заполнены нулями</param>
         /// <returns>Число в необходимой системе счисления</returns>
-        public string ToBase(int number, int padding = 0) {
-
+        public string ToBase(int number, int padding = 0)
+        {
             var outStack = new MyStack<char>();
-            while (number > 0) {
+            while (number > 0)
+            {
                 int b = number % this.NumberBase;
                 outStack.Push(this._bases[b]);
                 number /= this.NumberBase;

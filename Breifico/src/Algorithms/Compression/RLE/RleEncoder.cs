@@ -40,18 +40,25 @@ namespace Breifico.Algorithms.Compression.RLE
             }
 
             for (int i = 0; i < this._input.Length; i++) {
-                if (i - this._startIndex == Byte.MaxValue) {
-                    if (this._state == State.IdenticalSeq) {
-                        this.AppendSeq(this._lastByte.Value, i - this._startIndex, i);
-                    } else if (this._state == State.DifferentSeq) {
-                        var arr = new byte[i - this._startIndex - 1];
-                        this._output.Add(0);
-                        this._output.Add((byte)(i - this._startIndex - 1));
-                        Array.Copy(this._input, this._startIndex, arr, 0, i - this._startIndex - 1);
-                        this._output.AddRange(arr);
+                if (i - this._startIndex == Byte.MaxValue)
+                {
+                    switch (this._state)
+                    {
+                        case State.IdenticalSeq:
+                            var lastByte = this._lastByte;
+                            if (lastByte != null)
+                                this.AppendSeq(lastByte.Value, i - this._startIndex, i);
+                            break;
+                        case State.DifferentSeq:
+                            var arr = new byte[i - this._startIndex - 1];
+                            this._output.Add(0);
+                            this._output.Add((byte)(i - this._startIndex - 1));
+                            Array.Copy(this._input, this._startIndex, arr, 0, i - this._startIndex - 1);
+                            this._output.AddRange(arr);
 
-                        this._startIndex = i - 1;
-                        this._state = State.IdenticalSeq;
+                            this._startIndex = i - 1;
+                            this._state = State.IdenticalSeq;
+                            break;
                     }
                 }
                 byte currentByte = this._input[i];
@@ -66,8 +73,11 @@ namespace Breifico.Algorithms.Compression.RLE
                         }
                         break;
                     case State.IdenticalSeq:
-                        if (currentByte != this._lastByte) {
-                            this.AppendSeq(this._lastByte.Value, i - this._startIndex, i);
+                        if (currentByte != this._lastByte)
+                        {
+                            var lastByte = this._lastByte;
+                            if (lastByte != null)
+                                this.AppendSeq(lastByte.Value, i - this._startIndex, i);
                         }
                         break;
                     case State.DifferentSeq:
@@ -89,7 +99,9 @@ namespace Breifico.Algorithms.Compression.RLE
 
             switch (this._state) {
                 case State.IdenticalSeq:
-                    this.AppendSeq(this._lastByte.Value, this._input.Length - this._startIndex, 0);
+                    var lastByte = this._lastByte;
+                    if (lastByte != null)
+                        this.AppendSeq(lastByte.Value, this._input.Length - this._startIndex, 0);
                     break;
                 case State.DifferentSeq:
                 case State.Undetermined:

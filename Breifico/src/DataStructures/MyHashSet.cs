@@ -14,7 +14,7 @@ namespace Breifico.DataStructures
         /// <summary>
         /// Количество блоков в хэш-таблице по умолчанию
         /// </summary>
-        private const int DefaultBucketsCount = 1024;
+        private const int DEFAULT_BUCKETS_COUNT = 1024;
 
         private readonly int _bucketsCount;
         private object _syncRoot;
@@ -29,7 +29,7 @@ namespace Breifico.DataStructures
         /// <summary>
         /// Создает новую хэш-таблицу с количеством блоков по умолчанию
         /// </summary>
-        public MyHashSet() : this(DefaultBucketsCount) {}
+        public MyHashSet() : this(DEFAULT_BUCKETS_COUNT) {}
 
         /// <summary>
         /// Создает новую хэш-таблицу с указанным количеством блоков

@@ -8,7 +8,8 @@ namespace Breifico.Tests.DataStructures
     public class MyBinarySearchTreeTests
     {
         [TestMethod]
-        public void Test() {
+        public void Remove_ShouldRemoveItems()
+        {
             var tree = new MyBinarySearchTree<int> { 1, 2, 3, 4, 5 };
             tree.Should().Equal(1, 2, 3, 4, 5);
             tree.Remove(1);
@@ -43,7 +44,8 @@ namespace Breifico.Tests.DataStructures
         }
 
         [TestMethod]
-        public void Contains_WhenContains_ShouldReturnTrue() {
+        public void Contains_WhenContains_ShouldReturnTrue()
+        {
             var tree = new MyBinarySearchTree<int> { 10, 20, 30, 40 };
             tree.Contains(10).Should().BeTrue();
             tree.Contains(20).Should().BeTrue();
@@ -52,7 +54,8 @@ namespace Breifico.Tests.DataStructures
         }
 
         [TestMethod]
-        public void Contains_WhenNotContains_ShouldReturnFalse() {
+        public void Contains_WhenNotContains_ShouldReturnFalse()
+        {
             var tree = new MyBinarySearchTree<int> { 10, 20, 30, 40 };
             tree.Contains(0).Should().BeFalse();
             tree.Contains(11).Should().BeFalse();
@@ -61,12 +64,14 @@ namespace Breifico.Tests.DataStructures
         }
 
         [TestMethod]
-        public void SyncRoot_ShouldBeObject() {
+        public void SyncRoot_ShouldBeObject()
+        {
             new MyBinarySearchTree<int>().SyncRoot.Should().NotBeNull().And.BeOfType<object>();
         }
 
         [TestMethod]
-        public void IsSynchronized_ShouldBeFalse() {
+        public void IsSynchronized_ShouldBeFalse()
+        {
             new MyBinarySearchTree<int>().IsSynchronized.Should().BeFalse();
         }
     }

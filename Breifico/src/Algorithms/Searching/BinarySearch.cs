@@ -16,28 +16,27 @@ namespace Breifico.Algorithms.Searching
         /// <param name="input">Исходная коллекция</param>
         /// <param name="element">Искомый элемент</param>
         /// <returns>Индекс найденного элемента</returns>
-        public int Search(IList<T> input, T element) {
+        public int Search(IList<T> input, T element)
+        {
             // для пустой коллекции всегда возвращаем -1
-            if (input.Count == 0) {
+            if (input.Count == 0)
                 return -1;
-            }
             // если в коллекции один элемент, определят срау же, является ли он искомым
-            if (input.Count == 1) {
+            if (input.Count == 1)
                 return input[0].Equals(element) ? 0 : -1;
-            }
             int left = 0;
             int right = input.Count - 1;
 
-            while (left < right) {
+            while (left < right)
+            {
                 int midPoint = left + (right - left) / 2;
 
-                if (input[midPoint].CompareTo(element) == 0) {
+                if (input[midPoint].CompareTo(element) == 0)
                     return midPoint;
-                } else if (input[midPoint].CompareTo(element) < 0) {
+                else if (input[midPoint].CompareTo(element) < 0)
                     left = midPoint + 1;
-                } else {
+                else
                     right = midPoint - 1;
-                }
             }
             return input[left].CompareTo(element) == 0 ? left : -1;
         }

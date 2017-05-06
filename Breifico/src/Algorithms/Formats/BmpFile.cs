@@ -116,9 +116,13 @@ namespace Breifico.Algorithms.Formats
         public readonly uint ImportantColors;
     }
 
+    /// <summary>
+    /// Представляет структуру BMP-файла
+    /// </summary>
     public sealed class BmpFile : IImage
     {
-        public BmpFile(string fileName) {
+        public BmpFile(string fileName)
+        {
             this.Read(File.OpenRead(fileName));
         }
 
@@ -127,7 +131,8 @@ namespace Breifico.Algorithms.Formats
         /// </summary>
         /// <param name="width">Ширина изображения</param>
         /// <param name="height">Высота изображения</param>
-        public BmpFile(int width, int height) {
+        public BmpFile(int width, int height)
+        {
             this.Height = height;
             this.Width = width;
             this.ImageData = new Color[width, height];
@@ -165,16 +170,14 @@ namespace Breifico.Algorithms.Formats
         {
             get
             {
-                if (x < 0 || x > this.Width || y < 0 || y > this.Height) {
+                if (x < 0 || x > this.Width || y < 0 || y > this.Height)
                     throw new IndexOutOfRangeException();
-                }
                 return this.ImageData[x, y];
             }
             set
             {
-                if (x < 0 || x > this.Width || y < 0 || y > this.Height) {
+                if (x < 0 || x > this.Width || y < 0 || y > this.Height)
                     throw new IndexOutOfRangeException();
-                }
                 this.ImageData[x, y] = value;
             }
         }
@@ -183,30 +186,28 @@ namespace Breifico.Algorithms.Formats
         /// Читает изображение из потока
         /// </summary>
         /// <param name="s">Исходный поток, из которого читается BMP-изображение</param>
-        private void Read(Stream s) {
-            using (var reader = new StreamBinaryReader(s)) {
+        private void Read(Stream s)
+        {
+            using (var reader = new StreamBinaryReader(s))
+            {
                 // Чтение BMP заголовка
                 var bitmapHeader = reader.ReadStruct<BitmapFileHeader>();
 
-                if (bitmapHeader.Signature != 0x4D42) {
+                if (bitmapHeader.Signature != 0x4D42)
                     throw new InvalidBmpImageException($"Unknown BMP signature (0x{bitmapHeader.Signature:X4})");
-                }
 
                 // Чтение DIB-заголовка (поддерживается только 40-байтный BITMAPINFOHEADER заголовок)
                 var dibHeader = reader.ReadStruct<DibHeader>();
 
-                if (dibHeader.HeaderSize != 40) {
+                if (dibHeader.HeaderSize != 40)
                     throw new InvalidBmpImageException("Only BITMAPINFOHEADER header is supported");
-                }
 
                 // пока поддерживаются только 24- и 32-битные BMP
-                if (dibHeader.BitsPerPixel != 24 && dibHeader.BitsPerPixel != 32) {
+                if (dibHeader.BitsPerPixel != 24 && dibHeader.BitsPerPixel != 32)
                     throw new InvalidBmpImageException("Only 24bit/pixel BMP images is supported");
-                }
 
-                if (dibHeader.CompressionMethod != 0) {
+                if (dibHeader.CompressionMethod != 0)
                     throw new InvalidBmpImageException("Compressed BMP images is not supported");
-                }
 
                 this.BitsPerPixel = dibHeader.BitsPerPixel;
                 this.Width = (int)dibHeader.Width;
@@ -217,7 +218,8 @@ namespace Breifico.Algorithms.Formats
                 // перемещаемся к оффсету, с которого начинаются пиксели
                 reader.InternalStream.Seek(bitmapHeader.StartOffset, SeekOrigin.Begin);
 
-                switch (this.BitsPerPixel) {
+                switch (this.BitsPerPixel)
+                {
                     case 24:
                         this.Read24BitPixelData(reader);
                         break;
@@ -228,11 +230,14 @@ namespace Breifico.Algorithms.Formats
             }
         }
 
-        private void Read24BitPixelData(StreamBinaryReader reader) {
-            for (int i = this.Height - 1; i >= 0; i--) {
+        private void Read24BitPixelData(StreamBinaryReader reader)
+        {
+            for (int i = this.Height - 1; i >= 0; i--)
+            {
                 int imageBytes = (this.Width * 3 + 3) & ~0x03;
-                byte[] b = reader.ReadBytes(imageBytes);
-                for (int j = 0; j < this.Width; j++) {
+                var b = reader.ReadBytes(imageBytes);
+                for (int j = 0; j < this.Width; j++)
+                {
                     byte bComp = b[j * 3];
                     byte gComp = b[j * 3 + 1];
                     byte rComp = b[j * 3 + 2];
@@ -241,11 +246,14 @@ namespace Breifico.Algorithms.Formats
             }
         }
 
-        private void Read32BitPixelData(StreamBinaryReader reader) {
-            for (int i = this.Height - 1; i >= 0; i--) {
+        private void Read32BitPixelData(StreamBinaryReader reader)
+        {
+            for (int i = this.Height - 1; i >= 0; i--)
+            {
                 // выравнивание в 4 байта не нужно
-                byte[] b = reader.ReadBytes(this.Width * 4);
-                for (int j = 0; j < this.Width; j++) {
+                var b = reader.ReadBytes(this.Width * 4);
+                for (int j = 0; j < this.Width; j++)
+                {
                     byte bComp = b[j * 4];
                     byte gComp = b[j * 4 + 1];
                     byte rComp = b[j * 4 + 2];
@@ -259,14 +267,13 @@ namespace Breifico.Algorithms.Formats
         /// Конвертирует изображение в экземпляр класса <see cref="Bitmap"/> 
         /// </summary>
         /// <returns>Экземпляр класса <see cref="Bitmap"/>, представляющее данное изображение</returns>
-        public Bitmap ToBitmap() {
+        public Bitmap ToBitmap()
+        {
             // TODO: использовать LockBits
             var bitmap = new Bitmap(this.Width, this.Height);
-            for (int i = 0; i < this.Width; i++) {
-                for (int j = 0; j < this.Height; j++) {
+            for (int i = 0; i < this.Width; i++)
+                for (int j = 0; j < this.Height; j++)
                     bitmap.SetPixel(i, j, this.ImageData[i, j]);
-                }
-            }
             return bitmap;
         }
     }

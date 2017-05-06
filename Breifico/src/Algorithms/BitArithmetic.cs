@@ -10,9 +10,7 @@
         /// <typeparam name="T">Тип значения</typeparam>
         /// <param name="b">Исходное значение</param>
         /// <returns>Результат выполнения операции</returns>
-        public static T TurnOffRightmostOne<T>(dynamic b) {
-            return unchecked((T)(b & (T)(b - 1)));
-        }
+        public static T TurnOffRightmostOne<T>(dynamic b) => unchecked((T)(b & (T)(b - 1)));
 
         /// <summary>
         /// "Выключает" все конечные единичные биты в конце числа
@@ -22,9 +20,7 @@
         /// <typeparam name="T">Тип значения</typeparam>
         /// <param name="b">Исходное значение</param>
         /// <returns>Результат выполнения операции</returns>
-        public static T TurnOffRightmostTrailingOnes<T>(dynamic b) {
-            return unchecked((T)(b & (T)(b + 1)));
-        }
+        public static T TurnOffRightmostTrailingOnes<T>(dynamic b) => unchecked((T)(b & (T)(b + 1)));
 
         /// <summary>
         /// "Включает" последний нулевой бит в числа
@@ -34,9 +30,7 @@
         /// <typeparam name="T">Тип значения</typeparam>
         /// <param name="b">Исходное значение</param>
         /// <returns>Результат выполнения операции</returns>
-        public static T TurnOnRigthmostZero<T>(dynamic b) {
-            return unchecked((T)(b | (T)(b + 1)));
-        }
+        public static T TurnOnRigthmostZero<T>(dynamic b) => unchecked((T)(b | (T)(b + 1)));
 
         /// <summary>
         /// "Включает" все конечные нулевые биты в конце числа
@@ -46,9 +40,7 @@
         /// <typeparam name="T">Тип значения</typeparam>
         /// <param name="b">Исходное значение</param>
         /// <returns>Результат выполнения операции</returns>
-        public static T TurnOnRightmostTrailingZeros<T>(dynamic b) {
-            return unchecked((T)(b | (T)(b - 1)));
-        }
+        public static T TurnOnRightmostTrailingZeros<T>(dynamic b) => unchecked((T)(b | (T)(b - 1)));
 
         /// <summary>
         /// Выделяет правый крайний единичный бит
@@ -58,8 +50,6 @@
         /// <typeparam name="T">Тип значения</typeparam>
         /// <param name="b">Исходное значение</param>
         /// <returns>Результат выполнения операции</returns>
-        public static T IsolateRightmostOneBit<T>(dynamic b) {
-            return unchecked((T)(b & (T)(-b)));
-        }
+        public static T IsolateRightmostOneBit<T>(dynamic b) => unchecked((T)(b & (T)(-b)));
     }
 }

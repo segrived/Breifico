@@ -5,11 +5,21 @@ using System.Drawing;
 namespace Breifico
 {
     /// <summary>
-    /// Изображение, с указанной высотой, шириной и возможностью получения/установки
+    /// Изображение, с указанной высотой, шириной и возможностью получения
     /// значения пикселя по указанным координатам
     /// </summary>
-    public interface IImage
+    public interface IReadOnlyImage
     {
+        /// <summary>
+        /// Получает значение указанного пикселя
+        /// </summary>
+        /// <param name="x">Строка в изображении</param>
+        /// <param name="y">Ряд в строке</param>
+        /// <returns>Значение пикселя в указанных координатах</returns>
+        /// <exception cref="IndexOutOfRangeException">Бросается, если x или y меньше 
+        /// нуля, либо выходят за пределы количества строк и столбцов соответсвенно</exception>
+        Color this[int x, int y] { get; }
+
         /// <summary>
         /// Ширина изображения
         /// </summary>
@@ -21,20 +31,22 @@ namespace Breifico
         int Height { get; }
 
         /// <summary>
-        /// Получает или устанавливает значение указанного пикселя
-        /// </summary>
-        /// <param name="x">Строка в изображении</param>
-        /// <param name="y">Ряд в строке</param>
-        /// <returns>Значение пикселя в указанных координатах</returns>
-        /// <exception cref="IndexOutOfRangeException">Бросается, если x или y меньше 
-        /// нуля, либо выходят за пределы количества строк и столбцов соответсвенно</exception>
-        Color this[int x, int y] { get; set; }
-
-        /// <summary>
         /// Конвертирут изображение в экземпляр класса <see cref="Bitmap"/>
         /// </summary>
         /// <returns>Экземпляр класса <see cref="Bitmap"/></returns>
         Bitmap ToBitmap();
+    }
+
+    public interface IImage : IReadOnlyImage
+    {
+        /// <summary>
+        /// Устанавливает значение указанного пикселя
+        /// </summary>
+        /// <param name="x">Строка в изображении</param>
+        /// <param name="y">Ряд в строке</param>
+        /// <exception cref="IndexOutOfRangeException">Бросается, если x или y меньше 
+        /// нуля, либо выходят за пределы количества строк и столбцов соответсвенно</exception>
+        new Color this[int x, int y] { get; set; }
     }
 
     /// <summary>

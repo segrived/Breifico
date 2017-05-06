@@ -78,8 +78,8 @@ namespace Breifico.DataStructures
         /// <returns>Значение элемента по искомому индексу</returns>
         public T this[int index]
         {
-            get { return this.GetNodeByIndex(index).Value; }
-            set { this.GetNodeByIndex(index).Value = value; }
+            get => this.GetNodeByIndex(index).Value;
+            set => this.GetNodeByIndex(index).Value = value;
         }
 
         /// <summary>
@@ -87,55 +87,26 @@ namespace Breifico.DataStructures
         /// </summary>
         /// <param name="index">Индекс элемента</param>
         /// <returns>Нода по указанному индексу</returns>
-        protected Node<T> GetNodeByIndex(int index) {
-            if (index < 0 || index >= this.Count) {
+        protected Node<T> GetNodeByIndex(int index)
+        {
+            if (index < 0 || index >= this.Count)
                 throw new IndexOutOfRangeException();
-            }
+
             int midPoint = this.Count / 2;
 
             Node<T> tempNode;
             if (index < midPoint) {
                 tempNode = this.HeadNode;
-                for (int i = 0; i < index; i++) {
+                for (int i = 0; i < index; i++)
                     tempNode = tempNode.Next;
-                }
-            } else {
+            }
+            else
+            {
                 tempNode = this.LastNode;
-                for (int i = this.Count - 1; i > index; i--) {
+                for (int i = this.Count - 1; i > index; i--)
                     tempNode = tempNode.Previous;
-                }
             }
             return tempNode;
-        }
-
-        /// <summary>
-        /// Вставляет элемент в начало связного списка
-        /// </summary>
-        /// <param name="item">Добавляемый элемент</param>
-        public virtual void AddFirst(T item) {
-            this.Insert(0, item);
-        }
-
-        /// <summary>
-        /// Вставляет элемент в конец связного списка
-        /// </summary>
-        /// <param name="item">Добавляемый элемент</param>
-        public virtual void AddLast(T item) {
-            this.Insert(this.Count, item);
-        }
-
-        /// <summary>
-        /// Вставляет элемент после указанного элемента
-        /// Если указанный элемент отсутствует в списке, он будет добавлен в конец
-        /// </summary>
-        /// <param name="item">Добавляемый элемент</param>
-        public virtual void AddAfter(T item) {
-            int nodeIndex = this.IndexOf(item);
-            if (nodeIndex == -1) {
-                this.AddLast(item);
-            } else {
-                this.Insert(nodeIndex + 1, item);
-            }
         }
 
         /// <summary>
@@ -145,27 +116,57 @@ namespace Breifico.DataStructures
         public virtual void Add(T item) => this.AddLast(item);
 
         /// <summary>
+        /// Вставляет элемент в начало связного списка
+        /// </summary>
+        /// <param name="item">Добавляемый элемент</param>
+        public virtual void AddFirst(T item) => this.Insert(0, item);
+
+        /// <summary>
+        /// Вставляет элемент в конец связного списка
+        /// </summary>
+        /// <param name="item">Добавляемый элемент</param>
+        public virtual void AddLast(T item) => this.Insert(this.Count, item);
+
+        /// <summary>
+        /// Вставляет элемент после указанного элемента
+        /// Если указанный элемент отсутствует в списке, он будет добавлен в конец
+        /// </summary>
+        /// <param name="item">Добавляемый элемент</param>
+        public virtual void AddAfter(T item)
+        {
+            int nodeIndex = this.IndexOf(item);
+            if (nodeIndex == -1)
+                this.AddLast(item);
+            else
+                this.Insert(nodeIndex + 1, item);
+        }
+
+        /// <summary>
         /// Добавляет несколько элементов в связный список
         /// </summary>
         /// <param name="items">Добавляемые элементы</param>
-        public void AddRange(IEnumerable<T> items) {
-            foreach (var item in items) {
+        public void AddRange(IEnumerable<T> items)
+        {
+            foreach (var item in items)
                 this.Add(item);
-            }
         }
 
         /// <summary>
         /// Объеденяет текщуий связный список с другим, добавляя его элементы в конец
         /// </summary>
         /// <param name="list">Другой двусвязный список</param>
-        public void Append(MyLinkedList<T> list) {
-            if (list.Count == 0) {
+        public void Append(MyLinkedList<T> list)
+        {
+            if (list.Count == 0)
                 return;
-            }
-            if (this.Count == 0) {
+
+            if (this.Count == 0)
+            {
                 this.HeadNode = list.HeadNode;
                 this.LastNode = list.LastNode;
-            } else {
+            }
+            else
+            {
                 this.LastNode.Next = list.HeadNode;
                 this.LastNode.Next.Previous = this.LastNode;
                 this.LastNode = list.LastNode;
@@ -179,12 +180,13 @@ namespace Breifico.DataStructures
         /// </summary>
         /// <param name="item">Искомый элемент</param>
         /// <returns>Индекс искомого элемента</returns>
-        public int IndexOf(T item) {
+        public int IndexOf(T item)
+        {
             var tempNode = this.HeadNode;
-            for (int i = 0; i < this.Count; i++) {
-                if (tempNode.Value.Equals(item)) {
+            for (int i = 0; i < this.Count; i++)
+            {
+                if (tempNode.Value.Equals(item))
                     return i;
-                }
                 tempNode = tempNode.Next;
             }
             return -1;
@@ -197,27 +199,34 @@ namespace Breifico.DataStructures
         /// <param name="item">Элемент, который необходимо вставить в связный список</param>
         /// <exception cref="IndexOutOfRangeException">Бросается в случае, если указанный 
         /// индекс меньше нуля, либо больше размера коллекции</exception>
-        public virtual void Insert(int index, T item) {
-            if (index < 0 || index > this.Count) {
+        public virtual void Insert(int index, T item)
+        {
+            if (index < 0 || index > this.Count)
                 throw new IndexOutOfRangeException();
-            }
+
             var newNode = new Node<T>(item);
+
             // Если список пуст
-            if (this.Count == 0) {
+            if (this.Count == 0)
                 this.HeadNode = this.LastNode = newNode;
             // Добавление в начало списка
-            } else if (index == 0) {
+            else if (index == 0)
+            {
                 var oldHeadNode = this.HeadNode;
                 this.HeadNode = newNode;
                 this.HeadNode.Next = oldHeadNode;
                 oldHeadNode.Previous = this.HeadNode;
+            }
             // Добавление в конец списка
-            } else if (index == this.Count) {
+            else if (index == this.Count)
+            { 
                 this.LastNode.Next = newNode;
                 newNode.Previous = this.LastNode;
                 this.LastNode = newNode;
+            }
             // Добавление в середину списка
-            } else {
+            else 
+            {
                 var node = this.GetNodeByIndex(index);
                 newNode.Next = node;
                 newNode.Previous = node.Previous;
@@ -232,12 +241,13 @@ namespace Breifico.DataStructures
         /// </summary>
         /// <param name="item">Искомый элемент</param>
         /// <returns>True - если элемент присутствует в связном списке, иначе False</returns>
-        public bool Contains(T item) {
+        public bool Contains(T item)
+        {
             var tempNode = this.HeadNode;
-            while (tempNode != null) {
-                if (tempNode.Value.Equals(item)) {
+            while (tempNode != null)
+            {
+                if (tempNode.Value.Equals(item))
                     return true;
-                }
                 tempNode = tempNode.Next;
             }
             return false;
@@ -249,24 +259,29 @@ namespace Breifico.DataStructures
         /// <param name="index">Индекс элемента, который нужно удалить</param>
         /// <exception cref="IndexOutOfRangeException">Бросается в случае, если указанный 
         /// индекс выходит за границы связного списка</exception>
-        public virtual void RemoveAt(int index) {
-            if (index < 0 || index >= this.Count) {
+        public virtual void RemoveAt(int index)
+        {
+            if (index < 0 || index >= this.Count)
                 throw new IndexOutOfRangeException();
-            }
-            if (index == 0) {
+
+            if (index == 0)
+            {
                 this.HeadNode = this.HeadNode.Next;
-                if (this.HeadNode != null) {
+                if (this.HeadNode != null)
                     this.HeadNode.Previous = null;
-                }
-            } else if (index == this.Count - 1) {
+            }
+            else if (index == this.Count - 1)
+            {
                 this.LastNode = this.LastNode.Previous;
-                if (this.LastNode != null) {
+                if (this.LastNode != null)
                     this.LastNode.Next = null;
-                }
-            } else {
+            }
+            else
+            {
                 var node = this.GetNodeByIndex(index - 1);
                 node.Next = node.Next.Next;
             }
+
             this.Count -= 1;
         }
 
@@ -275,10 +290,13 @@ namespace Breifico.DataStructures
         /// </summary>
         /// <param name="item">Элемент, который необходимо удалить</param>
         /// <returns>True если элемент был удален, False если указанный элемент не найден</returns>
-        public bool Remove(T item) {
+        public bool Remove(T item)
+        {
             var tempNode = this.HeadNode;
-            for (int i = 0; i < this.Count; i++) {
-                if (tempNode.Value.Equals(item)) {
+            for (int i = 0; i < this.Count; i++)
+            {
+                if (tempNode.Value.Equals(item))
+                {
                     this.RemoveAt(i);
                     return true;
                 }
@@ -290,7 +308,8 @@ namespace Breifico.DataStructures
         /// <summary>
         /// Очищает связный список
         /// </summary>
-        public void Clear() {
+        public void Clear()
+        {
             this.HeadNode = this.LastNode = null;
             this.Count = 0;
         }
@@ -299,9 +318,11 @@ namespace Breifico.DataStructures
         /// Перечисляет элементы связного списка в обратном порядке
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<T> ReverseEnumerate() {
+        public IEnumerable<T> ReverseEnumerate()
+        {
             var tempNode = this.LastNode;
-            while (tempNode != null) {
+            while (tempNode != null)
+            {
                 yield return tempNode.Value;
                 tempNode = tempNode.Previous;
             }
@@ -311,28 +332,24 @@ namespace Breifico.DataStructures
         /// Возвращает строковое представление экземпляра связного списка
         /// </summary>
         /// <returns>Строковое представление экземпляра связного списка</returns>
-        public override string ToString() {
+        public override string ToString()
+        {
             string headNodeText = this.HeadNode?.ToString() ?? "null";
             string lastNodeText = this.LastNode?.ToString() ?? "null";
             return $"S: {headNodeText}, E: {lastNodeText}";
         }
 
         #region ICollection implementation
-        public void CopyTo(Array array, int index) {
-            throw new NotImplementedException();
-        }
+        public void CopyTo(Array array, int index) => throw new NotImplementedException();
 
-        public void CopyTo(T[] array, int arrayIndex) {
-            throw new NotImplementedException();
-        }
+        public void CopyTo(T[] array, int arrayIndex) => throw new NotImplementedException();
 
         public object SyncRoot
         {
             get
             {
-                if (this._syncRoot == null) {
+                if (this._syncRoot == null)
                     Interlocked.CompareExchange(ref this._syncRoot, new object(), null);
-                }
                 return this._syncRoot;
             }
         }
@@ -345,12 +362,13 @@ namespace Breifico.DataStructures
         /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
         /// </summary>
         /// <returns>
-        /// Объект <see cref="IEnumerator{T}" />, который может использоваться
-        /// для перебора коллекции
+        /// Объект <see cref="IEnumerator{T}" />, который может использоваться для перебора коллекции
         /// </returns>
-        public IEnumerator<T> GetEnumerator() {
+        public IEnumerator<T> GetEnumerator()
+        {
             var tempNode = this.HeadNode;
-            while (tempNode != null) {
+            while (tempNode != null)
+            {
                 yield return tempNode.Value;
                 tempNode = tempNode.Next;
             }
@@ -360,12 +378,10 @@ namespace Breifico.DataStructures
         /// Возвращает перечислитель, который осуществляет итерацию по коллекции.
         /// </summary>
         /// <returns>
-        /// Объект <see cref="IEnumerator" />, который может использоваться для 
-        /// перебора коллекции
+        /// Объект <see cref="IEnumerator" />, который может использоваться для перебора коллекции
         /// </returns>
-        IEnumerator IEnumerable.GetEnumerator() {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
         #endregion
     }
 }
